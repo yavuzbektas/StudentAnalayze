@@ -57,7 +57,7 @@ class Kullanicilar(models.Model):
     
     image=models.ImageField(null=True,blank=True,upload_to='images',verbose_name=TC)
     gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE)
-    telefonNo=models.CharField(validators=[validate_evenz], max_length=17, blank=True,default="0",null=True) # regex eklenecek, validasyon yapilacak
+    telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True) # regex eklenecek, validasyon yapilacak
     adres=TextField(max_length=75)
     calismaDurumu=models.BooleanField()
     yetki=models.BooleanField()
@@ -88,7 +88,7 @@ class OgrenciListesi(models.Model):
     soyAd=models.CharField(max_length=20)
     TC = models.IntegerField(validators=[validate_even])
     
-    telefonNo=models.IntegerField(unique=True,validators=[validate_evenz])
+    telefonNo=models.IntegerField(unique=True,validators=[validatePhone])
     adres=models.TextField()
     okulDevamDurumu=models.BooleanField(null=False)
     geldigiOkul=models.OneToOneField(OrtaOkulListesi,on_delete=models.CASCADE)
