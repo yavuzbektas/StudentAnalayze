@@ -9,7 +9,7 @@ from polls.views import validate_even, validatePhone,validateHesCode
 
 # Create your models here.
 
-class Donem(models.Model):# deneme
+class Donem(models.Model):# deneme testtt
     yillar=models.TextField(max_length=10,default="")
     
     def __str__(self): 
