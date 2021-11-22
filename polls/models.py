@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.db.models.fields.related import OneToOneField
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
-from polls.views import validate_even, validate_evenz,validateHesCode
+from polls.views import validate_even, validatePhone,validateHesCode
 
 # Create your models here.
 
@@ -51,16 +51,16 @@ class GorevTablosu(models.Model):
 
 class Kullanicilar(models.Model):
     
-    ad= models.CharField(max_length=20)
-    soyAd=models.CharField(max_length=20)
-    TC=models.IntegerField(unique=True,validators=[validate_even],max_length=17,)# regex eklenecek, validasyon yapilacak
+    ad= models.CharField(max_length=20,unique=False)
+    soyAd=models.CharField(max_length=20,unique=False)
+    TC=models.IntegerField(unique=True,validators=[validate_even],)# regex eklenecek, validasyon yapilacak
     
     image=models.ImageField(null=True,blank=True,upload_to='images',verbose_name=TC)
-    gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE)
-    telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True) # regex eklenecek, validasyon yapilacak
-    adres=TextField(max_length=75)
-    calismaDurumu=models.BooleanField()
-    yetki=models.BooleanField()
+    gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False)
+    telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False) # regex eklenecek, validasyon yapilacak
+    adres=TextField(max_length=75,unique=False)
+    calismaDurumu=models.BooleanField(default=True)
+    yetki=models.BooleanField(default=False)
     hes_Kodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
     dogumTarihi=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
     email=models.EmailField()
@@ -68,7 +68,7 @@ class Kullanicilar(models.Model):
               ('erkek','Erkek'),
               ('diger','Diğer'),
     )
-    cinsiyet=CharField(max_length=10 ,choices=CINSIYET) 
+    cinsiyet=CharField(max_length=10 ,choices=CINSIYET,unique=False) 
     def __str__(self):
         return self.ad +' '+ self.soyAd
     def save(self, *args, **kwargs):
@@ -84,19 +84,19 @@ class Kullanicilar(models.Model):
     
   
 class OgrenciListesi(models.Model):
-    ad= models.CharField(max_length=20,default="",editable=False)
-    soyAd=models.CharField(max_length=20)
-    TC = models.IntegerField(validators=[validate_even])
+    ad= models.CharField(max_length=20,default="",unique=False)
+    soyAd=models.CharField(max_length=20,unique=False)
+    TC = models.IntegerField(unique=True,validators=[validate_even])
     
-    telefonNo=models.IntegerField(unique=True,validators=[validatePhone])
-    adres=models.TextField()
-    okulDevamDurumu=models.BooleanField(null=False)
-    geldigiOkul=models.OneToOneField(OrtaOkulListesi,on_delete=models.CASCADE)
-    kayitYili=models.OneToOneField(Donem,on_delete=models.CASCADE)
+    telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
+    adres=models.TextField(unique=False)
+    okulDevamDurumu=models.BooleanField(null=False,default=True)
+    geldigiOkul=models.OneToOneField(OrtaOkulListesi,on_delete=models.CASCADE,unique=False)
+    kayitYili=models.OneToOneField(Donem,on_delete=models.CASCADE,unique=False)
     image=models.ImageField(null=True,blank=True,upload_to='images')
-    saglikDurumu=models.TextField()
-    hesKodu=models.CharField(max_length=12,unique=True)
-    dogumTarihi=models.CharField(max_length=12)
+    saglikDurumu=models.TextField(unique=False,null=True,)
+    hesKodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
+    dogumTarihi=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
     ogrenciNo=models.IntegerField()
     email=models.EmailField()
     CINSIYET=(('KIZ','Kız'),
@@ -108,7 +108,16 @@ class OgrenciListesi(models.Model):
     
     def __str__(self):
         return self.ad +' '+self.soyAd
-    
+    def save(self, *args, **kwargs):
+        """ This step is just formatting: add the dash if missing """
+        if '-' not in self.hes_Kodu:
+            self.hes_Kodu = '{0}-{1}-{2}'.format(
+                 self.hes_Kodu[:4], self.hes_Kodu[4:9], self.hes_Kodu[9:])
+        if '-' not in self.telefonNo:
+            self.telefonNo = '({0})-{1} {2}'.format(
+                 self.telefonNo[:4], self.telefonNo[4:7], self.telefonNo[7:])
+        # Continue the model saving
+        super(OgrenciListesi, self).save(*args, **kwargs)
 class VeliListesi(models.Model):
     ad= models.CharField(max_length=20,default="")
     soyAd=models.CharField(max_length=20)

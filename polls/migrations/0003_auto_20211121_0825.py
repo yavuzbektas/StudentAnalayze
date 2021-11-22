@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='kullanicilar',
             name='telefonNo',
-            field=models.CharField(blank=True, default='0505-', max_length=17, null=True, validators=[polls.views.validate_evenz]),
+            field=models.CharField(blank=True, default='0505-', max_length=17, null=True, validators=[polls.views.validatePhone]),
         ),
         migrations.AlterField(
             model_name='raporogrenci',
