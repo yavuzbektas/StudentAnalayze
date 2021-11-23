@@ -40,11 +40,11 @@ class Kullanicilar(models.Model):
     
     ad= models.CharField(max_length=20,unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
-<<<<<<< HEAD
-    TC=models.CharField(unique=True,validators=[validateeven])# regex eklenecek, validasyon yapilacak
-=======
-    TC=models.IntegerField(unique=True,validators=[validateEven],)# regex eklenecek, validasyon yapilacak
->>>>>>> 5a5db41c894cfaa35beb994877908be6ac7e9e5e
+
+    TC=models.CharField(max_length=11,unique=True,validators=[validateEven])# regex eklenecek, validasyon yapilacak
+
+   
+
     
     image=models.ImageField(null=True,blank=True,upload_to='images',verbose_name=TC)
     gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False,related_name="user")
@@ -75,13 +75,12 @@ class Kullanicilar(models.Model):
 class OgrenciListesi(models.Model):
     ad= models.CharField(max_length=20,default="",unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
-<<<<<<< HEAD
-    TC = models.CharField(unique=True,validators=[validateeven])
-=======
-    TC = models.IntegerField(unique=True,validators=[validateEven])
->>>>>>> 5a5db41c894cfaa35beb994877908be6ac7e9e5e
+
+    TC = models.CharField(max_length=11,unique=True,validators=[validateEven])
     
-    telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
+
+    
+    telefonNo = models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
     adres=models.TextField(unique=False)
     okulDevamDurumu=models.BooleanField(null=False,default=True)
     geldigiOkul=models.ForeignKey(OrtaOkulListesi,on_delete=models.CASCADE)

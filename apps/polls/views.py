@@ -13,6 +13,10 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.urls import reverse
 
+from apps.home.form import PostForm
+
+
+
 # from .form import testForm
 
 
@@ -60,14 +64,7 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 
-def form_view(request):
-    form=testForm()
-    context={
 
-        'form':form,
-    }
-
-    return render(request,'home/deneme.html',context)
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
@@ -100,3 +97,10 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+def formview(request):
+     form = PostForm(request.POST or None, request.FILES or None)
+     context = {
+        'form': form
+    }
+
+     return render(request, "post/form.html", context)
