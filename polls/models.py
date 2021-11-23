@@ -91,11 +91,11 @@ class OgrenciListesi(models.Model):
     telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
     adres=models.TextField(unique=False)
     okulDevamDurumu=models.BooleanField(null=False,default=True)
-    geldigiOkul=models.OneToOneField(OrtaOkulListesi,on_delete=models.CASCADE,unique=False)
-    kayitYili=models.OneToOneField(Donem,on_delete=models.CASCADE,unique=False)
+    geldigiOkul=models.ForeignKey(OrtaOkulListesi,on_delete=models.CASCADE)
+    kayitYili=models.ForeignKey(Donem,on_delete=models.CASCADE)
     image=models.ImageField(null=True,blank=True,upload_to='images')
     saglikDurumu=models.TextField(unique=False,null=True,)
-    hesKodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
+    hes_Kodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
     dogumTarihi=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
     ogrenciNo=models.IntegerField()
     email=models.EmailField()
@@ -116,6 +116,7 @@ class OgrenciListesi(models.Model):
         if '-' not in self.telefonNo:
             self.telefonNo = '({0})-{1} {2}'.format(
                  self.telefonNo[:4], self.telefonNo[4:7], self.telefonNo[7:])
+        
         # Continue the model saving
         super(OgrenciListesi, self).save(*args, **kwargs)
 class VeliListesi(models.Model):
@@ -135,7 +136,7 @@ class SubeListesi(models.Model):
         return self.subeAdi
 class SinifListesi(models.Model):
     ogrrenciListesi=models.ForeignKey(OgrenciListesi,models.CASCADE)
-    subeAdi=models.OneToOneField(SubeListesi,on_delete=models.CASCADE,default="")
+    subeAdi=models.ForeignKey(SubeListesi,on_delete=models.CASCADE,default="")
     donem=models.ForeignKey(Donem,on_delete=models.CASCADE)
     SECENEKLER=(
         ('9','9'),
@@ -171,7 +172,7 @@ class RaporOgrenci(models.Model):
     roporTuru=models.CharField(max_length=10,choices=RAPOR)
     anket_sonucu=models.ForeignKey(AnketListesi,on_delete=models.CASCADE)
     degerlendiren=models.ForeignKey(Kullanicilar,on_delete=models.CASCADE)
-    cevaplar=models.OneToOneField(cevaplar,on_delete=models.CASCADE)
+    cevaplar=models.ForeignKey(cevaplar,on_delete=models.CASCADE)
     donem=models.ForeignKey(Donem,on_delete=models.CASCADE)
     ogrenci=models.ForeignKey(OgrenciListesi,on_delete=models.CASCADE)
     def __str__(self) :
