@@ -19,14 +19,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 
-
+from apps.polls import views
 from django.conf.urls.static import static
 
 
 urlpatterns = [
  
     
-
+    path('deneme.html',views.form_view ,name='deneme' ),
     path('admin/', admin.site.urls),          # Django admin route
     path("", include("apps.authentication.urls")), # Auth routes - login / register
     path("", include("apps.home.urls"))             # UI Kits Html files

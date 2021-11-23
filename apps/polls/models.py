@@ -5,9 +5,9 @@ from django.db.models.base import Model
 from django.db.models.fields.related import OneToOneField
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
-from polls.views import validate_even, validatePhone,validateHesCode
+from .views import validateeven,validateHesCode,validatePhone
 
-# Create your models here.
+
 
 class Donem(models.Model):# deneme 
     yillar=models.TextField(max_length=10,default="")

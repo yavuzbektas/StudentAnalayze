@@ -13,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.urls import reverse
 
+from apps.polls.form import testForm
+
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
 
@@ -30,18 +32,18 @@ def validatePhone(value):
     #     )
 
 
-
-
-def validate_even(value):
+def validateeven(value):
     y=str(value)
     x=list(y)
         
         
     if len(x) != 11:
         raise ValidationError(
-            _('%(value)s 11 basasmaklı olmalı'),
+            ('%(value)s 11 basasmaklı olmalı'),
             params={'value': value},
         )
+
+
 def index(request):
 
     return render(request,'polls/index.html')
@@ -56,8 +58,14 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 
+def form_view(request):
+    form=testForm()
+    context={
 
+        'form':form,
+    }
 
+    return render(request,'home/deneme.html',context)
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
