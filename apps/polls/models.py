@@ -10,7 +10,7 @@ from .views import validateeven,validateHesCode,validatePhone
 
 
 class Donem(models.Model):# deneme 
-    yillar=models.TextField(max_length=10,default="")
+    yillar=models.CharField(max_length=10,default="")
     
     def __str__(self): 
       return self.yillar
@@ -53,16 +53,16 @@ class Kullanicilar(models.Model):
     
     ad= models.CharField(max_length=20,unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
-    TC=models.IntegerField(unique=True,validators=[validate_even],)# regex eklenecek, validasyon yapilacak
+    TC=models.CharField(unique=True,validators=[validateeven])# regex eklenecek, validasyon yapilacak
     
     image=models.ImageField(null=True,blank=True,upload_to='images',verbose_name=TC)
-    gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False)
+    gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False,related_name="user")
     telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False) # regex eklenecek, validasyon yapilacak
-    adres=TextField(max_length=75,unique=False)
+    adres=models.TextField(max_length=75,unique=False)
     calismaDurumu=models.BooleanField(default=True)
     yetki=models.BooleanField(default=False)
     hes_Kodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
-    dogumTarihi=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
+    dogumTarihi=models.DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
     email=models.EmailField()
     CINSIYET=(('KIZ','Kız'),
               ('erkek','Erkek'),
@@ -86,7 +86,7 @@ class Kullanicilar(models.Model):
 class OgrenciListesi(models.Model):
     ad= models.CharField(max_length=20,default="",unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
-    TC = models.IntegerField(unique=True,validators=[validate_even])
+    TC = models.CharField(unique=True,validators=[validateeven])
     
     telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
     adres=models.TextField(unique=False)

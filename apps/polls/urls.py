@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
-   
+    path('deneme.html',views.form_view ,name='deneme' ),
     # ex: /polls/
     path('', views.index, name='index'),
     # ex: /polls/5/

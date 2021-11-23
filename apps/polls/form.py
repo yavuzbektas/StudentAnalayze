@@ -12,4 +12,4 @@ class testForm(forms.ModelForm):
 
     class Meta:
         model=Kullanicilar
-        fields=['ad',]
+        fields=['ad','TC']
