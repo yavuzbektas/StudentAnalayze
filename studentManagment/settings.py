@@ -35,15 +35,27 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     'apps.polls.apps.PollsConfig.name',
+=======
+    #'apps.polls', # Enable the inner home (pollsme)
+>>>>>>> 5a5db41c894cfaa35beb994877908be6ac7e9e5e
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'apps.home',
     'apps.polls',
+=======
+    'apps.home', # Enable the inner home (home)
+    'apps.polls',
+    
+    
+    
+>>>>>>> 5a5db41c894cfaa35beb994877908be6ac7e9e5e
 ]
 
 MIDDLEWARE = [

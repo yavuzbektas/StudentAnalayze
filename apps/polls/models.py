@@ -5,34 +5,25 @@ from django.db.models.base import Model
 from django.db.models.fields.related import OneToOneField
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
-from .views import validateeven,validateHesCode,validatePhone
-
-
+#from .views import validateeven,validateHesCode,validatePhone
+from  apps.polls.views import validateHesCode, validatePhone , validateEven
 
 class Donem(models.Model):# deneme 
     yillar=models.CharField(max_length=10,default="")
     
     def __str__(self): 
       return self.yillar
-   
- 
-     
-
 class Question(models.Model):
     question_text = models.CharField(max_length=200,default="")
     pub_date = models.DateTimeField('date published')
     def __str__(self):
         return self.question_text
-
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE,default="")
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
     def __str__(self):
         return self.choice_text
-  
-
-
 class OrtaOkulListesi(models.Model):
     okulAdi=models.CharField(max_length=100,default="")
     def __str__(self): 
@@ -41,19 +32,19 @@ class SoruListesi(models.Model):
     sorular=models.CharField(max_length=200,default="")
     def __str__(self): 
         return self.sorular
-
-
 class GorevTablosu(models.Model):
     brans=models.TextField(max_length=30,default="")
     def __str__(self): 
         return self.brans
-
-
 class Kullanicilar(models.Model):
     
     ad= models.CharField(max_length=20,unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
+<<<<<<< HEAD
     TC=models.CharField(unique=True,validators=[validateeven])# regex eklenecek, validasyon yapilacak
+=======
+    TC=models.IntegerField(unique=True,validators=[validateEven],)# regex eklenecek, validasyon yapilacak
+>>>>>>> 5a5db41c894cfaa35beb994877908be6ac7e9e5e
     
     image=models.ImageField(null=True,blank=True,upload_to='images',verbose_name=TC)
     gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False,related_name="user")
@@ -81,12 +72,14 @@ class Kullanicilar(models.Model):
                  self.telefonNo[:4], self.telefonNo[4:7], self.telefonNo[7:])
         # Continue the model saving
         super(Kullanicilar, self).save(*args, **kwargs)
-    
-  
 class OgrenciListesi(models.Model):
     ad= models.CharField(max_length=20,default="",unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
+<<<<<<< HEAD
     TC = models.CharField(unique=True,validators=[validateeven])
+=======
+    TC = models.IntegerField(unique=True,validators=[validateEven])
+>>>>>>> 5a5db41c894cfaa35beb994877908be6ac7e9e5e
     
     telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
     adres=models.TextField(unique=False)
@@ -159,7 +152,6 @@ class AnketListesi(models.Model):
     donem=models.ForeignKey(Donem,on_delete=models.CASCADE)
     def __str__(self):
         return str(self.donem.yillar)+' Anketi'
-    
 class cevaplar(models.Model):
     cevap=models.TextField()
 class RaporOgrenci(models.Model):

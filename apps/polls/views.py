@@ -13,7 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.urls import reverse
 
-from apps.polls.form import testForm
+# from .form import testForm
+
 
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
@@ -32,7 +33,7 @@ def validatePhone(value):
     #     )
 
 
-def validateeven(value):
+def validateEven(value):
     y=str(value)
     x=list(y)
         
@@ -42,6 +43,7 @@ def validateeven(value):
             ('%(value)s 11 basasmaklı olmalı'),
             params={'value': value},
         )
+
 
 
 def index(request):
