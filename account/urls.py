@@ -10,7 +10,7 @@ from .views import login_view, register_user
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('layouts/base.html', login_view, name="login"),
+
      path('index', views.index, name='index'),
     path('home/login.html', login_view, name="login"),
     path('home/register.html', register_user, name="register"),

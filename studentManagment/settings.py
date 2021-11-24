@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-_9*&1ruatq4ii*bgb5ot*z#z$r4_13kb^b9$h#aqb5%0v2qptv
 DEBUG = True
 #config('DEBUG', default=True, cast=bool)
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.800', config('SERVER', default='127.0.0.1')]
 
 
 # Application definition
