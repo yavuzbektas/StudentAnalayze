@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <button name="login" class="btn btn-primary shadow-2 mb-4">Login</button>
-
+                        
                     </form>
 
                     <p class="mb-0 text-muted">Zaten bir hesabınız var mı ? <a href="/register.html" >Signup</a></p>
@@ -58,5 +58,13 @@
             </div>
         </div>
     </div>
-
+    <script>
+        $(window).on('load',function(){
+    
+            $('#login').modal('auth-wrapper')
+        });
+    
+    
+    
+    </script>
 {% endblock content %}
