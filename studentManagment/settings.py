@@ -13,7 +13,7 @@ import os
 
 from decouple import config
 from unipath import Path
-
+from apps import polls 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,6 +35,9 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 # Application definition
 
 INSTALLED_APPS = [
+     
+    'account.apps.AccountConfig',
+   
     #'apps.polls', # Enable the inner home (pollsme)
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,8 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home', # Enable the inner home (home)
-    'apps.polls',
-    
+    #'apps.polls',
+      
+
     
     
 ]

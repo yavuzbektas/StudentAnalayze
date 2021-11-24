@@ -1,11 +1,9 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-"""
+from django import forms
+
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from account.models import User
 
 
 class LoginForm(forms.Form):
@@ -23,8 +21,6 @@ class LoginForm(forms.Form):
                 "class": "form-control"
             }
         ))
-
-
 class SignUpForm(UserCreationForm):
     username = forms.CharField(
         widget=forms.TextInput(
@@ -58,4 +54,3 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
-"""
