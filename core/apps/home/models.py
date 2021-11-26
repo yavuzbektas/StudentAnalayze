@@ -69,7 +69,7 @@ class GorevTablosu(models.Model):
 class Kullanicilar(models.Model):
     
     ad= models.CharField(max_length=20,unique=False)
-    soyAd=models.CharField(max_length=20,unique=False)
+    soyAd=models.CharField(max_length=20,unique=False,verbose_name="Soyad")
     TC=models.CharField(max_length=11,unique=True,validators=[validateEven])# regex eklenecek, validasyon yapilacak
     image=models.ImageField(null=True,blank=True,upload_to="images/%Y/")
     gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False,related_name="user")
@@ -96,8 +96,9 @@ class Kullanicilar(models.Model):
             self.telefonNo = '({0})-{1} {2}'.format(
                  self.telefonNo[:4], self.telefonNo[4:7], self.telefonNo[7:])
         # Continue the model saving
-        if self.image.name !=None:
-            self.image.name = self.TC+".png"
+        #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
+        
+        self.image.name = self.TC+".png"
         
         super(Kullanicilar, self).save(*args, **kwargs)
 class OgrenciListesi(models.Model):
