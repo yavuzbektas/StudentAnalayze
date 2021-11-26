@@ -57,19 +57,19 @@ def userShow(request):
     
     return render(request,'home/usr-ogretmenler.html',context)
 def userAdd(request):
-    id= request.user.id
-    user = User.objects.get(id=id)
-    detail = ProfilDetay.objects.get(user=user)
-    jobs =  JobsTable.objects.all()
-    form = ProfilDetayForm()
-    context={
+    if request.method == "POST":
+        user = ProfilDetayForm(request.POST)
+        if user.is_valid():
+            user.save()
+            redirect('home/profil')
+    else:
+        user = ProfilDetayForm()
+        context={
         'user':user,
-        'detail':detail,
-        'jobs':jobs,
-        'form':form,
+       
         'media_url':settings.MEDIA_URL
-    }
-    return render(request,'home/profil.html',context)
+                }
+        return render(request,'home/profilRegister.html',context)
 def userUpdate(request):
     id= request.user.id
     user = User.objects.get(id=id)

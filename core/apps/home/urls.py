@@ -12,7 +12,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('usr-ogretmenler.html', views.userShow,name='kullanicilar'),
     path('profil.html',views.userUpdate, name="profil"),
-    path('profil.html',views.userAdd , name="profilEkle"),
+    path('profilRegister.html',views.userAdd , name="profilEkle"),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

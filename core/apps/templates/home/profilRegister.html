@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<form  method="POST">
+    {% csrf_token %}
+
+
+    <h1>Kayıt</h1>
+    {{ user.as_p}}
+
+    <input type="submit" value="Ekle">
+</form>
+
+
+
+
+{% endblock content %}
+© 2021 GitHub, Inc.
