@@ -11,9 +11,8 @@ from django.db.models.base import Model
 from django.db.models.fields.related import OneToOneField
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
-#from .views import validateeven,validateHesCode,validatePhone
-# Create your models here.
-#from  apps.polls.views import validateHesCode, validatePhone , validateEven
+from django.contrib.auth.models import User
+
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
 def validatePhone(value):
@@ -38,11 +37,49 @@ def validateEven(value):
             ('%(value)s 11 basasmaklı olmalı'),
             params={'value': value},
         )
-class Donem(models.Model):# deneme 
-    yillar=models.CharField(max_length=10,default="")
-    
+class JobsTable(models.Model):
+    name=models.CharField(max_length=50,default="",)
     def __str__(self): 
-      return self.yillar
+        return self.name
+class ProfilDetay(models.Model):
+    user=models.OneToOneField(User,on_delete=models.DO_NOTHING,related_name="user")
+    TC=models.CharField(max_length=11,unique=True,validators=[validateEven])# regex eklenecek, validasyon yapilacak
+    image=models.ImageField(null=True,blank=True,upload_to="images/%Y/")
+    job=models.ForeignKey(JobsTable,on_delete=models.CASCADE,unique=False)
+    phone=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="05",null=True,unique=False) # regex eklenecek, validasyon yapilacak
+    adress=models.TextField(max_length=100,unique=False)
+    isWorking=models.BooleanField(default=True,unique=False)
+    HESCode=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
+    birthdate=models.DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False,unique=False)
+    sexualChoice=(('KIZ','Kız'),
+              ('erkek','Erkek'),
+              ('diger','Diğer'),
+    )
+    gender=CharField(max_length=10 ,choices=sexualChoice,unique=False) 
+    def __str__(self):
+        return self.TC
+    def save(self, *args, **kwargs):
+        """ This step is just formatting: add the dash if missing """
+        if '-' not in self.HESCode:
+            self.HESCode = '{0}-{1}-{2}'.format(
+                 self.HESCode[:4], self.HESCode[4:9], self.HESCode[9:])
+        if '-' not in self.phone:
+            self.phone = '({0})-{1} {2}'.format(
+                 self.phone[:4], self.phone[4:7], self.phone[7:])
+        # Continue the model saving
+        #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
+        
+        self.image.name = self.TC+".png"
+        
+        super(ProfilDetay, self).save(*args, **kwargs)
+
+
+
+class Session(models.Model):
+    session=models.CharField(max_length=10,default="2021-2022",unique=True)
+    def __str__(self): 
+      return self.session
+"""
 class Question(models.Model):
     question_text = models.CharField(max_length=200,default="")
     pub_date = models.DateTimeField('date published')
@@ -62,45 +99,7 @@ class SoruListesi(models.Model):
     sorular=models.CharField(max_length=200,default="")
     def __str__(self): 
         return self.sorular
-class GorevTablosu(models.Model):
-    brans=models.TextField(max_length=30,default="")
-    def __str__(self): 
-        return self.brans
-class Kullanicilar(models.Model):
-    
-    ad= models.CharField(max_length=20,unique=False)
-    soyAd=models.CharField(max_length=20,unique=False,verbose_name="Soyad")
-    TC=models.CharField(max_length=11,unique=True,validators=[validateEven])# regex eklenecek, validasyon yapilacak
-    image=models.ImageField(null=True,blank=True,upload_to="images/%Y/")
-    gorev=models.ForeignKey(GorevTablosu,on_delete=models.CASCADE,unique=False,related_name="user")
-    telefonNo=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False) # regex eklenecek, validasyon yapilacak
-    adres=models.TextField(max_length=75,unique=False)
-    calismaDurumu=models.BooleanField(default=True)
-    yetki=models.BooleanField(default=False)
-    hes_Kodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
-    dogumTarihi=models.DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
-    email=models.EmailField()
-    CINSIYET=(('KIZ','Kız'),
-              ('erkek','Erkek'),
-              ('diger','Diğer'),
-    )
-    cinsiyet=CharField(max_length=10 ,choices=CINSIYET,unique=False) 
-    def __str__(self):
-        return self.ad +' '+ self.soyAd
-    def save(self, *args, **kwargs):
-        """ This step is just formatting: add the dash if missing """
-        if '-' not in self.hes_Kodu:
-            self.hes_Kodu = '{0}-{1}-{2}'.format(
-                 self.hes_Kodu[:4], self.hes_Kodu[4:9], self.hes_Kodu[9:])
-        if '-' not in self.telefonNo:
-            self.telefonNo = '({0})-{1} {2}'.format(
-                 self.telefonNo[:4], self.telefonNo[4:7], self.telefonNo[7:])
-        # Continue the model saving
-        #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
-        
-        self.image.name = self.TC+".png"
-        
-        super(Kullanicilar, self).save(*args, **kwargs)
+
 class OgrenciListesi(models.Model):
     ad= models.CharField(max_length=20,default="",unique=False)
     soyAd=models.CharField(max_length=20,unique=False)
@@ -126,7 +125,7 @@ class OgrenciListesi(models.Model):
     def __str__(self):
         return self.ad +' '+self.soyAd
     def save(self, *args, **kwargs):
-        """ This step is just formatting: add the dash if missing """
+        """" This step is just formatting: add the dash if missing """"
         if '-' not in self.hes_Kodu:
             self.hes_Kodu = '{0}-{1}-{2}'.format(
                  self.hes_Kodu[:4], self.hes_Kodu[4:9], self.hes_Kodu[9:])
@@ -199,3 +198,4 @@ class RaporSinif(models.Model):
     sinif=models.ForeignKey(SinifListesi,on_delete=models.CASCADE)
     def __str__(self) :
         return str(self.sinif.sinifNo)+self.sin
+"""
