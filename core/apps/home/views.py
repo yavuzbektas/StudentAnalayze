@@ -1,13 +1,17 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2021 - present RoboBusters
 """
+
+from django.shortcuts import render
 
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.conf import settings
+from . models  import Kullanicilar
 
 
 @login_required(login_url="/login/")
@@ -42,3 +46,12 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+def userList(request):
+    kullanicilar = Kullanicilar.objects.all()
+    context = {
+        'Kullanicilar' : kullanicilar,
+        'media_url':settings.MEDIA_URL
+    }
+    
+    return render(request,'home/usr-ogretmenler.html',context)
