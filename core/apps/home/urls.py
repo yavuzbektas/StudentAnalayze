@@ -10,10 +10,11 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
-    path('usr-ogretmenler.html', views.userShow,name='kullanicilar'),
+    
+    
+    # Matches any html file
     path('profil.html',views.userUpdate, name="profil"),
     path('profilRegister.html',views.userAdd , name="profilEkle"),
-    # Matches any html file
-    re_path(r'^.*\.*', views.pages, name='pages'),
-
+    path('usr-ogretmenler.html', views.userShow,name='kullanicilar'),
+    #re_path(r'^.*\.*', views.pages, name='pages'),
 ]

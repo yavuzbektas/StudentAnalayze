@@ -123,7 +123,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-
+DATE_INPUT_FORMATS = ['%Y-%m-%d',]
 #############################################################
 # SRC: https://devcenter.heroku.com/articles/django-assets
 

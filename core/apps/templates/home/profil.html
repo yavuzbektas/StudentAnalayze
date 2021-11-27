@@ -9,8 +9,8 @@
 
 <div class="container">
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="{{ media_url }}{{ detail..image_path }}" alt={{media_url}} width="72" height="72">
-      <h2>Profil Sayfanız</h2>
+      <img class="d-block mx-auto mb-4" src="{{ detail.image.url }}" alt={{media_url}} width="140" height="140">
+      <h2>{{detail.user.first_name}}  {{detail.user.last_name}}</h2>
       <p class="lead">Bu profil sayfası bilgileriniz içermektedir. Her kullanıcı sadece kendi profilini görecektir.</p>
     </div>
 
@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-4 mb-3">
               <label for="lastName">TC No</label>
-              <input type="text" class="form-control" id="TCnumber" placeholder="" value={{detail.TC}} required="">
+              <input type="text" class="form-control" id="TCnumber" placeholder="___________" value={{detail.TC}} required="">
               <div class="invalid-feedback">
                 TC No girmeniz gerekmektedir.
               </div>
@@ -46,7 +46,7 @@
             
             <div class="col-md-4 mb-3">
               <label for="lastName">HES Kod</label>
-              <input type="text" class="form-control" id="hescode" placeholder="" value={{detail.HESCode}} required="">
+              <input type="text" class="form-control" id="hescode" placeholder="____-____-_" value={{detail.HESCode}} required="">
               <div class="invalid-feedback">
                 HES Kod girmeniz gerekmektedir.
               </div>
@@ -55,7 +55,7 @@
               <label for="username">Doğum Tarihiniz</label>
               <div class="input-group">
                 
-                <input type="date" class="form-control" id="Test_DatetimeLocal" placeholder="Doğum Tarihiniz" required="" value={{detail.birthday}}>
+                <input type="date" class="form-control" id="Test_DatetimeLocal" placeholder="Doğum Tarihiniz" required="" value="{{detail.user.username}}">
                 <div class="invalid-feedback" style="width: 100%;">
                   Doğum Tarihinizi girmeniz gerekmektedir.
                 </div>

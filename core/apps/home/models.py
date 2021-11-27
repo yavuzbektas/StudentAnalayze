@@ -57,7 +57,7 @@ class ProfilDetay(models.Model):
     )
     gender=CharField(max_length=10 ,choices=sexualChoice,unique=False) 
     def __str__(self):
-        return self.TC
+        return self.TC + " - "+self.user.first_name+ " "+ self.user.last_name
     def save(self, *args, **kwargs):
         """ This step is just formatting: add the dash if missing """
         if '-' not in self.HESCode:
