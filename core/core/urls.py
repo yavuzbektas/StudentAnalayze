@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path("", include("apps.authentication.urls")), # Auth routes - login / register
     path('', include("apps.home.urls"))             # UI Kits Html files

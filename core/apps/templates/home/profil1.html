@@ -1,0 +1,140 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container">
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="{{ detail.image.url }}" alt={{media_url}} width="140" height="140">
+      <h2>{{detail.user.first_name}}  {{detail.user.last_name}}</h2>
+      <p class="lead">Bu profil sayfası bilgileriniz içermektedir. Her kullanıcı sadece kendi profilini görecektir.</p>
+    </div>
+
+    <div class="row">
+      
+      <div class="col-md-12 order-md-1">
+        <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
+        <form class="needs-validation" novalidate="" action="">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="firstName">Adınız</label>
+              <input type="text" class="form-control" id="firstName" placeholder="" value={{detail.user.first_name}} required="">
+              <div class="invalid-feedback">
+                Adınızı girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="lastName">Soy Adınız</label>
+              <input type="text" class="form-control" id="lastName" placeholder="" value={{detail.user.last_name}} required="">
+              <div class="invalid-feedback">
+                Soy adınızı girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="lastName">TC No</label>
+              <input type="text" class="form-control" id="TCnumber" placeholder="___________" value={{detail.TC}} required="">
+              <div class="invalid-feedback">
+                TC No girmeniz gerekmektedir.
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            
+            <div class="col-md-4 mb-3">
+              <label for="lastName">HES Kod</label>
+              <input type="text" class="form-control" id="hescode" placeholder="____-____-_" value={{detail.HESCode}} required="">
+              <div class="invalid-feedback">
+                HES Kod girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="username">Doğum Tarihiniz</label>
+              <div class="input-group">
+                
+                <input type="date" class="form-control" id="Test_DatetimeLocal" placeholder="Doğum Tarihiniz" required="" value="{{detail.user.username}}">
+                <div class="invalid-feedback" style="width: 100%;">
+                  Doğum Tarihinizi girmeniz gerekmektedir.
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="username">Kullanıcı Adınız</label>
+            <div class="input-group">
+              
+              <input type="text" class="form-control" id="username" placeholder="Username" required="" value={{detail.user.username}}>
+              <div class="invalid-feedback" style="width: 100%;">
+                Kullanıcı adınızı girmeniz gerekmektedir.
+              </div>
+            </div>
+          </div>
+
+          
+
+          
+          <div class="col-md-4 mb-3">
+            <label for="email">Email <span class="text-muted">(Gerekli)</span></label>
+            <input type="email" class="form-control" id="email" placeholder="you@example.com" value={{detail.user.email}}>
+            <div class="invalid-feedback">
+              Lütfen Email bilgisini giriniz.
+            </div>
+          </div>
+          <div class="col-md-4  mb-3">
+            <label for="country">Görev</label>
+            <select class="custom-select d-block w-100" id="jobname" required=""  >
+              {% for job in jobs %}
+              <option value="">{{job.name}}</option>
+              {% endfor %} 
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid country.
+            </div>
+          </div>
+        </div>
+          <div class="mb-3">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" value={{detail.adress}}>
+            <div class="invalid-feedback">
+              Lütfen adres bilgisini giriniz.
+            </div>
+          </div>
+
+          
+
+         
+          <hr class="col-md-4 mb-4">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="isWorking" checked={{detail.isWorking}} value="">
+            <label class="custom-control-label" for="isWorking">Çalışıyor mu </label>
+          </div>
+          
+          
+
+          
+   
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Kaydet</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">© 2021-2022 RoboBusters</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Gizlilik</a></li>
+        <li class="list-inline-item"><a href="#">Şartlat</a></li>
+        <li class="list-inline-item"><a href="#">Destek</a></li>
+      </ul>
+    </footer>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

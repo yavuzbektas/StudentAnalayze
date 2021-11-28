@@ -29,6 +29,15 @@ DEBUG = True
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
 
+# EMAIL service setting
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'testsite_app'
+EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
 
 # Application definition
 
@@ -41,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.authentication',
     'apps.home',
+    'widget_tweaks',
     
     
 ]
@@ -141,6 +151,8 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(CORE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+#EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+EMAIL_FILE_PATH = os.path.join(MEDIA_ROOT+"/log/", 'sent_emails')
 #############################################################
 
 # Default primary key field type

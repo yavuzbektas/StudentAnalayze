@@ -61,15 +61,43 @@ def userAdd(request):
         user = ProfilDetayForm(request.POST)
         if user.is_valid():
             user.save()
-            redirect('home/profil')
+            return HttpResponseRedirect('/')
     else:
         user = ProfilDetayForm()
-        context={
+    context={
         'user':user,
-       
+        'media_url':settings.MEDIA_URL}
+    return render(request,'home/profilRegister.html',context)
+def post_update(request,pk):
+    
+    
+    
+
+    post = get_object_or_404(ProfilDetay, id=pk)
+    
+    form = ProfilDetayForm(request.POST or None, request.FILES or None, instance=post)
+    if form.is_valid():
+        form.save()
+        
+        return HttpResponseRedirect('/')
+    
+    user = User.objects.get(id=pk)
+    detail = ProfilDetay.objects.get(user=user)
+    jobs =  JobsTable.objects.all()
+    form = ProfilDetayForm(instance=post)
+  
+    context={
+        'user':user,
+        'detail':detail,
+        'jobs':jobs,
+        'form':form,
         'media_url':settings.MEDIA_URL
-                }
-        return render(request,'home/profilRegister.html',context)
+        }
+    
+
+    return render(request, "home/profil.html", context)
+
+
 def userUpdate(request):
     id= request.user.id
     user = User.objects.get(id=id)
@@ -83,4 +111,4 @@ def userUpdate(request):
         'form':form,
         'media_url':settings.MEDIA_URL
     }
-    return render(request,'home/profil.html',context)
+    return render(request,'home/profil1.html',context)

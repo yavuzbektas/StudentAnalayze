@@ -1,0 +1,22 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: TestSite password reset
+From: TestSite Team <noreply@example.com>
+To: yavuzbektas@gmail.com
+Date: Sun, 28 Nov 2021 15:12:53 -0000
+Message-ID: <163811237378.16156.2986597988263333020@YBEKTAS-NB.iaosbatl.corp>
+
+
+To initiate the password reset process for your ybektas TestSite Account,
+click the link below:
+
+http://127.0.0.1:8000/accounts/reset/MQ/awu59h-4339136e8b27ebe4f7d998ddd2c33540/
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser
+window instead.
+
+Sincerely,
+The TestSite Team
+
+-------------------------------------------------------------------------------
