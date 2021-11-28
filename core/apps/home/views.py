@@ -11,8 +11,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.conf import settings
-from apps.home.form import ProfilDetayForm
-from apps.home.models  import ProfilDetay,JobsTable
+from apps.home.form import ProfilForm
+from apps.home.models  import Profil,JobsTable
 from django.contrib.auth.models import User
 
 @login_required(login_url="/login/")
@@ -49,7 +49,7 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 def userShow(request):
-    users = ProfilDetay.objects.all()
+    users = Profil.objects.all()
     context = {
         'Kullanicilar' : users,
         'media_url':settings.MEDIA_URL
@@ -57,15 +57,17 @@ def userShow(request):
     
     return render(request,'home/usr-ogretmenler.html',context)
 def userAdd(request):
+    user = request.user
     if request.method == "POST":
-        user = ProfilDetayForm(request.POST)
-        if user.is_valid():
-            user.save()
+        newUser = Profil(request.POST)
+        if newUser.is_valid():
+            newUser.save()
             return HttpResponseRedirect('/')
     else:
-        user = ProfilDetayForm()
+        newUser = ProfilForm()
     context={
         'user':user,
+        'newUser':newUser,
         'media_url':settings.MEDIA_URL}
     return render(request,'home/profilRegister.html',context)
 def post_update(request,pk):
@@ -73,18 +75,18 @@ def post_update(request,pk):
     
     
 
-    post = get_object_or_404(ProfilDetay, id=pk)
+    post = get_object_or_404(Profil, id=pk)
     
-    form = ProfilDetayForm(request.POST or None, request.FILES or None, instance=post)
+    form = ProfilForm(request.POST or None, request.FILES or None, instance=post)
     if form.is_valid():
         form.save()
         
         return HttpResponseRedirect('/')
     
     user = User.objects.get(id=pk)
-    detail = ProfilDetay.objects.get(user=user)
+    detail = Profil.objects.get(user=user)
     jobs =  JobsTable.objects.all()
-    form = ProfilDetayForm(instance=post)
+    form = ProfilForm(instance=post)
   
     context={
         'user':user,
@@ -101,9 +103,9 @@ def post_update(request,pk):
 def userUpdate(request):
     id= request.user.id
     user = User.objects.get(id=id)
-    detail = ProfilDetay.objects.get(user=user)
+    detail = Profil.objects.get(user=user)
     jobs =  JobsTable.objects.all()
-    form = ProfilDetayForm()
+    form = ProfilForm()
     context={
         'user':user,
         'detail':detail,

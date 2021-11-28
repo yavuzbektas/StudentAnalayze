@@ -18,25 +18,26 @@
       
       <div class="col-md-12 order-md-1">
         <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
-        <form class="needs-validation" novalidate="" action="">
+        <form class="needs-validation" novalidate="" action="POST">
+          {% csrf_token %}
           <div class="row">
             <div class="col-md-4 mb-3">
               <label for="firstName">Adınız</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value={{detail.user.first_name}} required="">
+              <input type="text" class="form-control" id="firstName" placeholder="" value="{{detail.user.first_name}}" required="">
               <div class="invalid-feedback">
                 Adınızı girmeniz gerekmektedir.
               </div>
             </div>
             <div class="col-md-4 mb-3">
               <label for="lastName">Soy Adınız</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value={{detail.user.last_name}} required="">
+              <input type="text" class="form-control" id="lastName" placeholder="" value="{{detail.user.last_name}}" required="">
               <div class="invalid-feedback">
                 Soy adınızı girmeniz gerekmektedir.
               </div>
             </div>
             <div class="col-md-4 mb-3">
               <label for="lastName">TC No</label>
-              <input type="text" class="form-control" id="TCnumber" placeholder="___________" value={{detail.TC}} required="">
+              <input type="text" class="form-control" id="TCnumber" placeholder="___________" value="{{detail.TC}}" required="">
               <div class="invalid-feedback">
                 TC No girmeniz gerekmektedir.
               </div>
@@ -46,7 +47,7 @@
             
             <div class="col-md-4 mb-3">
               <label for="lastName">HES Kod</label>
-              <input type="text" class="form-control" id="hescode" placeholder="____-____-_" value={{detail.HESCode}} required="">
+              <input type="text" class="form-control" id="hescode" placeholder="____-____-_" value="{{detail.HESCode}}" required="">
               <div class="invalid-feedback">
                 HES Kod girmeniz gerekmektedir.
               </div>

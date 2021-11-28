@@ -6,6 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ..home.models import Profil
 
 
 class LoginForm(forms.Form):
@@ -23,6 +24,15 @@ class LoginForm(forms.Form):
                 "class": "form-control"
             }
         ))
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profil.objects.create(user=instance)
+
 
 
 class SignUpForm(UserCreationForm):

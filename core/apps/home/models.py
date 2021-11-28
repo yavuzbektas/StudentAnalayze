@@ -41,37 +41,40 @@ class JobsTable(models.Model):
     name=models.CharField(max_length=50,default="",)
     def __str__(self): 
         return self.name
-class ProfilDetay(models.Model):
+
+class Profil(models.Model):
     user=models.OneToOneField(User,on_delete=models.DO_NOTHING,related_name="user")
-    TC=models.CharField(max_length=11,unique=True,validators=[validateEven])# regex eklenecek, validasyon yapilacak
-    image=models.ImageField(null=True,blank=True,upload_to="images/%Y/")
-    job=models.ForeignKey(JobsTable,on_delete=models.CASCADE,unique=False)
+    TC=models.CharField(max_length=11,unique=True,validators=[validateEven],blank=True,null=True)# regex eklenecek, validasyon yapilacak
+    image=models.ImageField(upload_to="images/%Y/",blank=True,null=True,default='images/person.png')
+    job=models.ForeignKey(JobsTable,on_delete=models.CASCADE,unique=False,blank=True,null=True)
     phone=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="05",null=True,unique=False) # regex eklenecek, validasyon yapilacak
-    adress=models.TextField(max_length=100,unique=False)
-    isWorking=models.BooleanField(default=True,unique=False)
-    HESCode=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
-    birthdate=models.DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False,unique=False)
-    sexualChoice=(('KIZ','Kız'),
-              ('erkek','Erkek'),
-              ('diger','Diğer'),
+    adress=models.TextField(max_length=100,unique=False,blank=True,null=True)
+    isWorking=models.BooleanField(default=True,unique=False,blank=True,null=True)
+    HESCode=models.CharField(max_length=12,unique=True,validators=[validateHesCode],blank=True,null=True)
+    birthdate=models.DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False,unique=False,blank=True,null=True)
+    sexualChoice=(('Kız','Kız'),
+              ('Erkek','Erkek'),
+              ('Diger','Diğer'),
     )
-    gender=CharField(max_length=10 ,choices=sexualChoice,unique=False) 
+    gender=CharField(max_length=10 ,choices=sexualChoice,unique=False,blank=True,null=True) 
     def __str__(self):
         return self.TC + " - "+self.user.first_name+ " "+ self.user.last_name
     def save(self, *args, **kwargs):
         """ This step is just formatting: add the dash if missing """
-        if '-' not in self.HESCode:
-            self.HESCode = '{0}-{1}-{2}'.format(
+        if self.HESCode!=None:
+            if '-' not in self.HESCode :
+                self.HESCode = '{0}-{1}-{2}'.format(
                  self.HESCode[:4], self.HESCode[4:9], self.HESCode[9:])
-        if '-' not in self.phone:
-            self.phone = '({0})-{1} {2}'.format(
+        if self.phone!=None:       
+            if '-' not in self.phone:
+                self.phone = '({0})-{1} {2}'.format(
                  self.phone[:4], self.phone[4:7], self.phone[7:])
         # Continue the model saving
         #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
+        if self.image.name!=None and self.TC!=None:
+            self.image.name = self.TC+".png"
         
-        self.image.name = self.TC+".png"
-        
-        super(ProfilDetay, self).save(*args, **kwargs)
+        super(Profil, self).save(*args, **kwargs)
 
 
 
