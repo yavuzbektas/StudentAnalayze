@@ -4,7 +4,7 @@ Copyright (c) 2021 - present RoboBusters
 """
 
 from django.shortcuts import render
-
+from django.shortcuts import get_object_or_404
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -14,6 +14,10 @@ from django.conf import settings
 from apps.home.form import ProfilForm
 from apps.home.models  import Profil,JobsTable
 from django.contrib.auth.models import User
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from .form import ProfilForm
 
 @login_required(login_url="/login/")
 def index(request):
@@ -57,9 +61,9 @@ def userShow(request):
     
     return render(request,'home/usr-ogretmenler.html',context)
 
-def post_update(request,pk):
-    
-    post = get_object_or_404(Profil, id=pk)
+def post_update(request):
+    pk=request.user.id
+    post = get_object_or_404(Profil, id=1)
     
     form = ProfilForm(request.POST or None, request.FILES or None, instance=post)
     if form.is_valid():
@@ -67,7 +71,7 @@ def post_update(request,pk):
         
         return HttpResponseRedirect('/')
     
-    user = User.objects.get(id=pk)
+    user = User.objects.get(id=1)
     detail = Profil.objects.get(user=user)
     jobs =  JobsTable.objects.all()
     form = ProfilForm(instance=post)
@@ -98,3 +102,14 @@ def userUpdate(request):
         'media_url':settings.MEDIA_URL
     }
     return render(request,'home/profil.html',context)
+
+
+class ProfilView(FormView):
+    template_name = 'profil.html'
+    form_class = ProfilForm
+    success_url = reverse_lazy('profil')
+    #success_message = 'We received your request'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

@@ -13,7 +13,7 @@ urlpatterns = [
     
     
     # Matches any html file
-    path('profil.html',views.userUpdate, name="profil"),
+    path('profil.html',views.post_update, name="profil"),
     path('usr-ogretmenler.html', views.userShow,name='kullanicilar'),
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]
