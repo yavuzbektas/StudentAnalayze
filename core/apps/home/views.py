@@ -56,25 +56,9 @@ def userShow(request):
     }
     
     return render(request,'home/usr-ogretmenler.html',context)
-def userAdd(request):
-    user = request.user
-    if request.method == "POST":
-        newUser = Profil(request.POST)
-        if newUser.is_valid():
-            newUser.save()
-            return HttpResponseRedirect('/')
-    else:
-        newUser = ProfilForm()
-    context={
-        'user':user,
-        'newUser':newUser,
-        'media_url':settings.MEDIA_URL}
-    return render(request,'home/profilRegister.html',context)
+
 def post_update(request,pk):
     
-    
-    
-
     post = get_object_or_404(Profil, id=pk)
     
     form = ProfilForm(request.POST or None, request.FILES or None, instance=post)
@@ -113,4 +97,4 @@ def userUpdate(request):
         'form':form,
         'media_url':settings.MEDIA_URL
     }
-    return render(request,'home/profil1.html',context)
+    return render(request,'home/profil.html',context)
