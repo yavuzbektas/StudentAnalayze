@@ -16,5 +16,5 @@ urlpatterns = [
     path('profil.html',views.userUpdate, name="profil"),
     path('profilRegister.html',views.userAdd , name="profilEkle"),
     path('usr-ogretmenler.html', views.userShow,name='kullanicilar'),
-    #re_path(r'^.*\.*', views.pages, name='pages'),
+    re_path(r'^.*\.*', views.pages, name='pages'),
 ]
