@@ -46,41 +46,69 @@ class RegisterForm(UserCreationForm):
         fields = ['first_name','last_name', 'username', 'email', 'password1', 'password2']
 
 class ProfilForm(forms.ModelForm):
-    adress = forms.CharField()
-    # TC = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'Last Name'
-    # }))
-    TC = forms.CharField()
-    HESCode = forms.CharField()
-    birthday = forms.DateField()
-    user = forms.CharField()
-    # email = forms.EmailField(widget=forms.EmailInput(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'Your Email'
-    # }))
-    # job = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'job'
-    # }))
-    # adress = forms.CharField(widget=forms.Textarea(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'address'
-    # }))
-    # phone = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'Your Phone'
-    # }))
-    # gender = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'Gender'
-    # }))
-    # isWorking = forms.BooleanField(widget=forms.CheckboxInput(attrs={
-    #     'class': 'form-control',
-    #     'placeholder': 'isWorking'
-    # }))
+    adress = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Adres'
+    }))
+    TC = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'TC No'
+    }))
+    HESCode = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'HES No'
+    }))
+    
+    
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Your Email'
+    }))
+    image = forms.ImageField(widget=forms.FileInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'image'
+    }))
+   
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Telefon No'
+    }))
+    
+    CHOICES =[('Kız','Kız'),
+              ('Erkek','Erkek'),
+              ('Diger','Diğer'),
+    ]
+    gender = forms.ChoiceField( widget=forms.RadioSelect({'class':'form-check'}) , choices=CHOICES
+        )
+    isWorking = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Calisiyor mu'
+    }),required=False)
 
     class Meta:
         model = Profil
-        fields =  ['TC', 'HESCode','adress','birthday','user' ]
-        
+        fields =  ['adress',"TC",'phone','HESCode','gender',"isWorking","email",'image']
+
+class UserForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Kullanıcı Adı'
+    }))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Adınız'
+    }))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Soy adınız'
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Your Email'
+    }))
+   
+    
+
+    class Meta:
+        model = User
+        fields =  ['first_name',"last_name","email","username"]

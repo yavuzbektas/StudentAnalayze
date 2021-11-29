@@ -21,6 +21,7 @@
                           <th scope="col">Adres</th>
                           <th scope="col">Email</th>
                           <th scope="col">Aktif</th>
+                          <th scope="col">Yetki</th>
                         </tr>
                       </thead>
                     <tbody>
@@ -47,7 +48,7 @@
                             <td>
                                 <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i></h6>
                             </td>
-                            <td><a href="#!" class="label theme-bg2 text-white f-12">Yetki Kaldır</a><a href="#!" class="label theme-bg text-white f-12">Yetki Ver</a></td>
+                            <td><a href="/profil.html/{{kullanici.id}}"class="label theme-bg text-white f-12">detay</a><a href="#!" class="label theme-bg text-white f-12">Yetki Ver</a><a href="/delete/{{kullanici.id}}" class="label theme-bg text-white f-12">Delete</a></td>
                         </tr>
                        {% endfor %} 
                     </tbody>

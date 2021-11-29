@@ -9,8 +9,8 @@
 
 <div class="container">
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="{{ form.image.url }}" alt={{media_url}} width="140" height="140">
-      <h2>{{form.user.first_name}}  {{form.user.last_name}}</h2>
+      <img class="d-block mx-auto mb-4" src="{{detail.image.url}}"  alt="{{ media_url }}images/person.png" width="140" height="140">
+      <h2>{{user_form.first_name}}  - {{user_form.last_name}}</h2>
       <p class="lead">Bu profil sayfası bilgileriniz içermektedir. Her kullanıcı sadece kendi profilini görecektir.</p>
     </div>
 
@@ -20,19 +20,55 @@
         <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
         <form class="needs-validation"  method="POST">
           {% csrf_token %}
-          
+          {{user_form.username}}
+          {{user_form.first_name}}
+          {{user_form.last_name}}
+          {{user_form.email}}
+          {{profile_form.image}}
           <div class="row">
             <div class="col-md-4 mb-3">
-              <label for="firstName">Adınız</label>
-              {{form.HESCode}}
-              
+              <label for="HESCode">HES Kod</label>
+              {{profile_form.HESCode}}
               <div class="invalid-feedback">
-                Adınızı girmeniz gerekmektedir.
-                <label for="firstName">Adınız</label>
-                
+                Hes kod girmeniz gerekmektedir.
               </div>
             </div>
+            <div class="col-md-4 mb-3">
+              <label for="TC">TC No</label>
+              {{profile_form.TC}}
+              <div class="invalid-feedback">
+                TC no girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="phone">Telefon No</label>
+              {{profile_form.phone}}
+              <div class="invalid-feedback">
+                Telefon no girmeniz gerekmektedir.
+              </div>
+            </div>
+          </div>
+            <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="adress">Adres</label>
+              {{profile_form.adress}}
+              <div class="invalid-feedback">
+                adress no girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="gender">Cinsiyet</label>
+              {{profile_form.gender}}
+              <div class="invalid-feedback">
+                gender bilgisi girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="TC">Calisma Durumu</label>
+              {{profile_form.isWorking}}
+            </div>
             
+          </div>
           
    
           <hr class="mb-4">

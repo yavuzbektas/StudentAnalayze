@@ -58,7 +58,10 @@ class Profil(models.Model):
     )
     gender=CharField(max_length=10 ,choices=sexualChoice,unique=False,blank=True,null=True) 
     def __str__(self):
-        return self.TC + " - "+self.user.first_name+ " "+ self.user.last_name
+        if self.TC!=None and self.user.first_name!=None  and self.user.last_name!=None :
+            return self.TC + " - "+self.user.first_name+ " "+ self.user.last_name
+        else :
+            return "profil bos"
     def save(self, *args, **kwargs):
         """ This step is just formatting: add the dash if missing """
         if self.HESCode!=None:

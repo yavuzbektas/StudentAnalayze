@@ -13,7 +13,8 @@ urlpatterns = [
     
     
     # Matches any html file
-    path('profil.html',views.post_update, name="profil"),
+    path('profil.html', views.post_update, name='users-edit'),
     path('usr-ogretmenler.html', views.userShow,name='kullanicilar'),
-    re_path(r'^.*\.*', views.pages, name='pages'),
+    path('delete/<int:pk>',views.post_delete, name='delete'),
+    #re_path(r'^.*\.*', views.pages, name='pages'),
 ]

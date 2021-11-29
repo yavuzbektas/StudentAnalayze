@@ -17,7 +17,7 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-from .form import ProfilForm
+from .form import ProfilForm,UserForm
 
 @login_required(login_url="/login/")
 def index(request):
@@ -63,24 +63,33 @@ def userShow(request):
 
 def post_update(request):
     pk=request.user.id
-    post = get_object_or_404(Profil, id=1)
+    user = User.objects.get(id=pk)
+    post = Profil.objects.get(user=user)
+    jobs =  JobsTable.objects.all()
     
-    form = ProfilForm(request.POST or None, request.FILES or None, instance=post)
-    if form.is_valid():
-        form.save()
+    
+    profile_form = ProfilForm(request.POST, instance=post)
+    user_form = UserForm(request.POST, instance=user)
+    if profile_form.is_valid() and user_form.is_valid():
+        formf =profile_form.save(commit=False)
+        userf= user_form.save()
+        formf.user=userf
+        formf.save()
         
         return HttpResponseRedirect('/')
-    
-    user = User.objects.get(id=1)
-    detail = Profil.objects.get(user=user)
-    jobs =  JobsTable.objects.all()
-    form = ProfilForm(instance=post)
-  
+    elif profile_form.errors :
+        print("Profil form da hatalar var")
+    elif user_form.errors :
+        print("User form da hatalar var")
+        
+    profile_form = ProfilForm(instance=post)
+    user_form = UserForm(instance=user)
     context={
         'user':user,
-        'detail':detail,
+        'detail':post,
         'jobs':jobs,
-        'form':form,
+        'profile_form':profile_form,
+        'user_form':user_form,
         'media_url':settings.MEDIA_URL
         }
     
@@ -103,6 +112,16 @@ def userUpdate(request):
     }
     return render(request,'home/profil.html',context)
 
+def post_delete(request, pk):
+    user = User.objects.get(id=pk)
+    if not request.user.is_authenticated:
+        # Eğer kullanıcı giriş yapmamış ise hata sayfası gönder
+        return Http404()
+
+    post = get_object_or_404(Profil, id=pk)
+    post.delete()
+    user.delete()
+    return HttpResponseRedirect("/")
 
 class ProfilView(FormView):
     template_name = 'profil.html'
