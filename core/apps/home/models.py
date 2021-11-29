@@ -43,7 +43,7 @@ class JobsTable(models.Model):
         return self.name
 
 class Profil(models.Model):
-    user=models.OneToOneField(User,on_delete=models.DO_NOTHING,related_name="user")
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="user")
     TC=models.CharField(max_length=11,unique=True,validators=[validateEven],blank=True,null=True)# regex eklenecek, validasyon yapilacak
     image=models.ImageField(upload_to="images/%Y/",blank=True,null=True,default='images/person.png')
     job=models.ForeignKey(JobsTable,on_delete=models.CASCADE,unique=False,blank=True,null=True)
@@ -75,7 +75,7 @@ class Profil(models.Model):
         # Continue the model saving
         #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
         if self.image.name!=None and self.TC!=None:
-            self.image.name = self.TC+".png"
+            self.image.name =  self.TC+".png"
         
         super(Profil, self).save(*args, **kwargs)
 

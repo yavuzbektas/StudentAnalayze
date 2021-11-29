@@ -3,6 +3,7 @@
         <div class="navbar-wrapper">
             <div class="navbar-brand header-logo">
                 <a target="_blank" 
+                href="#"
                    class="b-brand">
                     <div class="b-bg">
                         <i class="feather icon-trending-up"></i>
@@ -11,11 +12,14 @@
                     
                 </a>
                 
-                <a class="mobile-menu" id="mobile-collapse" href="javascript:"></a>
+                <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+                
             </div>
-            <li class="nav-item pcoded-menu-caption">
-                <label><strong>Kullanıcı :</strong> {{user.first_name}} {{user.last_name}}</label>
-            </li>
+            <div class="nav-item">
+                
+                <span>K :  {{user.first_name}} {{user.last_name}}</span>
+            </div>
+            
             <div class="navbar-content scroll-div">
                 <ul class="nav pcoded-inner-navbar">
                     
@@ -103,9 +107,9 @@
                     <li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Profil Ayarları</span></a>
                         <ul class="pcoded-submenu">
-                            <li class=""><a href="/accounts/password_reset/" class="">Şifre Resetleme</a></li>
+                            
                             <li class=""><a href="/profil.html" class="">Profil Düzenle</a></li>
-                           
+                            <li class=""><a href="/accounts/password_reset/" class="">Şifre Resetleme</a></li>
                         </ul>
                     </li>
                     

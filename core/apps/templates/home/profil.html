@@ -9,7 +9,16 @@
 
 <div class="container">
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="{{detail.image.url}}"  alt="{{ media_url }}images/person.png" width="140" height="140">
+      <form class="needs-validation"  method="POST">
+        {% csrf_token %}
+      <img class="d-block mx-auto mb-4" src="{{detail.image.url}}"  alt="{{ media_url }}images/person.png" width="340" height="340">
+      
+      <div class="col-md-12 mb-3">
+
+        {{detail.image}}
+        {{profile_form.image}}
+        
+      </div>
       <h2>{{user_form.first_name}}  - {{user_form.last_name}}</h2>
       <p class="lead">Bu profil sayfası bilgileriniz içermektedir. Her kullanıcı sadece kendi profilini görecektir.</p>
     </div>
@@ -18,13 +27,12 @@
       
       <div class="col-md-12 order-md-1">
         <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
-        <form class="needs-validation"  method="POST">
-          {% csrf_token %}
+        
           {{user_form.username}}
           {{user_form.first_name}}
           {{user_form.last_name}}
           {{user_form.email}}
-          {{profile_form.image}}
+          
           <div class="row">
             <div class="col-md-4 mb-3">
               <label for="HESCode">HES Kod</label>
