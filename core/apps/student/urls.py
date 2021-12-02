@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2021 - present Robobusters
 """
 
 from django.urls import path, re_path
-from apps.home import views
+from apps.student import views
 def repath_func(request):
     from django.http import HttpResponseRedirect
 
@@ -13,14 +13,14 @@ def repath_func(request):
 urlpatterns = [
 
     # The home page
-    path('student/', views.index, name='student'),
+    path('', views.studentIndex, name='student'),
     
     
     # Matches any html file
-    path('student/profil.html', views.studentUpdate, name='student-edit'),
-    path('student/view/<int:pk>', views.studentView, name='student-view'),
-    path('student/view/list', views.studentShowList,name='student-list'),
-    path('student/delete/<int:pk>',views.studentDelete, name='student-delete'),
+    path('profil.html', views.studentUpdate, name='student-edit'),
+    path('view/<int:pk>', views.studentView, name='student-view'),
+    path('list/', views.studentShowList,name='student-list'),
+    path('delete/<int:pk>',views.studentDelete, name='student-delete'),
     
     
 ]

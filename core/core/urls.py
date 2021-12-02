@@ -22,7 +22,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path("", include("apps.authentication.urls")), # Auth routes - login / register
-    path('', include("apps.home.urls"))             # UI Kits Html files
+    path('', include("apps.home.urls")),    
+    path('student/', include("apps.student.urls"))  # UI Kits Html files
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
