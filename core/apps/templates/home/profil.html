@@ -8,94 +8,148 @@
 {% block content %}
 
 <div class="container">
-    <div class="py-5 text-center">
-      <form class="needs-validation"  method="POST">
-        {% csrf_token %}
-      <img class="d-block mx-auto mb-4" src="{{detail.image.url}}"  alt="{{ media_url }}images/person.png" width="340" height="340">
-      
-      <div class="col-md-12 mb-3">
-
-        {{detail.image}}
-        {{profile_form.image}}
-        
-      </div>
-      <h2>{{user_form.first_name}}  - {{user_form.last_name}}</h2>
-      <p class="lead">Bu profil sayfası bilgileriniz içermektedir. Her kullanıcı sadece kendi profilini görecektir.</p>
-    </div>
-
-    <div class="row">
-      
-      <div class="col-md-12 order-md-1">
-        <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
-        
-          {{user_form.username}}
-          {{user_form.first_name}}
-          {{user_form.last_name}}
-          {{user_form.email}}
-          
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <label for="HESCode">HES Kod</label>
-              {{profile_form.HESCode}}
-              <div class="invalid-feedback">
-                Hes kod girmeniz gerekmektedir.
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="TC">TC No</label>
-              {{profile_form.TC}}
-              <div class="invalid-feedback">
-                TC no girmeniz gerekmektedir.
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="phone">Telefon No</label>
-              {{profile_form.phone}}
-              <div class="invalid-feedback">
-                Telefon no girmeniz gerekmektedir.
-              </div>
-            </div>
-          </div>
-            <div class="row">
-            <div class="col-md-4 mb-3">
-              <label for="adress">Adres</label>
-              {{profile_form.adress}}
-              <div class="invalid-feedback">
-                adress no girmeniz gerekmektedir.
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="gender">Cinsiyet</label>
-              {{profile_form.gender}}
-              <div class="invalid-feedback">
-                gender bilgisi girmeniz gerekmektedir.
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="TC">Calisma Durumu</label>
-              {{profile_form.isWorking}}
-            </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto">
             
-          </div>
-          
-   
-          <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Kaydet</button>
-        </form>
-      </div>
+            <div class="my-4">
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="row mt-5 align-items-center">
+                        <div class="col-md-5 text-center mb-5">
+                            <div class="avatar avatar-xl">
+                                <img src="{{detail.image.url}}" alt="..." class="avatar-img rounded-circle" width="340" height="340"/>
+                                {{detail.image.url}}
+                                {{profile_form.image}}
+                                
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                
+                                <div class="col-md-7">
+                                    <h4 class="mb-1">{{detail.user.first_name}} {{detail.user.last_name}}</h4>
+                                    <p class="medium mb-3"><span class="badge badge-dark">{{detail.job.name}}</span></p>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                
+                                <div class="col">
+                                    <p class="small mb-0 text-muted">{{detail.user.username}}</p>
+                                    <p class="small mb-0 text-muted">{{detail.user.email}}</p>
+                                    <p class="small mb-0 text-muted">{{detail.adress}}</p>
+                                    <p class="small mb-0 text-muted">{{detail.phone}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="lastname">Kullanıcı Adınız</label>
+                            {{user_form.username}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="firstname">Adınız</label>
+                            {{user_form.first_name}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="lastname">Soyadınız</label>
+                            {{user_form.last_name}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        {{user_form.email}}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phone">Telefon No</label>
+                        {{profile_form.phone}}
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress5">Adres</label>
+                        {{profile_form.adress}}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCompany5">TC No</label>
+                            {{profile_form.TC}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputGender">Cinsiyet</label>
+                            {{profile_form.gender}}
+                            <!-- <select id="inputState5" class="form-control">
+                                <option selected="">Choose...</option>
+                                <option>...</option>
+                            </select> -->
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="HesCode">HES Kod</label>
+                            {{profile_form.HESCode}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="Working">isWorking</label>
+                        {{profile_form.isWorking}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputBirthday">Doğum Günü</label>
+                        {{profile_form.birthdate}}
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputBirthday">Doğum Günü</label>
+                        {{profile_form.job}}
+                    </div>
+                </div>
+                    <hr class="my-4" />
+                    {% if profile_form.subject.errors %}
+                        <ol>
+                        {% for error in profile_form.subject.errors %}
+                            <li><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                        </ol>
+                    {% endif %}
+                    
+                    
+                    <!-- <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="inputPassword4">Old Password</label>
+                                <input type="password" class="form-control" id="inputPassword5" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword5">New Password</label>
+                                <input type="password" class="form-control" id="inputPassword5" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword6">Confirm Password</label>
+                                <input type="password" class="form-control" id="inputPassword6" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2">Password requirements</p>
+                            <p class="small text-muted mb-2">To create a new password, you have to meet all of the following requirements:</p>
+                            <ul class="small text-muted pl-4 mb-0">
+                                <li>Minimum 8 character</li>
+                                <li>At least one special character</li>
+                                <li>At least one number</li>
+                                <li>Can’t be the same as a previous password</li>
+                            </ul>
+                        </div>
+                    </div> -->
+                    <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
     </div>
 
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-      <p class="mb-1">© 2021-2022 RoboBusters</p>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Gizlilik</a></li>
-        <li class="list-inline-item"><a href="#">Şartlat</a></li>
-        <li class="list-inline-item"><a href="#">Destek</a></li>
-      </ul>
-    </footer>
-  </div>
-
-{% endblock content %}
+    {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}

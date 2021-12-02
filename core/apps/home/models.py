@@ -12,7 +12,7 @@ from django.db.models.fields.related import OneToOneField
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
 from django.contrib.auth.models import User
-
+from django.core.files.base import ContentFile
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
 def validatePhone(value):
@@ -41,11 +41,17 @@ class JobsTable(models.Model):
     name=models.CharField(max_length=50,default="",)
     def __str__(self): 
         return self.name
+def logo_dir_path(instance, filename):
+        extension = filename.split('.')[-1]
+        og_filename = filename.split('.')[0]
+        new_filename = "images/ogretmenler/%s.%s" % (instance.TC, extension)
 
+        return new_filename
+    
 class Profil(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="user")
     TC=models.CharField(max_length=11,unique=True,validators=[validateEven],blank=True,null=True)# regex eklenecek, validasyon yapilacak
-    image=models.ImageField(upload_to="images/%Y/",blank=True,null=True,default='images/person.png')
+    image=models.ImageField(upload_to="images/ogretmenler/",blank=True,null=True,default='images/person.png')
     job=models.ForeignKey(JobsTable,on_delete=models.CASCADE,unique=False,blank=True,null=True)
     phone=models.CharField(validators=[validatePhone], max_length=17, blank=True,default="05",null=True,unique=False) # regex eklenecek, validasyon yapilacak
     adress=models.TextField(max_length=100,unique=False,blank=True,null=True)
@@ -57,6 +63,8 @@ class Profil(models.Model):
               ('Diger','Diğer'),
     )
     gender=CharField(max_length=10 ,choices=sexualChoice,unique=False,blank=True,null=True) 
+    
+    
     def __str__(self):
         if self.TC!=None and self.user.first_name!=None  and self.user.last_name!=None :
             return self.TC + " - "+self.user.first_name+ " "+ self.user.last_name
@@ -74,8 +82,6 @@ class Profil(models.Model):
                  self.phone[:4], self.phone[4:7], self.phone[7:])
         # Continue the model saving
         #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
-        if self.image.name!=None and self.TC!=None:
-            self.image.name =  self.TC+".png"
         
         super(Profil, self).save(*args, **kwargs)
 

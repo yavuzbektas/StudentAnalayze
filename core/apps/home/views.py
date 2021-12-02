@@ -18,6 +18,8 @@ from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from .form import ProfilForm,UserForm
+from django.views.generic.detail import DetailView
+
 
 @login_required(login_url="/login/")
 def index(request):
@@ -52,36 +54,57 @@ def pages(request):
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
 
-def userShow(request):
-    users = Profil.objects.all()
+@login_required(login_url="/login/")
+def profilShowList(request):
+    profilList = Profil.objects.all()
     context = {
-        'Kullanicilar' : users,
+        'Kullanicilar' : profilList,
         'media_url':settings.MEDIA_URL
     }
     
     return render(request,'home/usr-ogretmenler.html',context)
 
-def post_update(request):
-    pk=request.user.id
+@login_required(login_url="/login/")
+def profilView(request,pk=None):
+    detail = Profil.objects.get(id=pk)
+    
+    context={
+        
+        'detail':detail,
+        
+        'media_url':settings.MEDIA_URL
+        }
+    
+
+    return render(request, "home/profilView.html", context)
+
+
+@login_required(login_url="/login/")
+def profilUpdate(request,pk=None):
+    if pk==None:
+        pk=request.user.id
     user = User.objects.get(id=pk)
     post = Profil.objects.get(user=user)
+    
     jobs =  JobsTable.objects.all()
     
     
-    profile_form = ProfilForm(request.POST, instance=post)
+    profile_form = ProfilForm(request.POST,request.FILES, instance=post)
     user_form = UserForm(request.POST, instance=user)
-    if profile_form.is_valid() and user_form.is_valid():
-        formf =profile_form.save(commit=False)
-        userf= user_form.save()
-        formf.user=userf
-        formf.save()
-        
-        return HttpResponseRedirect('/')
-    elif profile_form.errors :
-        print("Profil form da hatalar var")
-    elif user_form.errors :
-        print("User form da hatalar var")
-        
+    if request.method == 'POST':
+        if profile_form.is_valid() and user_form.is_valid():
+            formf =profile_form.save(commit=False)
+            userf= user_form.save()
+            formf.user=userf
+            formf.save()
+            
+            return HttpResponseRedirect('/view/'+str(post.id))
+        elif profile_form.errors :
+            print("Profil form da hatalar var" , profile_form.errors.as_text())
+            
+        elif user_form.errors :
+            print("User form da hatalar var",user_form.errors.as_text())
+            
     profile_form = ProfilForm(instance=post)
     user_form = UserForm(instance=user)
     context={
@@ -96,7 +119,7 @@ def post_update(request):
 
     return render(request, "home/profil.html", context)
 
-
+@login_required(login_url="/login/")
 def userUpdate(request):
     id= request.user.id
     user = User.objects.get(id=id)
@@ -112,8 +135,11 @@ def userUpdate(request):
     }
     return render(request,'home/profil.html',context)
 
-def post_delete(request, pk):
-    user = User.objects.get(id=pk)
+@login_required(login_url="/login/")
+def profilDelete(request, pk):
+    
+    profil = Profil.objects.get(id=pk)
+    user = User.objects.get(id=profil.user.id)
     if not request.user.is_authenticated:
         # Eğer kullanıcı giriş yapmamış ise hata sayfası gönder
         return Http404()
@@ -123,12 +149,3 @@ def post_delete(request, pk):
     user.delete()
     return HttpResponseRedirect("/")
 
-class ProfilView(FormView):
-    template_name = 'profil.html'
-    form_class = ProfilForm
-    success_url = reverse_lazy('profil')
-    #success_message = 'We received your request'
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)

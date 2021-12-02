@@ -1,0 +1,101 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container">
+    <div class="py-5 text-center">
+      <form class="needs-validation"  method="POST">
+        {% csrf_token %}
+      <img class="d-block mx-auto mb-4" src="{{detail.image.url}}"  alt="{{ media_url }}images/person.png" width="340" height="340">
+      
+      <div class="col-md-12 mb-3">
+
+        {{detail.image}}
+        {{profile_form.image}}
+        
+      </div>
+      <h2>{{user_form.first_name}}  - {{user_form.last_name}}</h2>
+      <p class="lead">Bu profil sayfası bilgileriniz içermektedir. Her kullanıcı sadece kendi profilini görecektir.</p>
+    </div>
+
+    <div class="row">
+      
+      <div class="col-md-12 order-md-1">
+        <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
+        
+          {{user_form.username}}
+          {{user_form.first_name}}
+          {{user_form.last_name}}
+          {{user_form.email}}
+          
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="HESCode">HES Kod</label>
+              {{profile_form.HESCode}}
+              <div class="invalid-feedback">
+                Hes kod girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="TC">TC No</label>
+              {{profile_form.TC}}
+              <div class="invalid-feedback">
+                TC no girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="phone">Telefon No</label>
+              {{profile_form.phone}}
+              <div class="invalid-feedback">
+                Telefon no girmeniz gerekmektedir.
+              </div>
+            </div>
+          </div>
+            <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="adress">Adres</label>
+              {{profile_form.adress}}
+              <div class="invalid-feedback">
+                adress no girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="gender">Cinsiyet</label>
+              {{profile_form.gender}}
+              <div class="invalid-feedback">
+                gender bilgisi girmeniz gerekmektedir.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="TC">Calisma Durumu</label>
+              {{profile_form.isWorking}}
+            </div>
+            
+          </div>
+          
+   
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Kaydet</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">© 2021-2022 RoboBusters</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Gizlilik</a></li>
+        <li class="list-inline-item"><a href="#">Şartlat</a></li>
+        <li class="list-inline-item"><a href="#">Destek</a></li>
+      </ul>
+    </footer>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

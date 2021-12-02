@@ -30,13 +30,14 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
 
 # EMAIL service setting
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'testsite_app'
-EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_HOST = 'mail.iaosb.org.tr'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'ybektas'
+EMAIL_HOST_PASSWORD = 'SESESESESESES'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
 
 
 # Application definition
