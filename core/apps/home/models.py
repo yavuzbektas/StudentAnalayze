@@ -103,61 +103,12 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     def __str__(self):
         return self.choice_text
-class OrtaOkulListesi(models.Model):
-    okulAdi=models.CharField(max_length=100,default="")
-    def __str__(self): 
-        return self.okulAdi
 class SoruListesi(models.Model):
     sorular=models.CharField(max_length=200,default="")
     def __str__(self): 
         return self.sorular
 
-class OgrenciListesi(models.Model):
-    ad= models.CharField(max_length=20,default="",unique=False)
-    soyAd=models.CharField(max_length=20,unique=False)
-    TC = models.CharField(max_length=11,unique=True,validators=[validateEven])
-    telefonNo = models.CharField(validators=[validatePhone], max_length=17, blank=True,default="0",null=True,unique=False)
-    adres=models.TextField(unique=False)
-    okulDevamDurumu=models.BooleanField(null=False,default=True)
-    geldigiOkul=models.ForeignKey(OrtaOkulListesi,on_delete=models.CASCADE)
-    kayitYili=models.ForeignKey(Donem,on_delete=models.CASCADE)
-    image=models.ImageField(null=True,blank=True,upload_to='images',default='https://picsum.photos/200/300')
-    saglikDurumu=models.TextField(unique=False,null=True,)
-    hes_Kodu=models.CharField(max_length=12,unique=True,validators=[validateHesCode])
-    dogumTarihi=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False)
-    ogrenciNo=models.IntegerField()
-    email=models.EmailField()
-    CINSIYET=(('KIZ','Kız'),
-              ('erkek','Erkek'),
-              ('diger','Diğer'),
-    )
-    cinsiyet=CharField(max_length=10 ,choices=CINSIYET)
-    
-    
-    def __str__(self):
-        return self.ad +' '+self.soyAd
-    def save(self, *args, **kwargs):
-        """" This step is just formatting: add the dash if missing """"
-        if '-' not in self.hes_Kodu:
-            self.hes_Kodu = '{0}-{1}-{2}'.format(
-                 self.hes_Kodu[:4], self.hes_Kodu[4:9], self.hes_Kodu[9:])
-        if '-' not in self.telefonNo:
-            self.telefonNo = '({0})-{1} {2}'.format(
-                 self.telefonNo[:4], self.telefonNo[4:7], self.telefonNo[7:])
-        
-        # Continue the model saving
-        super(OgrenciListesi, self).save(*args, **kwargs)
-class VeliListesi(models.Model):
-    ad= models.CharField(max_length=20,default="")
-    soyAd=models.CharField(max_length=20)
-    ogrenci=models.ManyToManyField(OgrenciListesi)
-    yakinlikDurumu=models.CharField(max_length=20)
-    telefonNo=models.IntegerField()
-    adres=models.TextField()
-    meslek=models.CharField(max_length=20)
 
-    def __str__(self):
-        return self.ad
 class SubeListesi(models.Model):
     subeAdi=models.CharField(default="A",max_length=1,unique=True)
     def __str__(self): 

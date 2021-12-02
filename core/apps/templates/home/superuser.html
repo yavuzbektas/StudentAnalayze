@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Kullanıcılar {% endblock %}
+
+{% block content %}   
+
+{% if user.is_staff %} 
+<form action='' method='POST'>{% csrf_token %}
+    <h1> silinecek öğretmen "{{ form.user.username }}"?</h1>
+    <p><input type='submit' value='confirm' >  <a  href="/usr-ogretmenler.html" class="nav-link ">Cancel</a></p>
+
+</form>
+{%  endif %}
+
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

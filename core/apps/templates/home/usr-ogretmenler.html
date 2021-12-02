@@ -17,11 +17,14 @@
                         <tr>
                         <th scope="col">Profil Resmi</th>
                           <th scope="col">Ad ve Soyad</th>
+                          <th scope="col">Görevi</th>
                           <th scope="col">Telefon</th>
                           <th scope="col">Adres</th>
                           <th scope="col">Email</th>
                           <th scope="col">Aktif</th>
+                          <th scope="col">Profile Detay</th>
                           <th scope="col">Yetki</th>
+                          <th scope="col">Profil Sİl</th>
                         </tr>
                       </thead>
                     <tbody>
@@ -31,7 +34,11 @@
                            
                             <td title="Ad Soyad">
                                 <h6 class="mb-1">{{kullanici.user.first_name}} {{kullanici.last_name}}</h6>
-                                <p class="m-0">{{kullanici.gorev}} </p>
+                            
+                            </td>
+                            <td>
+                                <h6 class="mb-1">{{kullanici.job}} </h6>
+        
                             </td>
                             <td>
                                 <h6 class="mb-1">{{kullanici.phone}} </h6>
@@ -46,15 +53,26 @@
         
                             </td>
                             <td>
+                                {% if kullanici.isWorking %}
                                 <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i></h6>
+                                {% else %}
+                                <h6 class="text-muted"><i class="fas fa-circle text-c-black f-10 m-r-15"></i></h6>
+                                {% endif %}
                             </td>
                             {% if user.is_staff %}
                             <td>
                                 
-                                <a href="{% url 'users-view' kullanici.id %}"class="label theme-bg text-white f-12">detay</a>
-                                
-                                <a href="#!" class="label theme-bg text-white f-12">Yetki Ver</a>
-                                <a href="{% url 'delete' kullanici.id %}" class="label theme-bg text-white f-12">Delete</a>
+                                <a href="{% url 'users-view' kullanici.id %}"class="label theme-bg text-white f-12">Profile Git</a>
+                            </td>
+                            <td>
+                                {% if kullanici.user.is_staff %}
+                                <a href="{% url 'yetki' kullanici.user.id %}" class="label theme-bg text-white f-12">Yetki Kaldır</a>
+                                {% else %}
+                                <a href="{% url 'yetki' kullanici.user.id %}" class="label theme-bg text-white f-12">Yetki Ver</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'delete' kullanici.id %}" class="label theme-bg text-white f-12">Kullanıcı Sİl</a>
                                 
                             </td>
                             {% endif %}

@@ -3,7 +3,7 @@
 Copyright (c) 2021 - present RoboBusters
 """
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
 from django import template
 from django.contrib.auth.decorators import login_required
@@ -19,7 +19,7 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from .form import ProfilForm,UserForm
 from django.views.generic.detail import DetailView
-
+from django.contrib.auth import get_user_model
 
 @login_required(login_url="/login/")
 def index(request):
@@ -138,14 +138,43 @@ def userUpdate(request):
 @login_required(login_url="/login/")
 def profilDelete(request, pk):
     
+    post = get_object_or_404(Profil, id=pk)
     profil = Profil.objects.get(id=pk)
     user = User.objects.get(id=profil.user.id)
     if not request.user.is_authenticated:
         # Eğer kullanıcı giriş yapmamış ise hata sayfası gönder
         return Http404()
 
-    post = get_object_or_404(Profil, id=pk)
-    post.delete()
-    user.delete()
-    return HttpResponseRedirect("/")
+    if request.method == 'POST':
+        post.delete()
+        user.delete()
+        return redirect('/')
+    
+    context={
+        'form': profil
+    }
+    
+    return render(request,"home/ProfileDeleteConfirm.html",context)
 
+@login_required(login_url="/login/")
+def issuperUser(request,pk):
+    
+    User = get_user_model()
+    user = User.objects.get(id=pk)
+    if request.method == 'POST':
+        if user.is_superuser :
+            user.is_staff = False
+            user.is_admin = False
+            user.is_superuser = False
+            
+        else:
+            user.is_staff = True
+            user.is_admin = False
+            user.is_superuser = True
+        user.save()
+        return redirect('/')
+    context={
+        'form': user
+    }
+    
+    return render(request,"home/superuser.html",context)

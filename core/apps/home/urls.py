@@ -21,6 +21,7 @@ urlpatterns = [
     path('view/<int:pk>', views.profilView, name='users-view'),
     path('usr-ogretmenler.html', views.profilShowList,name='kullanicilar'),
     path('delete/<int:pk>',views.profilDelete, name='delete'),
+    path('yetki/<int:pk>',views.issuperUser, name='yetki'),
     
     #re_path(r'^.*\.*', views.pages, name='pages'),
     
