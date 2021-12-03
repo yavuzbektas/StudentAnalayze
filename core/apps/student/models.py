@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
 from django.db.models.fields.related import OneToOneField,ManyToManyField
 from django.db.models.deletion import CASCADE
+from django.core.validators import RegexValidator,ValidationError
 # Create your models here.
 from ..home.models import Session
 def validateHesCode(value):
@@ -68,4 +69,4 @@ class Parent(models.Model):
     job=models.CharField(max_length=30,default="",unique=False,null=True,blank=True,)
 
     def __str__(self):
-        return "Veli : " +  self.firstName +' '+ lastName  
+        return "Veli : " +  self.firstName +' '+ self.lastName  

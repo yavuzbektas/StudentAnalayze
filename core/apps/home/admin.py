@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from .models import JobsTable,Profil,Session
 
 admin.site.register(JobsTable)
-#admin.site.register(ProfilDetay)
+
 admin.site.register(Session)
 
 

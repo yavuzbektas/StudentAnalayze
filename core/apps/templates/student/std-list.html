@@ -28,32 +28,32 @@
                         </tr>
                       </thead>
                     <tbody>
-                        {% for kullanici in Kullanicilar %}
+                        {% for student in students %}
                         <tr class="unread">
-                            <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{kullanici.image}}" alt="activity-user"></td>
+                            <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
                            
                             <td title="Ad Soyad">
-                                <h6 class="mb-1">{{kullanici.user.first_name}} {{kullanici.last_name}}</h6>
+                                <h6 class="mb-1">{{student.first_name}} {{student.last_name}}</h6>
                             
                             </td>
                             <td>
-                                <h6 class="mb-1">{{kullanici.job}} </h6>
+                                <h6 class="mb-1">{{student.job}} </h6>
         
                             </td>
                             <td>
-                                <h6 class="mb-1">{{kullanici.phone}} </h6>
+                                <h6 class="mb-1">{{student.phone}} </h6>
         
                             </td>
                             <td>
-                                <h6 class="mb-1">{{kullanici.adress}}</h6>
+                                <h6 class="mb-1">{{student.adress}}</h6>
         
                             </td>
                             <td>
-                                <h6 class="mb-1">{{kullanici.user.email}} </h6>
+                                <h6 class="mb-1">{{student.email}} </h6>
         
                             </td>
                             <td>
-                                {% if kullanici.isWorking %}
+                                {% if student.status %}
                                 <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i></h6>
                                 {% else %}
                                 <h6 class="text-muted"><i class="fas fa-circle text-c-black f-10 m-r-15"></i></h6>
@@ -62,17 +62,17 @@
                             {% if user.is_staff %}
                             <td>
                                 
-                                <a href="{% url 'users-view' kullanici.id %}"class="label theme-bg text-white f-12">Profile Git</a>
+                                <a href="{% url 'users-view' student.id %}"class="label theme-bg text-white f-12">Profile Git</a>
                             </td>
                             <td>
                                 {% if kullanici.user.is_staff %}
-                                <a href="{% url 'yetki' kullanici.user.id %}" class="label theme-bg text-white f-12">Yetki Kaldır</a>
+                                <a href="{% url 'yetki' student.user.id %}" class="label theme-bg text-white f-12">Yetki Kaldır</a>
                                 {% else %}
-                                <a href="{% url 'yetki' kullanici.user.id %}" class="label theme-bg text-white f-12">Yetki Ver</a>
+                                <a href="{% url 'yetki' student.user.id %}" class="label theme-bg text-white f-12">Yetki Ver</a>
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'delete' kullanici.id %}" class="label theme-bg text-white f-12">Kullanıcı Sİl</a>
+                                <a href="{% url 'delete' student.id %}" class="label theme-bg text-white f-12">Kullanıcı Sİl</a>
                                 
                             </td>
                             {% endif %}
