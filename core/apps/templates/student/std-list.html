@@ -11,6 +11,7 @@
             <h5>Kullanıcılar Tablosu</h5>
         </div>
         <div class="card-block px-0 py-3">
+            
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -33,11 +34,11 @@
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
                            
                             <td title="Ad Soyad">
-                                <h6 class="mb-1">{{student.first_name}} {{student.last_name}}</h6>
+                                <h6 class="mb-1">{{student.firstName}} {{student.lastName}}</h6>
                             
                             </td>
                             <td>
-                                <h6 class="mb-1">{{student.job}} </h6>
+                                <h6 class="mb-1">{{student.TC}} </h6>
         
                             </td>
                             <td>
@@ -45,7 +46,7 @@
         
                             </td>
                             <td>
-                                <h6 class="mb-1">{{student.adress}}</h6>
+                                <h6 class="mb-1">{{student.address}}</h6>
         
                             </td>
                             <td>
@@ -60,21 +61,21 @@
                                 {% endif %}
                             </td>
                             {% if user.is_staff %}
-                            <td>
+                            <!-- <td>
                                 
                                 <a href="{% url 'users-view' student.id %}"class="label theme-bg text-white f-12">Profile Git</a>
                             </td>
                             <td>
-                                {% if kullanici.user.is_staff %}
-                                <a href="{% url 'yetki' student.user.id %}" class="label theme-bg text-white f-12">Yetki Kaldır</a>
+                                {% if kullanici.is_staff %}
+                                <a href="{% url 'yetki' student.id %}" class="label theme-bg text-white f-12">Yetki Kaldır</a>
                                 {% else %}
-                                <a href="{% url 'yetki' student.user.id %}" class="label theme-bg text-white f-12">Yetki Ver</a>
+                                <a href="{% url 'yetki' student.id %}" class="label theme-bg text-white f-12">Yetki Ver</a>
                                 {% endif %}
                             </td>
                             <td>
                                 <a href="{% url 'delete' student.id %}" class="label theme-bg text-white f-12">Kullanıcı Sİl</a>
                                 
-                            </td>
+                            </td> -->
                             {% endif %}
                         </tr>
                        {% endfor %} 

@@ -63,12 +63,12 @@
                                   </div>
                                 <div class="col-md-4 mb-3">
                                 <label for="firstName">Adınız</label>
-                                <input readonly type="text" class="form-control" id="firstName" placeholder="" value="{{detail.user.first_name}}" required="">
+                                <input readonly type="text" class="form-control" id="firstName" placeholder="" value="{{detail.user.first_name |capfirst}}" required="">
                                
                               </div>
                               <div class="col-md-4 mb-3">
                                 <label for="lastName">Soy Adınız</label>
-                                <input  readonly type="text" class="form-control" id="lastName" placeholder="" value="{{detail.user.last_name}}" required="">
+                                <input  readonly type="text" class="form-control" id="lastName" placeholder="" value="{{detail.user.last_name|capfirst}}" required="">
                                 
                               </div>
                               
