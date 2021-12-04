@@ -9,6 +9,7 @@ class ClassLevels(models.Model):
     level=models.CharField(default="9",max_length=2,unique=True)
     def __str__(self): 
         return self.level
+
 class ClassNames(models.Model):
     name=models.CharField(default="A",max_length=1,unique=True)
     def __str__(self): 
@@ -21,13 +22,11 @@ class Classes(models.Model):
         
         return self.level.level+self.className.name
 
-
-
 class StudentList(models.Model):
     className=models.ForeignKey(Classes,on_delete=models.CASCADE)
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
-    students=models.ManyToManyField(Student)
-  
+    students=models.ManyToManyField(Student,blank=True)
+    teacher=models.ManyToManyField(Profil,blank=True,verbose_name="Sınıf Öğretmeni")
     def __str__(self):
         
         return str(self.session.session)+' '+str(self.className.level.level)+self.className.className.name
