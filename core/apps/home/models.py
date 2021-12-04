@@ -84,13 +84,12 @@ class Profil(models.Model):
         #https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
         
         super(Profil, self).save(*args, **kwargs)
-
-
-
 class Session(models.Model):
     session=models.CharField(max_length=10,default="2021-2022",unique=True)
     def __str__(self): 
       return self.session
+
+
 """
 class Question(models.Model):
     question_text = models.CharField(max_length=200,default="")
@@ -107,30 +106,6 @@ class SoruListesi(models.Model):
     sorular=models.CharField(max_length=200,default="")
     def __str__(self): 
         return self.sorular
-
-
-class SubeListesi(models.Model):
-    subeAdi=models.CharField(default="A",max_length=1,unique=True)
-    def __str__(self): 
-        return self.subeAdi
-class SinifListesi(models.Model):
-    ogrrenciListesi=models.ForeignKey(OgrenciListesi,models.CASCADE)
-    subeAdi=models.ForeignKey(SubeListesi,on_delete=models.CASCADE,default="")
-    donem=models.ForeignKey(Donem,on_delete=models.CASCADE)
-    SECENEKLER=(
-        ('9','9'),
-        ('10','10'),
-        ('11','11'),
-        ('12','12'),
-
-    )
-    sinifNo=models.CharField(max_length=2,choices=SECENEKLER)
-    
-       
-
-    def __str__(self):
-        
-        return str(self.donem.yillar)+' '+str(self.sinifNo)+self.subeAdi.subeAdi
 class DersIzlemeSinavlari(models.Model):
     disVerileri=models.TextField(default="")
 class AnketListesi(models.Model):

@@ -10,6 +10,8 @@
         <div class="card-header">
             <h5>Kullanıcılar Tablosu</h5>
         </div>
+        {% include  'includes/filter.html' %}
+        
         <div class="card-block px-0 py-3">
             
             <div class="table-responsive">
@@ -29,7 +31,7 @@
                         </tr>
                       </thead>
                     <tbody>
-                        {% for student in students %}
+                        <!-- {% for student in students %} -->
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
                            
@@ -78,7 +80,7 @@
                             </td> -->
                             {% endif %}
                         </tr>
-                       {% endfor %} 
+                       <!-- {% endfor %}  -->
                     </tbody>
                 </table>
             </div>

@@ -52,8 +52,9 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.home',
     'apps.student',
+    'apps.classes',
     'widget_tweaks',
-    
+    'django_filters',
     
 ]
 
