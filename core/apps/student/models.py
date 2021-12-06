@@ -3,8 +3,12 @@ from django.db.models.fields import CharField, DateField, IntegerField, TextFiel
 from django.db.models.fields.related import OneToOneField,ManyToManyField
 from django.db.models.deletion import CASCADE
 from django.core.validators import RegexValidator,ValidationError
+
+
 # Create your models here.
-from ..home.models import Session
+from ..home.models import Profil,Session
+from ..classes.models import Classes
+
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
 def validatePhone(value):
@@ -34,7 +38,7 @@ class Student(models.Model):
     status=models.BooleanField(unique=False,null=True,blank=True,)
     middleSchool=models.ForeignKey(MiddleSchool,on_delete=models.CASCADE)
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
-    image=models.ImageField(unique=False,null=True,blank=True,upload_to='images',default='https://picsum.photos/200/300')
+    image=models.ImageField(unique=False,null=True,blank=True,upload_to='images',default='images/person.png')
     health=models.TextField(unique=False,null=True,blank=True,)
     HESCode=models.CharField(max_length=12,unique=False,null=True,blank=True,validators=[validateHesCode])
     birtdate=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False,unique=False,null=True,blank=True,)
@@ -70,3 +74,12 @@ class Parent(models.Model):
 
     def __str__(self):
         return "Veli : " +  self.firstName +' '+ self.lastName  
+
+class StudentList(models.Model):
+    className=models.ForeignKey(Classes,on_delete=models.CASCADE)
+    session=models.ForeignKey(Session,on_delete=models.CASCADE)
+    students=models.ManyToManyField(Student,blank=True,related_name='student')
+    teachers=models.ManyToManyField(Profil,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
+    def __str__(self):
+        
+        return str(self.session.session)+' '+str(self.className.level.level)+self.className.className.name

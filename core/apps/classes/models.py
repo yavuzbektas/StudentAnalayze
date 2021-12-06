@@ -1,5 +1,5 @@
 from django.db import models
-from apps.student.models import Student
+
 from apps.home.models import Profil,Session
 from django.db.models.fields.related import OneToOneField,ManyToManyField
 from django.db.models.deletion import CASCADE
@@ -22,11 +22,3 @@ class Classes(models.Model):
         
         return self.level.level+self.className.name
 
-class StudentList(models.Model):
-    className=models.ForeignKey(Classes,on_delete=models.CASCADE)
-    session=models.ForeignKey(Session,on_delete=models.CASCADE)
-    students=models.ManyToManyField(Student,blank=True)
-    teacher=models.ManyToManyField(Profil,blank=True,verbose_name="Sınıf Öğretmeni")
-    def __str__(self):
-        
-        return str(self.session.session)+' '+str(self.className.level.level)+self.className.className.name

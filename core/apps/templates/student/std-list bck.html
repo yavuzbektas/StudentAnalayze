@@ -5,7 +5,7 @@
 {% block content %}   
 
  <!--[ Recent Users ] start-->
- <div class="col-xl-8 col-md-6">
+ <div class="col-xl-12 col-md-6">
     <div class="card Recent-Users">
         <div class="card-header">
             <h5>Kullanıcılar Tablosu</h5>
@@ -31,7 +31,7 @@
                         </tr>
                       </thead>
                     <tbody>
-                        <!-- {% for student in students %} -->
+                        {% for student in students %}
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
                            
@@ -80,7 +80,7 @@
                             </td> -->
                             {% endif %}
                         </tr>
-                       <!-- {% endfor %}  -->
+                       {% endfor %} 
                     </tbody>
                 </table>
             </div>
