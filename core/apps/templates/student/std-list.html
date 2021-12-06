@@ -19,6 +19,8 @@
                     <thead>
                         <tr>
                         <th scope="col">Profil Resmi</th>
+                        <th scope="col">Sınıf</th>
+                        <th scope="col">Okul No</th>
                           <th scope="col">Ad ve Soyad</th>
                           <th scope="col">Görevi</th>
                           <th scope="col">Telefon</th>
@@ -34,7 +36,14 @@
                         {% for student in students %}
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
-                           
+                            <td title="Sınıfı">
+                                <h6 class="mb-1">{{selectedLevel}}/{{selectedClass}}  </h6>
+                            
+                            </td>
+                            <td title="Okul No">
+                                <h6 class="mb-1">{{student.number}} </h6>
+                            
+                            </td>
                             <td title="Ad Soyad">
                                 <h6 class="mb-1">{{student.firstName}} {{student.lastName}}</h6>
                             

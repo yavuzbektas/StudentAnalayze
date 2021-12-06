@@ -37,6 +37,7 @@ class Student(models.Model):
     address=models.TextField(unique=False,null=True,blank=True,)
     status=models.BooleanField(unique=False,null=True,blank=True,)
     middleSchool=models.ForeignKey(MiddleSchool,on_delete=models.CASCADE)
+    number=models.IntegerField(unique=False,null=True,blank=True,)
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
     image=models.ImageField(unique=False,null=True,blank=True,upload_to='images',default='images/person.png')
     health=models.TextField(unique=False,null=True,blank=True,)
@@ -48,10 +49,11 @@ class Student(models.Model):
               ('Diger','Diğer'),
     )
     gender=CharField(max_length=10 ,choices=genders,unique=False,blank=True,null=True)
-    
+    class Meta:
+        ordering = ('firstName',)
     
     def __str__(self):
-        return self.firstName +' '+self.lastName
+        return self.session.session + " - " + str(self.number) +" - " + self.firstName +' '+self.lastName
     def save(self, *args, **kwargs):
         
         if '-' not in self.HESCode:

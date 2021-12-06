@@ -12,6 +12,8 @@ class ClassLevels(models.Model):
 
 class ClassNames(models.Model):
     name=models.CharField(default="A",max_length=1,unique=True)
+    class Meta:
+        ordering = ('name',)
     def __str__(self): 
         return self.name
 
