@@ -36,10 +36,10 @@
         </select>
       </div>
       <div class="form-group col-xl-3 col-md-3">
-        <label for="classLevel">Sınıf</label>
-        <select id="classLevel" class="form-control" name="className">
+        <label for="className">Sınıf</label>
+        <select id="className" class="form-control" name="className">
           {% for className in classNames %}
-          <option value="{{ classLevel }}">{{ className }}</option>
+          <option value="{{ className }}">{{ className }}</option>
           {% endfor %}
         </select>
       </div>
