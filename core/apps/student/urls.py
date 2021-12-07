@@ -17,12 +17,11 @@ urlpatterns = [
     
     
     # Matches any html file
-    path('profil.html', views.studentUpdate, name='student-edit'),
+    path('std-profile.html', views.studentUpdate, name='student-edit'),
     path('view/<int:pk>', views.studentView, name='student-view'),
-    path('list/', views.studentShowList,name='student-list'),
+    #path('list/', views.studentShowList,name='student-list'),
     path('delete/<int:pk>',views.studentDelete, name='student-delete'),
-    
-    #path('list/', views.StudentFilterView.as_view(),name='student-list'),
+    path('list/', views.StudentListView.as_view(),name='student-list'),
     
     
 ]

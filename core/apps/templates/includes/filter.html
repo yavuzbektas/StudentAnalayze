@@ -19,8 +19,8 @@
     <div class="form-group col-md-6">
       <select id="category" class="form-control" name="category">
         
-        {% for filterName in filterNames %}
-        <option value="{{ filterName }}">{{ filterName }}</option>
+        {% for k,v in filterNames.items %}
+        <option value="{{ v }}">{{ k }}</option>
         {% endfor %}
       </select>
     </div>
@@ -30,17 +30,21 @@
       <div class="form-group col-xl-3 col-md-3">
         <label for="classLevel">Sınıf</label>
         <select id="classLevel" class="form-control" name="classLevel">
+          
           {% for classLevel in classLevels %}
           <option value="{{ classLevel }}">{{ classLevel }}</option>
           {% endfor %}
+          <option value="all">Tüm Seviyeler</option>
         </select>
       </div>
       <div class="form-group col-xl-3 col-md-3">
         <label for="className">Sınıf</label>
         <select id="className" class="form-control" name="className">
+          
           {% for className in classNames %}
           <option value="{{ className }}">{{ className }}</option>
           {% endfor %}
+          <option value="all">Tüm Sınıflar</option>
         </select>
       </div>
       <div class="form-group col-xl-3 col-md-3">
@@ -62,10 +66,10 @@
         id="reviewed"
         name="reviewed"
       />
-      <label class="form-check-label" for="reviewed"> Reviewed </label>
+      <label class="form-check-label" for="reviewed"> Ayrılan </label>
     </div>
   </div>
  
 </div>
-  <a href=""><button type="submit" class="btn btn-primary">Search</button></a>
+  <a href=""><button type="submit" class="btn btn-primary">Arama</button></a>
 </form>

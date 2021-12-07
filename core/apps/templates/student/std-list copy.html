@@ -32,15 +32,15 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for studentlist in object_list  %}
-                        {% for student in studentlist.students.all  %}
+                        {% for student.students in object_list  %}
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
                             <td title="Sınıfı">
-                                <h6 class="mb-1">{{studentlist.className}}  </h6> 
+                                <h6 class="mb-1">{{student.className}}  </h6>
+                                
                             </td>
                             <td title="Okul No">
-                                <h6 class="mb-1">{{student.number}} </h6>
+                                <h6 class="mb-1">{{student.students.TC}} </h6>
                             
                             </td>
                             <td title="Ad Soyad">
@@ -73,11 +73,24 @@
                             
                         </tr>
                        {% endfor %} 
-                       {% endfor %} 
                        
                     </tbody>
                 </table>
-                
+                <table>
+
+                    <tbody>
+                        
+                        {% for studentL in studentList %}
+                        <tr class="unread">
+                            
+                            <td title="Ad Soyad">
+                                <h6 class="mb-1">{{studentL.firstName}} {{studentL.lastName}}</h6>
+                            
+                            </td>
+                        </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

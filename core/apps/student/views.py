@@ -26,7 +26,9 @@ def studentShowList(request):
     classLevels = ClassLevels.objects.all()
     sessions = Session.objects.all()
     studentList = StudentList.objects.all()
-    
+    className="-"
+    classLevel="-"
+    selectedLevel=[]
     filterNames = {
         "Kullancı Adı" : "firstName",
         "Kullanıcı Soyadı" : "lastName",
@@ -57,19 +59,19 @@ def studentShowList(request):
             # for student in listem.students.filter(**{filtertext: getFilterText}):
             #     studentList.append(student )
         students = studentList
-    
+    else:
         
-        
-    
-       
+        for listem in StudentList.objects.filter():
+            studentList= listem.students.all()
+            selectedLevel = listem.className.className.name
+            
     context = {
         'students' : students,
         'studentList':studentList,
         'classLevels':classLevels,
         'sessions':sessions,
         'classNames':classNames,
-        'selectedClass':className,
-        'selectedLevel':classLevel,
+        'selectedLevel' : selectedLevel,
         'filterNames' :filterNames.keys(),
         'media_url':settings.MEDIA_URL
     }
@@ -87,4 +89,80 @@ def studentIndex(request):
     return render(request, "student/std-profile.html", context)
 
 
+
+
+class StudentListView(ListView):
+    template_name = 'student/std-list.html'
+    model = StudentList
+    paginate_by = 4  # if pagination is desired
+    
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        filterNames = {
+        "Seçim Yap" :"all",
+        "Kullancı Adı" : "1",
+        "Kullanıcı Soyadı" : "2",
+        "TC No" : "3",
+        "Cinsiyet" : "4",
+    }
+        
+        context['classLevels']=ClassLevels.objects.all()
+        context['sessions']=Session.objects.all()
+        context['classNames']=ClassNames.objects.all()
+        context['filterNames'] =filterNames
+        context['media_url'] =settings.MEDIA_URL
+        
+        #context['students'] = StudentList.students.objects.all()
+        return context
+    def get_queryset(self):
+        queryset = StudentList.objects.all()
+        getFilterText = self.request.GET.get("filterTextVal")
+        category = self.request.GET.get("category")
+        className = self.request.GET.get("className")
+        session = self.request.GET.get("session")
+        classLevel = self.request.GET.get("classLevel")
+        
+        if  category and className and classLevel:
+            """ Kullancı Adı" : "1",
+                "Kullanıcı Soyadı" : "2",
+                "TC No" : "3",
+                "Cinsiyet" : "4"""
+            if category=="all" and className=="all"  and classLevel=="all"  and session:
+                queryset = StudentList.objects.filter(
+                session__session__contains=session)
+            elif category=="all" and className=="all"  and classLevel!="all"  and session:
+                queryset = StudentList.objects.filter(
+                className__level__level__contains=classLevel,
+                session__session__contains=session)
+            elif category=="all" and className!="all"  and classLevel=="all"  and session:
+                queryset = StudentList.objects.filter(
+                className__className__name__contains=className,
+                session__session__contains=session)
+            elif category=="all" and className!="all"  and classLevel!="all"  and session:
+                queryset = StudentList.objects.filter(
+                className__className__name__contains=className,
+                className__level__level__contains=classLevel,
+                session__session__contains=session)
+            elif category!="all" and className!="all"  and classLevel!="all"  and session:
+                queryset = StudentList.objects.filter(
+                className__className__name__contains=className,
+                className__level__level__contains=classLevel,
+                session__session__contains=session,
+                students__firstName__contains=getFilterText)
+            elif category!="all" and className=="all"  and classLevel!="all"  and session:
+                queryset = StudentList.objects.filter(
+                className__level__level__contains=classLevel,
+                session__session__contains=session,
+                students__firstName__contains=getFilterText)
+            elif category!="all" and className!="all"  and classLevel=="all"  and session:
+                queryset = StudentList.objects.filter(
+                className__className__name__contains=className,
+                session__session__contains=session,
+                students__firstName__contains=getFilterText)
+            else:
+                queryset = StudentList.objects.filter(
+                session__session__contains=session)
+        return queryset
 
