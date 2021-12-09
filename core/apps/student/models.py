@@ -39,7 +39,7 @@ class Student(models.Model):
     middleSchool=models.ForeignKey(MiddleSchool,on_delete=models.CASCADE)
     number=models.IntegerField(unique=False,null=True,blank=True,)
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
-    image=models.ImageField(unique=False,null=True,blank=True,upload_to='images',default='images/person.png')
+    image=models.ImageField(upload_to="images/ogrenciler/",unique=False,null=True,blank=True,default='images/person.png')
     health=models.TextField(unique=False,null=True,blank=True,)
     HESCode=models.CharField(max_length=12,unique=False,null=True,blank=True,validators=[validateHesCode])
     birtdate=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False,unique=False,null=True,blank=True,)

@@ -7,7 +7,7 @@
 <div class="col-xl-12 col-md-6">
     <div class="card ">
         <div class="card-header">
-            <h5>Kullanıcılar Tablosu</h5>
+            <h5>Öğrenci Tablosu</h5>
         </div>
         {% include  'includes/filter.html' %}
         
@@ -32,8 +32,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for studentlist in object_list  %}
+                        
+                        {% for studentlist in object_list.studentlist  %}
                         {% for student in studentlist.students.all  %}
+                        
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
                             <td title="Sınıfı">
@@ -72,9 +74,9 @@
                             </td>
                             
                         </tr>
-                       {% endfor %} 
-                       {% endfor %} 
                        
+                       {% endfor %} 
+                       {% endfor %} 
                     </tbody>
                 </table>
                 
