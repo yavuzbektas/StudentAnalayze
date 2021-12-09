@@ -116,8 +116,8 @@ class StudentListView(ListView):
         #context['students'] = StudentList.students.objects.all()
         return context
     def get_queryset(self):
-        queryset = {"studentlist": Student.objects.all()}
-        
+        queryset = {"students": Student.objects.all()}
+        queryset = {"studentlist": StudentList.objects.all()}
         getFilterText = self.request.GET.get("filterTextVal")
         category = self.request.GET.get("category")
         className = self.request.GET.get("className")
@@ -157,7 +157,7 @@ class StudentListView(ListView):
             query["studentlist__session__session__contains"]=session
             query2["session__session__contains"]=session
             try:
-                queryset = {"students": Student.objects.filter(**query),"studentlist": StudentList.objects.filter(**query2)}  
+                queryset = {"students": Student.objects.filter(**query).distinct(),"studentlist": StudentList.objects.filter(**query2).distinct()}  
             except:
                 print("sorgu hatası")
             

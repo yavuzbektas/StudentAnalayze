@@ -33,8 +33,8 @@
                       </thead>
                       <tbody>
                         
-                        {% for studentlist in object_list.studentlist  %}
-                        {% for student in studentlist.students.all  %}
+                        
+                        {% for student in object_list.students %}
                         
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
@@ -76,6 +76,7 @@
                         </tr>
                        
                        {% endfor %} 
+                       {% for studentlistx in object_list.studentlist  %}
                        {% endfor %} 
                     </tbody>
                 </table>

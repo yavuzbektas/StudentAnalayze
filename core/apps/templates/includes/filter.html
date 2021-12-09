@@ -20,7 +20,7 @@
       <select id="category" class="form-control" name="category">
         
         {% for k,v in filterNames.items %}
-        <option value="{{ v }}">{{ k }}</option>
+        <option value="{{ v }}" {% if k.selected %} selected {% endif %} >{{ k }}</option>
         {% endfor %}
       </select>
     </div>
@@ -32,7 +32,7 @@
         <select id="classLevel" class="form-control" name="classLevel">
           
           {% for classLevel in classLevels %}
-          <option value="{{ classLevel }}">{{ classLevel }}</option>
+          <option value="{{ classLevel }}" {% if classLevel.selected %} selected {% endif %} >{{ classLevel }}</option>
           {% endfor %}
           <option value="0">Tüm Seviyeler</option>
         </select>
