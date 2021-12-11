@@ -34,13 +34,17 @@
                       <tbody>
                         
                         
+                        
                         {% for student in object_list.students %}
                         
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
+                            {% for classNames in student.studentlist_set.all %}
                             <td title="Sınıfı">
-                                <h6 class="mb-1">{{studentlist.className}}  </h6> 
+                                <h6 class="mb-1">{{classNames.className}}  </h6> 
                             </td>
+                            {% endfor %}  
+                            
                             <td title="Okul No">
                                 <h6 class="mb-1">{{student.number}} </h6>
                             
@@ -74,10 +78,9 @@
                             </td>
                             
                         </tr>
+                        
+                       {% endfor %} 
                        
-                       {% endfor %} 
-                       {% for studentlistx in object_list.studentlist  %}
-                       {% endfor %} 
                     </tbody>
                 </table>
                 

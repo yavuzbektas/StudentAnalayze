@@ -132,6 +132,9 @@ class StudentListView(ListView):
             "Cinsiyet" : "4"""
             query={}
             query2={}
+            values = ["students__firstName","students__lastName","students__TC","students__phone","students__address",
+                      "students__status","students__middleSchool","students__number","students__image","students__email",
+                      "students__gender","session__session","className__className","className__level"]
             if category!="0":
                 filterNames = {
                 "1" :"firstName",
@@ -158,6 +161,7 @@ class StudentListView(ListView):
             query2["session__session__contains"]=session
             try:
                 queryset = {"students": Student.objects.filter(**query).distinct(),"studentlist": StudentList.objects.filter(**query2).distinct()}  
+                
             except:
                 print("sorgu hatası")
             
