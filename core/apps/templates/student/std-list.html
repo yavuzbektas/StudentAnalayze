@@ -18,7 +18,6 @@
                     <thead>
                         <tr>
                         <th scope="col">Profil Resmi</th>
-                        <th scope="col">Sınıf</th>
                         <th scope="col">Okul No</th>
                           <th scope="col">Ad ve Soyad</th>
                           <th scope="col">Görevi</th>
@@ -39,11 +38,7 @@
                         
                         <tr class="unread">
                             <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
-                            {% for classNames in student.studentlist_set.all %}
-                            <td title="Sınıfı">
-                                <h6 class="mb-1">{{classNames.className}}  </h6> 
-                            </td>
-                            {% endfor %}  
+                            
                             
                             <td title="Okul No">
                                 <h6 class="mb-1">{{student.number}} </h6>

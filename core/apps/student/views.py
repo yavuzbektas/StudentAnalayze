@@ -7,17 +7,19 @@ from .filter import StudentFilter
 from django.conf import settings
 from django.views.generic.list import ListView
 from ..classes.models import ClassLevels,Classes,ClassNames
-from ..home.models import Session
+from ..home.models import Session,Period
 from django.views.generic.detail import SingleObjectMixin
+sessions = Session.objects.all()
+periods = Period.objects.all()
 # Create your views here.
 @login_required(login_url="/login/")
 def studentUpdate(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "student/std-profile.html", context)
 
 @login_required(login_url="/login/")
 def studentView(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "student/std-profile.html", context)
 
 @login_required(login_url="/login/")
@@ -26,6 +28,7 @@ def studentShowList(request):
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
     sessions = Session.objects.all()
+    periods=Period.objects.all()
     studentList = StudentList.objects.all()
     className="-"
     classLevel="-"
@@ -35,6 +38,7 @@ def studentShowList(request):
         "Kullanıcı Soyadı" : "lastName",
         "TC No" : "TC",
         "Cinsiyet" : "gender",
+        "Periyot" : "periods",
     }
     
     if request.GET:
@@ -42,7 +46,7 @@ def studentShowList(request):
         category = request.GET["category"]
         className = request.GET["className"]
         session = request.GET["session"]
-        
+        period = request.GET["period"]
         classLevel = request.GET["classLevel"]
         getFilterBy = filterNames[category]
         filtertext = '{0}__{1}'.format(getFilterBy, 'startswith')
@@ -52,7 +56,8 @@ def studentShowList(request):
         for listem in StudentList.objects.filter(
             className__className__name__contains=className,
             className__level__level__contains=classLevel,
-            session__session__contains=session):
+            session__session__contains=session,
+            period__period__contains=period):
             studentList = listem.students.filter(**{filtertext: getFilterText})
             # if Student.objects.filter(**{filtertext: getFilterText}):
         #     students = Student.objects.filter(**{filtertext: getFilterText})
@@ -71,6 +76,7 @@ def studentShowList(request):
         'studentList':studentList,
         'classLevels':classLevels,
         'sessions':sessions,
+        'periods':periods,
         'classNames':classNames,
         'selectedLevel' : selectedLevel,
         'filterNames' :filterNames.keys(),
@@ -81,12 +87,12 @@ def studentShowList(request):
 
 @login_required(login_url="/login/")
 def studentDelete(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "student/std-profile.html", context)
 
 @login_required(login_url="/login/")
 def studentIndex(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "student/std-profile.html", context)
 
 
@@ -96,7 +102,6 @@ class StudentListView(ListView):
     template_name = 'student/std-list.html'
     model = Student
 
-    
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -110,6 +115,7 @@ class StudentListView(ListView):
         
         context['classLevels']=ClassLevels.objects.all()
         context['sessions']=Session.objects.all()
+        context['periods']=Period.objects.all()
         context['classNames']=ClassNames.objects.all()
         context['filterNames'] =filterNames
         context['media_url'] =settings.MEDIA_URL
@@ -118,54 +124,34 @@ class StudentListView(ListView):
         return context
     def get_queryset(self):
         queryset = {"students": Student.objects.all()}
-        queryset = {"studentlist": StudentList.objects.all()}
         getFilterText = self.request.GET.get("filterTextVal")
         category = self.request.GET.get("category")
         className = self.request.GET.get("className")
         session = self.request.GET.get("session")
+        period = self.request.GET.get("period")
         classLevel = self.request.GET.get("classLevel")
         
-        if  category and className and classLevel:
+        if  className and classLevel:
             """Seçim Yap" :"0",
             "Kullancı Adı" : "1",
             "Kullanıcı Soyadı" : "2",
             "TC No" : "3",
             "Cinsiyet" : "4"""
             query={}
-            query2={}
-            values = ["students__firstName","students__lastName","students__TC","students__phone","students__address",
-                      "students__status","students__middleSchool","students__number","students__image","students__email",
-                      "students__gender","session__session","className__className","className__level"]
-            if category!="0":
-                filterNames = {
-                "1" :"firstName",
-                "2" : "lastName",
-                "3" : "TC",
-                "4" : "gender",
-                "5" : "4",
-    }
-                query[f'{filterNames[category]}__startswith']=getFilterText
-                query2[f'students__{filterNames[category]}__startswith']=getFilterText
             
             if className!="0":
                 query['studentlist__className__className__name__contains']=className
-                query2['className__className__name__contains']=className
             else:
                 query['studentlist__className__className__name__contains']=""
-                query2['className__className__name__contains']=""
-                
             if classLevel!="0":
                 query['studentlist__className__level__level__contains']=classLevel
-                query2['className__level__level__contains']=classLevel
-            
-            query["studentlist__session__session__contains"]=session
-            query2["session__session__contains"]=session
+            #query["studentlist__session__session__contains"]=session
             try:
-                queryset = {"students": Student.objects.filter(**query).distinct(),"studentlist": StudentList.objects.filter(**query2).distinct()}  
+                queryset = {"students": Student.objects.filter(**query).distinct()}  
                 
             except:
                 print("sorgu hatası")
             
-        print(queryset)
+        print(query,queryset)
         return queryset
 

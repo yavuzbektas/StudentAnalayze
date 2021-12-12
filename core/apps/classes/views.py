@@ -2,36 +2,38 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from ..student.models import Student
 from django.conf import settings
-
+from ..home.models import Session,Period
+sessions = Session.objects.all()
+periods = Period.objects.all()
 # Create your views here.
 @login_required(login_url="/login/")
 def classesUpdate(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesView(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesShowList(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesDelete(request):
-   context={}
+   context={'sessions':sessions,"periods":periods}
    return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesIndex(request):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesShowListFiltered(request,filterBy,filterValue):
-    context={}
+    context={'sessions':sessions,"periods":periods}
     return render(request, "classes/cls-9sinif.html", context)
 
 

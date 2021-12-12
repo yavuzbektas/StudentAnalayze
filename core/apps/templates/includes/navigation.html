@@ -1,6 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+<nav style = "margin-left:260px" class="navbar navbar-expand-lg navbar-dark bg-dark ">
   <div class="container-fluid"> 
-  <a class="navbar-brand" href="#">Django </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -35,8 +34,8 @@
       <li class="nav-item select">
         
         <select id="period" class="form-control" name="period">-->
-          {% for session in sessions %}
-          <option value="{{ session }}">{{ session }}</option>
+          {% for period in periods %}
+          <option value="{{ period }}">{{ period }}</option>
           {% endfor %}
         </select>
       </li>

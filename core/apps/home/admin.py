@@ -7,12 +7,13 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 # Register your models here.
 
-from .models import JobsTable,Profil,Session
+from .models import JobsTable,Profil,Session,Period,SessionPeriod
 
 admin.site.register(JobsTable)
 
 admin.site.register(Session)
-
+admin.site.register(Period)
+admin.site.register(SessionPeriod)
 
 
 class EmployeeInline(admin.StackedInline):

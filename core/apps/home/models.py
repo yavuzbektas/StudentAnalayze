@@ -88,8 +88,15 @@ class Session(models.Model):
     session=models.CharField(max_length=10,default="2021-2022",unique=True)
     def __str__(self): 
       return self.session
-
-
+class Period(models.Model):
+    period=models.CharField(max_length=10,default="1.Dönem",unique=True)
+    def __str__(self): 
+      return self.period
+class SessionPeriod(models.Model):
+    session=models.ForeignKey(Session,on_delete=models.CASCADE)
+    period=models.ForeignKey(Period,on_delete=models.CASCADE)
+    def __str__(self): 
+      return self.session.session + "-" + self.period.period
 """
 class Question(models.Model):
     question_text = models.CharField(max_length=200,default="")
