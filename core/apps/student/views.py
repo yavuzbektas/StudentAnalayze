@@ -8,6 +8,7 @@ from django.conf import settings
 from django.views.generic.list import ListView
 from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session
+from django.views.generic.detail import SingleObjectMixin
 # Create your views here.
 @login_required(login_url="/login/")
 def studentUpdate(request):
