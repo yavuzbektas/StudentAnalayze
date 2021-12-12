@@ -130,14 +130,14 @@ class StudentListView(ListView):
         session = self.request.GET.get("session")
         period = self.request.GET.get("period")
         classLevel = self.request.GET.get("classLevel")
-        
+        query={}
         if  className and classLevel:
             """Seçim Yap" :"0",
             "Kullancı Adı" : "1",
             "Kullanıcı Soyadı" : "2",
             "TC No" : "3",
             "Cinsiyet" : "4"""
-            query={}
+            
             
             if className!="0":
                 query['studentlist__className__className__name__contains']=className
