@@ -91,7 +91,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
+TEMPLATE_CONTEXT_PROCESSORS = ("apps.home.context_processors.sessions_processor", )
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

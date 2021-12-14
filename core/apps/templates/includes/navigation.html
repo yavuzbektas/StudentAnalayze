@@ -1,5 +1,6 @@
-<nav style = "margin-left:260px" class="navbar navbar-expand-lg navbar-dark bg-dark ">
-  <div class="container-fluid"> 
+
+<nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse "> 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,7 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarsExample03">
     <ul class="navbar-nav mr-auto">
       
-      <li class="nav-item active">
+      <li class="text-white">
         <a class="nav-link" href="#">Anasayfa<span class="sr-only">(current)</span></a>
       </li>
       <!-- <li class="nav-item">
@@ -16,7 +17,8 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Link 2</a>
       </li> -->
-      <li class="nav-item label">
+      <form class="form-inline my-2 my-md-0" action="">
+      <li class="text-white align-middle mx-3">
         <label for="session">Dönem</label>
       </li>
       
@@ -28,7 +30,7 @@
           {% endfor %}
         </select>
       </li>
-      <li class="nav-item label">
+      <li class="text-white mx-3">
         <label for="session">Periyot</label>
       </li>
       <li class="nav-item select">
@@ -39,7 +41,10 @@
           {% endfor %}
         </select>
       </li>
+      <button type="submit" class="btn btn-primary mx-3">Git</button>
     </ul>
+    
+  </form>
     <form class="form-inline my-2 my-md-0">
       <input class="form-control" type="text" placeholder="Search">
     </form>
