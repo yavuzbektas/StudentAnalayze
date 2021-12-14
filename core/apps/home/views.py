@@ -58,10 +58,18 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def profilShowList(request):
-    profilList = Profil.objects.all()
+    jobs =  JobsTable.objects.all()
+    
+    jobname = request.GET.get("jobname")
+    if jobname ==None or jobname =="0":
+        profilList = Profil.objects.all()
+    else:
+        
+        profilList = Profil.objects.filter(job__name=jobname)
     context = {
         'Kullanicilar' : profilList,
         'media_url':settings.MEDIA_URL,
+        'jobs':jobs,
         'sessions':sessions,"periods":periods
     }
     

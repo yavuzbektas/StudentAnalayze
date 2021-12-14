@@ -10,6 +10,7 @@
         <div class="card-header">
             <h5>Kullanıcılar Tablosu</h5>
         </div>
+        {% include  'home/filter.html' %}
         <div class="card-block px-0 py-3">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -30,27 +31,37 @@
                     <tbody>
                         {% for kullanici in Kullanicilar %}
                         <tr class="unread">
-                            <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{kullanici.image}}" alt="activity-user"></td>
-                           
-                            <td title="Ad Soyad">
-                                <h6 class="mb-1">{{kullanici.user.first_name}} {{kullanici.last_name}}</h6>
                             
+                            <td>
+                                <a href="{% url 'users-view' kullanici.id %}">
+                                <img class="rounded-circle" style="width:50px;" src="{{media_url}}{{kullanici.image}}" alt="activity-user" >
+                            </a>
+                            </td>
+                        
+                            <td title="Ad Soyad">
+                                <a href="{% url 'users-view' kullanici.id %}">
+                                <h6 class="mb-1">{{kullanici.user.first_name}} {{kullanici.last_name}}</h6>
+                                </a>
                             </td>
                             <td>
+                                <a href="{% url 'users-view' kullanici.id %}">
                                 <h6 class="mb-1">{{kullanici.job}} </h6>
-        
+                                </a>
                             </td>
                             <td>
+                                <a href="{% url 'users-view' kullanici.id %}">
                                 <h6 class="mb-1">{{kullanici.phone}} </h6>
-        
+                                </a>
                             </td>
                             <td>
+                                <a href="{% url 'users-view' kullanici.id %}">
                                 <h6 class="mb-1">{{kullanici.adress}}</h6>
-        
+                            </a>
                             </td>
                             <td>
+                                <a href="{% url 'users-view' kullanici.id %}">
                                 <h6 class="mb-1">{{kullanici.user.email}} </h6>
-        
+                            </a>
                             </td>
                             <td>
                                 {% if kullanici.isWorking %}
