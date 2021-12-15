@@ -7,7 +7,7 @@
 <div class="col-xl-12 col-md-6">
     <div class="card ">
         <div class="card-header">
-            <h5>Öğrenci Tablosu</h5>
+            <h5>Öğrenci Listesi</h5>
         </div>
         {% include  'student/filter.html' %}
         
@@ -26,43 +26,54 @@
                           <th scope="col">Email</th>
                           <th scope="col">Aktif</th>
                           <th scope="col">Profile Detay</th>
-                          <th scope="col">Yetki</th>
-                          <th scope="col">Profil Sil</th>
+                          {% if user.is_staff %}
+                          <th scope="col">Güncelleme</th>
+                          <th scope="col">Sil</th>
+                          
+                          {% endif %}
                         </tr>
                       </thead>
                       <tbody>
                         
                         
+                        {% for studentl in object_list.studentlist %}
                         
-                        {% for student in object_list.students %}
-                        
-                        <tr class="unread">
-                            <td><img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
-                            
+                        {% for student in studentl.students.all %}
+                        <tr class="unread"></tr>
+                            <td>
+                                <a href="{% url 'student-view' student.id %}">
+                                <img class="rounded-circle" style="width:50px;" src="{{media_url}}{{student.image}}" alt="activity-user"></td>
+                                </a>
                             
                             <td title="Okul No">
-                                <h6 class="mb-1">{{student.number}} </h6>
-                            
+                                <a href="{% url 'student-view' student.id %}">
+                                <h6 class="mb-1">{{studentl.className}} - {{student.number}}  </h6>
+                                 </a>
                             </td>
                             <td title="Ad Soyad">
+                                <a href="{% url 'student-view' student.id %}">
                                 <h6 class="mb-1">{{student.firstName}} {{student.lastName}}</h6>
-                            
+                            </a>
                             </td>
                             <td>
+                                <a href="{% url 'student-view' student.id %}">
                                 <h6 class="mb-1">{{student.TC}} </h6>
-        
+                            </a>
                             </td>
                             <td>
+                                <a href="{% url 'student-view' student.id %}">
                                 <h6 class="mb-1">{{student.phone}} </h6>
-        
+                            </a>
                             </td>
                             <td>
+                                <a href="{% url 'student-view' student.id %}">
                                 <h6 class="mb-1">{{student.address}}</h6>
-        
+                            </a>
                             </td>
                             <td>
+                                <a href="{% url 'student-view' student.id %}">
                                 <h6 class="mb-1">{{student.email}} </h6>
-        
+                            </a>
                             </td>
                             <td>
                                 {% if student.status %}
@@ -72,10 +83,25 @@
                                 {% endif %}
                             </td>
                             
+                            <td>
+                                
+                                <a href="{% url 'student-view' student.id %}"class="label btn btn-success  f-12">Profile Git</a>
+                            </td>
+                            {% if user.is_staff %}
+                            <td>
+                                <a href="{% url 'student-update' student.id %}" class="label btn btn-primary  f-12">Güncelle</a>
+                                
+                            </td>
+                            <td>
+                                <a href="{% url 'student-delete' student.id %}" class="label btn btn-danger f-12">Sil</a>
+                                
+                            </td>
+                            {% endif %}
                         </tr>
                         
                        {% endfor %} 
                        
+                        {% endfor %} 
                     </tbody>
                 </table>
                 

@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator,ValidationError
 
 
 # Create your models here.
-from ..home.models import Profil,Session
+from ..home.models import Profil,Session,Period
 from ..classes.models import Classes
 
 def validateHesCode(value):
@@ -80,6 +80,7 @@ class Parent(models.Model):
 class StudentList(models.Model):
     className=models.ForeignKey(Classes,on_delete=models.CASCADE)
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
+    periods=models.ForeignKey(Period,on_delete=models.CASCADE)
     students=models.ManyToManyField(Student,blank=True)
     teachers=models.ManyToManyField(Profil,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
     def __str__(self):
