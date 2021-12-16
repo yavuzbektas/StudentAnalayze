@@ -12,17 +12,50 @@ from django.views.generic.detail import SingleObjectMixin
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
+
+def sessionUpdate(request):
+    if request.GET.get("sessionID"):
+        try:
+            oldSession = Session.objects.get(active=1)
+            oldSession.active=False
+            oldSession.save()
+        except:
+            pass
+        newSession=request.GET.get("sessionID")
+        print("Yeni sezon : ",newSession)
+        newSession = Session.objects.get(session=newSession)
+        newSession.active=True
+        newSession.save()
+    if request.GET.get("periodID"):
+        try:
+            oldPeriod = Period.objects.get(active=1)
+            oldPeriod.active=False
+            oldPeriod.save()
+        except:
+            pass
+        newPeriod =request.GET.get("periodID")
+        print("Yeni Period  : ",newPeriod )
+        newPeriod  = Period.objects.get(period=newPeriod )
+        newPeriod.active=True
+        newPeriod.save()
+
 @login_required(login_url="/login/")
-def studentUpdate(request,pk=None,session="2021-2022",period="1.Dönem"):
+def studentUpdate(request,pk=None):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
     try:
         
         student = Student.objects.get(id=pk)
-        className = StudentList.objects.get(students=student,session=Session.objects.get(session=session),periods=Period.objects.get(period=period))
+        className = StudentList.objects.get(students=student,session=session,periods=period)
     except:
-        return HttpResponseRedirect("student/std-list.html")
-    if request.POST:
-        if form.is_invalid():
-            pass
+        context={
+        
+        'sessions':sessions,"periods":periods
+        }
+        return render(request,"student/std-list.html",context)
+    
+    
     context={
         'student':student,
         'className':className,
@@ -32,14 +65,19 @@ def studentUpdate(request,pk=None,session="2021-2022",period="1.Dönem"):
     return render(request, "student/std-Update.html", context)
 
 @login_required(login_url="/login/")
-def studentView(request,pk=None,session="2021-2022",period="1.Dönem"):
-    
+def studentView(request,pk=None):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
     try:
         student = Student.objects.get(id=pk)
-        className = StudentList.objects.get(students=student,session=Session.objects.get(session=session),periods=Period.objects.get(period=period))
+        className = StudentList.objects.get(students=student,session=session,periods=period)
     except:
+        context={
         
-        return HttpResponseRedirect("student/std-list.html")
+        'sessions':sessions,"periods":periods
+        }
+        return render(request,"student/std-list.html",context)
     context={
         'student':student,
         'className':className,
@@ -121,9 +159,6 @@ def studentIndex(request):
     context={'sessions':sessions,"periods":periods}
     return render(request, "student/std-profile.html", context)
 
-
-
-
 class StudentListView(ListView):
     template_name = 'student/std-list.html'
     model = Student
@@ -131,46 +166,27 @@ class StudentListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        filterNames = {
-        "Seçim Yap" :"0",
-        "Kullancı Adı" : "1",
-        "Kullanıcı Soyadı" : "2",
-        "TC No" : "3",
-        "Cinsiyet" : "4",
-    }
         
         context['classLevels']=ClassLevels.objects.all()
         context['sessions']=Session.objects.all()
         context['periods']=Period.objects.all()
         context['classNames']=ClassNames.objects.all()
-        context['filterNames'] =filterNames
         context['media_url'] =settings.MEDIA_URL
         
-        #context['students'] = StudentList.students.objects.all()
         return context
     def get_queryset(self):
-        queryset = {"students": Student.objects.all()}
-        getFilterText = self.request.GET.get("filterTextVal")
-        category = self.request.GET.get("category")
-        className = self.request.GET.get("className")
+        queryset = {"studentlist": StudentList.objects.all()}
         
-        session = self.request.GET.get("session")
-        if session==None:
-            session="2021-2022"
-        period = self.request.GET.get("period")
-        if period==None:
-            period="1.Dönem"
+        sessionUpdate(self.request)
+    
+        session=Session.objects.get(active=True)
+        period=Period.objects.get(active=True)
+        className = self.request.GET.get("className")
         classLevel = self.request.GET.get("classLevel")
         query={}
         query2={}
-        if  className and classLevel:
-            """Seçim Yap" :"0",
-            "Kullancı Adı" : "1",
-            "Kullanıcı Soyadı" : "2",
-            "TC No" : "3",
-            "Cinsiyet" : "4"""
-            
         
+           
         if className!="0" and className!=None:
             query['studentlist__className__className__name__contains']=className
             query2['className__className__name__contains']=className
@@ -194,6 +210,6 @@ class StudentListView(ListView):
         except:
             print("sorgu hatası")
             
-        print(query,queryset)
+
         return queryset
 

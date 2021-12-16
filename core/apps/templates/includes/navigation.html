@@ -17,14 +17,13 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Link 2</a>
       </li> -->
-      <form class="form-inline my-2 my-md-0" action="">
+      <form class="form-inline my-2 my-md-0"  method="GET" >
+        {% csrf_token %}
       <li class="text-black align-middle mx-3">
         <label for="session">Dönem</label>
       </li>
-      
       <li class="nav-item select">
-        
-        <select id="session" class="form-control" name="session">-->
+        <select id="sessionID" class="form-control" name="sessionID">-->
           {% for session in sessions %}
           <option value="{{ session }}">{{ session }}</option>
           {% endfor %}
@@ -35,16 +34,17 @@
       </li>
       <li class="nav-item select">
         
-        <select id="period" class="form-control" name="period">-->
+        <select id="periodID" class="form-control" name="periodID">-->
           {% for period in periods %}
           <option value="{{ period }}">{{ period }}</option>
           {% endfor %}
         </select>
-      </li>
-      <button type="submit" class="btn btn-primary mx-3">Git</button>
+      </li>'
+      <button  type="submit" class="btn btn-primary mx-3" >Git</button></a>
+    </form>
     </ul>
     
-  </form>
+  
     <form class="form-inline my-2 my-md-0">
       <input class="form-control" type="text" placeholder="Arama">
     </form>

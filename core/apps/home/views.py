@@ -12,12 +12,12 @@ from django.template import loader
 from django.urls import reverse
 from django.conf import settings
 from apps.home.form import ProfilForm
-from apps.home.models  import Profil,JobsTable,Session,Period
+from apps.home.models  import Profil,JobsTable,Session,Period,SessionPeriod
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-from .form import ProfilForm,UserForm
+from .form import ProfilForm,UserForm,SessionForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
 sessions = Session.objects.all()

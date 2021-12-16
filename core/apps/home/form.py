@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profil,JobsTable
+from .models import Profil,JobsTable,SessionPeriod,Period,Session
 
 
 # class ProfilForm(forms.ModelForm):
@@ -125,3 +125,17 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields =  ['first_name',"last_name","email","username"]
+        
+class SessionForm(forms.ModelForm):
+    session = forms.ModelChoiceField(queryset=Session.objects.all(),widget=forms.TextInput(attrs={
+        'id':'session',
+        'class': 'form-control',
+    }),required=False)
+    active = forms.BooleanField(widget=forms.TextInput(attrs={
+        'id':'activeSession',
+        'class': 'form-control',
+    }),required=False)
+    
+    class Meta:
+        model = Session
+        fields =  ['session',"active"]
