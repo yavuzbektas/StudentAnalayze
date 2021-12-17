@@ -13,7 +13,7 @@ def repath_func(request):
 urlpatterns = [
 
     # The home page
-    path('maps-google.html', views.index, name='home'),
+    path('', views.index, name='home'),
     
     
     # Matches any html file

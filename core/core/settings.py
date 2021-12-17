@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.home',
     'apps.student',
     'apps.classes',
+    'apps.attendance',
     'django_tables2',
     'widget_tweaks',
     'django_filters',
