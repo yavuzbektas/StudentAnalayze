@@ -150,9 +150,19 @@ def studentShowList(request):
     return render(request, "student/std-list.html", context)
 
 @login_required(login_url="/login/")
-def studentDelete(request):
+def studentDelete(request,pk):
+    
+    student = Student.objects.get(id=pk)
+    if not request.user.is_authenticated:
+        # Eğer kullanıcı giriş yapmamış ise hata sayfası gönder
+        return Http404()
+
+    if request.method == 'GET':
+        student.delete()
+        return redirect('/')
     context={'sessions':sessions,"periods":periods}
-    return render(request, "student/std-profile.html", context)
+    
+    return render(request, "student/std-list.html", context)
 
 @login_required(login_url="/login/")
 def studentIndex(request):

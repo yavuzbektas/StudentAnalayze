@@ -6,7 +6,8 @@ from django.conf import settings
 from django.views.generic.list import ListView
 from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
-from .models import LessonPeriods
+from .models import LessonPeriods,DailyAttendance
+import datetime
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
@@ -36,6 +37,11 @@ def sessionUpdate(request):
         newPeriod  = Period.objects.get(period=newPeriod )
         newPeriod.active=True
         newPeriod.save()
+
+
+
+
+
 
 @login_required(login_url="/login/")
 def stdAttUpdate(request,pk=None):
@@ -161,7 +167,9 @@ def stdAttIndex(request):
 class StdAttDailyListView(ListView):
     template_name = 'attendance/std-dailyAttendance.html'
     model = Student
+    
 
+    
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -171,6 +179,7 @@ class StdAttDailyListView(ListView):
         context['periods']=Period.objects.all()
         context['classNames']=ClassNames.objects.all()
         context['media_url'] =settings.MEDIA_URL
+        context['dailyattendance']=DailyAttendance.objects.filter(day=datetime.date(year=2021,month=12,day=19))
         
         return context
     def get_queryset(self):
@@ -182,6 +191,22 @@ class StdAttDailyListView(ListView):
         period=Period.objects.get(active=True)
         className = self.request.GET.get("className")
         classLevel = self.request.GET.get("classLevel")
+        attandanceList = self.request.GET.getlist("cb-1")
+        day = datetime.date(year=2021,month=12,day=19)
+        for item in attandanceList:
+            newAttandance = DailyAttendance()
+            lessonID,studentID = item.split("-")
+            try: 
+                DailyAttendance.objects.get(lesPeriod=lessonID,student=studentID,day=day)
+                print("kayıt var ?")
+                continue
+            except:
+                    
+                newAttandance.lesPeriod=LessonPeriods.objects.get(id=lessonID)
+                newAttandance.periods=period
+                newAttandance.session=session
+                newAttandance.student=Student.objects.get(id=studentID)
+                newAttandance.save()
         query={}
         query2={}
         

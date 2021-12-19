@@ -14,7 +14,8 @@
         {% include 'attendance/filter.html' %}
 
         <div class="card-block px-0 py-3">
-
+            <form action="" method="GET">
+                {% csrf_token %}
 
             <div class="accordion" id="accordionExample">
                 {% for lesson in lessonPeriod %}
@@ -66,9 +67,13 @@
                                         </td>
 
                                         <td>
-
-                                            <a href="{% url 'student-view' student.id %}"
-                                                class="label btn btn-success  f-12">Sınıfta</a>
+                                            <div class="checkbox checkbox-danger checkbox-fill d-inline">
+                                                <input type="checkbox" name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}" 
+                                                {% if student.id in dailyattendance.value  %} checked {%else%} unchecked {% endif %} value="{{lesson.id}}-{{student.id}}">
+                                                <label for="checkbox-infill-{{lesson.id}}{{student.id}}" class="cr">Yok</label>
+                                                
+                                            </div>                
+                                           
                                         </td>
 
                                         </tr>
@@ -90,12 +95,14 @@
 
 
             </div>
+            <hr>
+            <button type="submit" class="btn btn-success">Değişiklikleri Kaydet</button>
+            
+            </form>
         </div>
 
     </div>
-
-
-
+    
     {% endblock content %}
     <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}

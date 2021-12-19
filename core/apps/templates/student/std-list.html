@@ -93,8 +93,25 @@
                                 
                             </td>
                             <td>
-                                <a href="{% url 'student-delete' student.id %}" class="label btn btn-danger f-12">Sil</a>
                                 
+                                <div id="{{student.id}}model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{student.id}}modelLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="{{student.id}}modelLabel">Öğrenci Silinecek</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>{{student.firstName}} {{student.lastName}} isimli öğrenciyi silmek istediğinize emin misiniz ? </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                <a href="{% url 'student-delete' student.id %}"><button type="button" class="btn btn-danger">Sil</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{student.id}}model">Sil</button>
                             </td>
                             {% endif %}
                         </tr>
@@ -109,8 +126,6 @@
         </div>
     </div>
 </div>
-
-
 
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->
