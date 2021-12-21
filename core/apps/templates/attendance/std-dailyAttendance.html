@@ -68,16 +68,25 @@
 
                                         <td>
                                             <div class="checkbox checkbox-danger checkbox-fill d-inline">
+                                                {%for xxx in dailyattendance %}
+                                                {% if  xxx.student.id == student.id and xxx.lesPeriod.id == lesson.id %}  
                                                 <input type="checkbox" name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}" 
-                                                {% if student.id in dailyattendance.value  %} checked {%else%} unchecked {% endif %} value="{{lesson.id}}-{{student.id}}">
+                                                checked value="{{lesson.id}}-{{student.id}}">
                                                 <label for="checkbox-infill-{{lesson.id}}{{student.id}}" class="cr">Yok</label>
-                                                
+                                                {%else%} 
+                                                <input type="checkbox" name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}" 
+                                                unchecked value="{{lesson.id}}-{{student.id}}">
+                                                <label for="checkbox-infill-{{lesson.id}}{{student.id}}" class="cr">Yok</label>
+                                                {%endif%}
+                                                {% endfor %}
                                             </div>                
                                            
                                         </td>
 
                                         </tr>
-
+                                        {%for xxx in dailyattendance %}
+                                        {% if  xxx.student.id == student.id%} evet var {{student}} {%else%} yok {%endif%}
+                                        {% endfor %}
                                         {% endfor %}
                                     </tbody>
                                 </table>

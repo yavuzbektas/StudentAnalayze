@@ -179,7 +179,7 @@ class StdAttDailyListView(ListView):
         context['periods']=Period.objects.all()
         context['classNames']=ClassNames.objects.all()
         context['media_url'] =settings.MEDIA_URL
-        context['dailyattendance']=DailyAttendance.objects.filter(day=datetime.date(year=2021,month=12,day=19))
+        context['dailyattendance']=DailyAttendance.objects.filter(day=datetime.date(year=2021,month=12,day=21))
         
         return context
     def get_queryset(self):
@@ -192,12 +192,13 @@ class StdAttDailyListView(ListView):
         className = self.request.GET.get("className")
         classLevel = self.request.GET.get("classLevel")
         attandanceList = self.request.GET.getlist("cb-1")
-        day = datetime.date(year=2021,month=12,day=19)
+        day = datetime.date(year=2021,month=12,day=21)
         for item in attandanceList:
             newAttandance = DailyAttendance()
             lessonID,studentID = item.split("-")
             try: 
                 DailyAttendance.objects.get(lesPeriod=lessonID,student=studentID,day=day)
+               # newAttandance.update(lesPeriod=lessonID,student=studentID,day=day)
                 print("kayıt var ?")
                 continue
             except:
