@@ -18,13 +18,13 @@
                 {% csrf_token %}
 
             <div class="accordion" id="accordionExample">
-                {% for lesson in lessonPeriod %}
+                {% for lesson, studentlist in newlist %}
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" href="#{{lesson.id}}">
-                                    <div class="badge badge-primary">{{lesson.id}}.Ders - {{lesson}}</div>
+                                    <div class="badge badge-primary">{{lesson.lessName}}  -  {{lesson.lesPeriod}}</div>
                                 </a>
                             </h4>
                         </div>
@@ -38,10 +38,12 @@
                                             <th scope="col">Okul No</th>
                                             <th scope="col">Ad ve Soyad</th>
                                             <th scope="col">tc</th>
+                                            <th scope="col">Yoklama</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for student in object_list.students %}
+                                        
+                                        {% for student,status  in studentlist %}
                                         <tr class="unread"></tr>
                                         <td>
                                             <a href="{% url 'student-view' student.id %}">
@@ -68,25 +70,19 @@
 
                                         <td>
                                             <div class="checkbox checkbox-danger checkbox-fill d-inline">
-                                                {%for xxx in dailyattendance %}
-                                                {% if  xxx.student.id == student.id and xxx.lesPeriod.id == lesson.id %}  
-                                                <input type="checkbox" name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}" 
-                                                checked value="{{lesson.id}}-{{student.id}}">
-                                                <label for="checkbox-infill-{{lesson.id}}{{student.id}}" class="cr">Yok</label>
-                                                {%else%} 
-                                                <input type="checkbox" name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}" 
-                                                unchecked value="{{lesson.id}}-{{student.id}}">
-                                                <label for="checkbox-infill-{{lesson.id}}{{student.id}}" class="cr">Yok</label>
+                                                
+                                                
+                                                {% if status %}
+                                                <input name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}" type="checkbox" unchecked data-toggle="toggle" data-on="VAR" data-off="YOK" data-onstyle="success" data-offstyle="danger" value="{{lesson.id}}-{{student.id}}-0">
+                                                {%else%}
+                                                <input name="cb-1" id="checkbox-infill-{{lesson.id}}{{student.id}}"  type="checkbox" unchecked data-toggle="toggle" data-on="YOK" data-off="VAR" data-onstyle="danger" data-offstyle="success" value="{{lesson.id}}-{{student.id}}-1">
                                                 {%endif%}
-                                                {% endfor %}
                                             </div>                
-                                           
+                                            
                                         </td>
 
                                         </tr>
-                                        {%for xxx in dailyattendance %}
-                                        {% if  xxx.student.id == student.id%} evet var {{student}} {%else%} yok {%endif%}
-                                        {% endfor %}
+                                        
                                         {% endfor %}
                                     </tbody>
                                 </table>
@@ -94,6 +90,7 @@
 
                             </div>
                         </div>
+                        
                         {% endfor %}
                     </div>
 
@@ -102,14 +99,15 @@
 
 
 
-
+              
             </div>
             <hr>
+            
             <button type="submit" class="btn btn-success">Değişiklikleri Kaydet</button>
             
             </form>
         </div>
-
+        
     </div>
     
     {% endblock content %}

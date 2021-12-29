@@ -10,9 +10,10 @@ from apps.student.models import Student,StudentList
 from apps.home.models import Session,Period
 # Create your models here.
 class LessonPeriods(models.Model):
+    lessName=models.CharField(max_length=15,default="1.Ders",verbose_name="Ders No")
     lesPeriod=models.CharField(max_length=15,default="9:30-10:10",unique=True)
     def __str__(self):
-      return self.lesPeriod
+      return self.lessName + "-" + self.lesPeriod 
 
 class DailyAttendance(models.Model):
     session=models.ForeignKey(Session,on_delete=models.CASCADE)

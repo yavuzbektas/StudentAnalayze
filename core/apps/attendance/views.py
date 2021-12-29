@@ -91,69 +91,6 @@ def stdAttView(request,pk=None):
     return render(request, "student/std-profile.html", context)
 
 @login_required(login_url="/login/")
-def stdAttShowList(request):
-    students = Student.objects.all()
-    classNames = ClassNames.objects.all()
-    classLevels = ClassLevels.objects.all()
-    sessions = Session.objects.all()
-    periods=Period.objects.all()
-    studentList = StudentList.objects.all()
-    className="-"
-    classLevel="-"
-    selectedLevel=[]
-    filterNames = {
-        "Kullancı Adı" : "firstName",
-        "Kullanıcı Soyadı" : "lastName",
-        "TC No" : "TC",
-        "Cinsiyet" : "gender",
-        "Periyot" : "periods",
-    }
-    
-    if request.GET:
-        getFilterText = request.GET["filterTextVal"]
-        category = request.GET["category"]
-        className = request.GET["className"]
-        session = request.GET["session"]
-        period = request.GET["period"]
-        classLevel = request.GET["classLevel"]
-        getFilterBy = filterNames[category]
-        filtertext = '{0}__{1}'.format(getFilterBy, 'startswith')
-        # "students__{0}__contains='{1}'".format(getFilterBy, getFilterText)
-        # **{'students__{0}__contains'.format(getFilterBy,):getFilterText}
-        
-        for listem in StudentList.objects.filter(
-            className__className__name__contains=className,
-            className__level__level__contains=classLevel,
-            session__session__contains=session,
-            period__period__contains=period):
-            studentList = listem.students.filter(**{filtertext: getFilterText})
-            # if Student.objects.filter(**{filtertext: getFilterText}):
-        #     students = Student.objects.filter(**{filtertext: getFilterText})
-            
-            # for student in listem.students.filter(**{filtertext: getFilterText}):
-            #     studentList.append(student )
-        students = studentList
-    else:
-        
-        for listem in StudentList.objects.filter():
-            studentList= listem.students.all()
-            selectedLevel = listem.className.className.name
-            
-    context = {
-        'students' : students,
-        'studentList':studentList,
-        'classLevels':classLevels,
-        'sessions':sessions,
-        'periods':periods,
-        'classNames':classNames,
-        'selectedLevel' : selectedLevel,
-        'filterNames' :filterNames.keys(),
-        'media_url':settings.MEDIA_URL
-    }
-    
-    return render(request, "student/std-list.html", context)
-
-@login_required(login_url="/login/")
 def stdAttDelete(request):
     context={'sessions':sessions,"periods":periods}
     return render(request, "student/std-profile.html", context)
@@ -164,79 +101,211 @@ def stdAttIndex(request):
     return render(request, "attendance/std-dailyAttendance.html", context)
 
 
-class StdAttDailyListView(ListView):
-    template_name = 'attendance/std-dailyAttendance.html'
-    model = Student
+# class StdAttDailyListView(ListView):
+#     template_name = 'attendance/std-dailyAttendance.html'
+#     model = Student
     
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['lessonPeriod']=LessonPeriods.objects.all()
+#         context['classLevels']=ClassLevels.objects.all()
+#         context['sessions']=Session.objects.all()
+#         context['periods']=Period.objects.all()
+#         context['classNames']=ClassNames.objects.all()
+#         context['newlist']=LessonPeriods.objects.all()
+#         context['media_url'] =settings.MEDIA_URL
+#         #context['dailyattendance']=DailyAttendance.objects.filter(day=datetime.date(year=2021,month=12,day=23))
+        
+        
+        
+#         dalist1 = []
+#         dalist2 = []
+#         # for i in context["dailyattendance"]:
+#         #     if i.student.id not in dalist1:
+#         #         dalist1.append(i.student.id)
+#         #         i.student.id
+#         #     if i.lesPeriod.id not in dalist2:
+#         #         dalist2.append(i.lesPeriod.id)
+        
+#         # context["dalist1"] = dalist1
+#         # context["dalist2"] = dalist2
+        
+#         return context
+#     def get_queryset(self):
+#         queryset = {"student": StudentList.objects.filter(className=1)}
+        
+#         sessionUpdate(self.request)
+        
+#         session=Session.objects.get(active=True)
+#         period=Period.objects.get(active=True)
+#         className = self.request.GET.get("className")
+#         classLevel = self.request.GET.get("classLevel")
+#         attandanceList = self.request.GET.getlist("cb-1")
+#         day = datetime.date(year=2021,month=12,day=23)
+        
+        
+        
+        
+        
+#         for item in attandanceList:
+#             newAttandance = DailyAttendance()
+#             lessonID,studentID,status = item.split("-")
+#             print(lessonID,studentID,status)
+#             try: 
+#                 oldAttandance = DailyAttendance.objects.get(lesPeriod=lessonID,student=studentID,day=day)
+#                 # newAttandance.update(lesPeriod=lessonID,student=studentID,day=day)
+#                 if status=="0":
+#                     oldAttandance.delete()
+#                 print("kayıt var ?")
+#                 continue
+#             except:
+#                 newAttandance.lesPeriod=LessonPeriods.objects.get(id=lessonID)
+#                 newAttandance.student=Student.objects.get(id=studentID)
+#                 newAttandance.periods=period
+#                 newAttandance.session=session  
+#                 newAttandance.save()
+#         query={}
+#         query2={}
+        
+           
+#         if className!="0" and className!=None:
+#             query['studentlist__className__className__name__contains']=className
+#             query2['className__className__name__contains']=className
+#         else:
+#             query['studentlist__className__className__name__contains']="A"
+#             query2['className__className__name__contains']=""
+#         if classLevel!="0" and classLevel!=None:
+#             query['studentlist__className__level__level__contains']=classLevel
+#             query2['className__level__level__contains']=classLevel
+#         else:
+#             query['studentlist__className__level__level__contains']="9"
+#             query2['className__level__level__contains']=""
+            
+#         query["studentlist__session__session__contains"]=session
+#         query["studentlist__periods__period__contains"]=period
+#         query2["session__session__contains"]=session
+#         query2["periods__period__contains"]=period
+#         try:
+            
+#             queryset = {"students": Student.objects.filter(**query),"studentlist": StudentList.objects.filter(**query2)}  
+            
+#             #queryset = {"students": Student.objects.filter(**query)}
+#             day = datetime.date(year=2021,month=12,day=23)
+#             studentsList =Student.objects.all()
+#             lesPeriods=LessonPeriods.objects.all()
+            
+#             newlist=[]
+#             for x in lesPeriods:
+#                 mylist=[]
+#                 for student in studentsList:
+                    
+#                     try:
+#                         DailyAttendance.objects.get(lesPeriod=x.pk,student=student.pk,day=day)
+                            
+#                         student.attStatus = True
+                        
+#                     except:
+#                         student.attStatus = False
+                    
+#                     mylist.append(student)
+#                 x.studentsList=mylist 
+#                 newlist.append(x)
+#             print(newlist)
+#             queryset = {"newlist":newlist}
+#         except Exception as err:
+#             print(err)
+            
 
+#         return queryset
+
+@login_required(login_url="/login/")
+def stdAttShowList(request):
+    day =datetime.date.today()
+    classNames = ClassNames.objects.all()
+    classLevels = ClassLevels.objects.all()
+    lesPeriods=LessonPeriods.objects.all()
+    absentStudentList = DailyAttendance.objects.filter(day=day)
+    #sessions = Session.objects.all()
+    #periods=Period.objects.all()
+    
+    #studentList = StudentList.objects.all()
+    newlist=[]
     
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['lessonPeriod']=LessonPeriods.objects.all()
-        context['classLevels']=ClassLevels.objects.all()
-        context['sessions']=Session.objects.all()
-        context['periods']=Period.objects.all()
-        context['classNames']=ClassNames.objects.all()
-        context['media_url'] =settings.MEDIA_URL
-        context['dailyattendance']=DailyAttendance.objects.filter(day=datetime.date(year=2021,month=12,day=21))
-        
-        return context
-    def get_queryset(self):
-        queryset = {"studentlist": StudentList.objects.filter(className=1)}
-        
-        sessionUpdate(self.request)
+    if request.GET:
+        sessionUpdate(request)
         
         session=Session.objects.get(active=True)
         period=Period.objects.get(active=True)
-        className = self.request.GET.get("className")
-        classLevel = self.request.GET.get("classLevel")
-        attandanceList = self.request.GET.getlist("cb-1")
-        day = datetime.date(year=2021,month=12,day=21)
-        for item in attandanceList:
-            newAttandance = DailyAttendance()
-            lessonID,studentID = item.split("-")
-            try: 
-                DailyAttendance.objects.get(lesPeriod=lessonID,student=studentID,day=day)
-               # newAttandance.update(lesPeriod=lessonID,student=studentID,day=day)
-                print("kayıt var ?")
-                continue
-            except:
-                    
-                newAttandance.lesPeriod=LessonPeriods.objects.get(id=lessonID)
-                newAttandance.periods=period
-                newAttandance.session=session
-                newAttandance.student=Student.objects.get(id=studentID)
-                newAttandance.save()
-        query={}
-        query2={}
+        className = request.GET.get("className")
+        classLevel = request.GET.get("classLevel")
+        attandanceList = request.GET.getlist("cb-1")
+          
+        if className==None or classLevel==None:
+            className="A"
+            classLevel="9"
         
+        studentsList = Student.objects.filter(
+            studentlist__className__className__name__contains=className,
+            studentlist__className__level__level__contains=classLevel,
+            studentlist__session__session__contains=session,
+            studentlist__periods__period__contains=period)
+        if attandanceList:
+            for item in attandanceList:
+                newAttandance = DailyAttendance()
+                lessonID,studentID,status = item.split("-")
+                print(lessonID,studentID,status)
+                try: 
+                    oldAttandance = DailyAttendance.objects.get(lesPeriod=lessonID,student=studentID,day=day)
+                    # newAttandance.update(lesPeriod=lessonID,student=studentID,day=day)
+                    
+                    if status=="0":
+                        oldAttandance.delete()
+                    print("kayıt var ?")
+                    continue
+                except:
+                    newAttandance.lesPeriod=LessonPeriods.objects.get(id=lessonID)
+                    newAttandance.student=Student.objects.get(id=studentID)
+                    newAttandance.periods=period
+                    newAttandance.session=session  
+                    newAttandance.save()
+            
+        studentsx=[]
+        for x in lesPeriods:
+            
+            statusList=[]
+            for student in studentsList:
+                studentss = DailyAttendance.objects.filter(lesPeriod=x.pk,day=day,student=student)
+                
+                if studentss :
+                    
+                        
+                    statusList.append(True)
+                    
+                else:
+                    statusList.append(False)
            
-        if className!="0" and className!=None:
-            query['studentlist__className__className__name__contains']=className
-            query2['className__className__name__contains']=className
-        else:
-            query['studentlist__className__className__name__contains']=""
-            query2['className__className__name__contains']=""
-        if classLevel!="0" and classLevel!=None:
-            query['studentlist__className__level__level__contains']=classLevel
-            query2['className__level__level__contains']=classLevel
-        else:
-            query['studentlist__className__level__level__contains']=""
-            query2['className__level__level__contains']=""
+            studentsx.append(zip(studentsList,statusList))
             
-        query["studentlist__session__session__contains"]=session
-        query["studentlist__periods__period__contains"]=period
-        query2["session__session__contains"]=session
-        query2["periods__period__contains"]=period
-        try:
-            queryset = {"students": Student.objects.filter(**query),"studentlist": StudentList.objects.filter(**query2)}  
-            
-        except:
-            print("sorgu hatası")
-            
-
-        return queryset
-
-
+        newlist = zip(lesPeriods,studentsx)
+        
+    else:
+        
+        for listem in StudentList.objects.filter():
+            studentList= listem.students.all()
+          
+           
+    context = {
+        #'students' : students,
+        #'studentList':studentList,
+        'sessions':sessions,
+        'periods':periods,
+        'lesPeriods':lesPeriods,
+        'classNames':classNames,
+        'classLevels':classLevels,
+        'newlist':newlist,
+        'media_url':settings.MEDIA_URL
+    }
+    
+    return render(request, "attendance/std-dailyAttendance.html", context)
 # Create your views here.

@@ -17,7 +17,7 @@ urlpatterns = [
     
     
     # Matches any html file
-    path('list/', views.StdAttDailyListView.as_view(),name='student-list'),
+    path('list/', views.stdAttShowList,name='student-list'),
     
     
     
