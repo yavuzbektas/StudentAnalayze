@@ -9,6 +9,7 @@ from django.views.generic.list import ListView
 from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
 from django.views.generic.detail import SingleObjectMixin
+from .form import StudentForm
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
@@ -43,11 +44,25 @@ def sessionUpdate(request):
 def studentUpdate(request,pk=None):
     sessionUpdate(request)
     session=Session.objects.get(active=True)
-    period=Period.objects.get(active=True)
+    period=Period.objects.get(active=True)    
+    
     try:
         
         student = Student.objects.get(id=pk)
         className = StudentList.objects.get(students=student,session=session,periods=period)
+        student_form = StudentForm(request.POST,request.FILES, instance=student)
+        
+        if request.method == 'POST':
+            student_form.save()
+            if student_form.is_valid():
+                formf =student_form.save()
+                print("ok",student_form.firstName)
+            
+                return render(request, "student/std-Update.html", context)
+            elif student_form.errors :
+                print("Profil form da hatalar var" , student_form.errors.as_text())
+            else:
+                print("false")
     except:
         context={
         
@@ -55,10 +70,11 @@ def studentUpdate(request,pk=None):
         }
         return render(request,"student/std-list.html",context)
     
-    
+    student_form = StudentForm(instance=student)
     context={
         'student':student,
         'className':className,
+        'student_form':student_form,
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods
         }

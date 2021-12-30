@@ -52,6 +52,9 @@ def stdAttUpdate(request,pk=None):
         
         student = Student.objects.get(id=pk)
         className = StudentList.objects.get(students=student,session=session,periods=period)
+        if request.POST:
+            
+            student.save()
     except:
         context={
         
@@ -101,122 +104,6 @@ def stdAttIndex(request):
     return render(request, "attendance/std-dailyAttendance.html", context)
 
 
-# class StdAttDailyListView(ListView):
-#     template_name = 'attendance/std-dailyAttendance.html'
-#     model = Student
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['lessonPeriod']=LessonPeriods.objects.all()
-#         context['classLevels']=ClassLevels.objects.all()
-#         context['sessions']=Session.objects.all()
-#         context['periods']=Period.objects.all()
-#         context['classNames']=ClassNames.objects.all()
-#         context['newlist']=LessonPeriods.objects.all()
-#         context['media_url'] =settings.MEDIA_URL
-#         #context['dailyattendance']=DailyAttendance.objects.filter(day=datetime.date(year=2021,month=12,day=23))
-        
-        
-        
-#         dalist1 = []
-#         dalist2 = []
-#         # for i in context["dailyattendance"]:
-#         #     if i.student.id not in dalist1:
-#         #         dalist1.append(i.student.id)
-#         #         i.student.id
-#         #     if i.lesPeriod.id not in dalist2:
-#         #         dalist2.append(i.lesPeriod.id)
-        
-#         # context["dalist1"] = dalist1
-#         # context["dalist2"] = dalist2
-        
-#         return context
-#     def get_queryset(self):
-#         queryset = {"student": StudentList.objects.filter(className=1)}
-        
-#         sessionUpdate(self.request)
-        
-#         session=Session.objects.get(active=True)
-#         period=Period.objects.get(active=True)
-#         className = self.request.GET.get("className")
-#         classLevel = self.request.GET.get("classLevel")
-#         attandanceList = self.request.GET.getlist("cb-1")
-#         day = datetime.date(year=2021,month=12,day=23)
-        
-        
-        
-        
-        
-#         for item in attandanceList:
-#             newAttandance = DailyAttendance()
-#             lessonID,studentID,status = item.split("-")
-#             print(lessonID,studentID,status)
-#             try: 
-#                 oldAttandance = DailyAttendance.objects.get(lesPeriod=lessonID,student=studentID,day=day)
-#                 # newAttandance.update(lesPeriod=lessonID,student=studentID,day=day)
-#                 if status=="0":
-#                     oldAttandance.delete()
-#                 print("kayıt var ?")
-#                 continue
-#             except:
-#                 newAttandance.lesPeriod=LessonPeriods.objects.get(id=lessonID)
-#                 newAttandance.student=Student.objects.get(id=studentID)
-#                 newAttandance.periods=period
-#                 newAttandance.session=session  
-#                 newAttandance.save()
-#         query={}
-#         query2={}
-        
-           
-#         if className!="0" and className!=None:
-#             query['studentlist__className__className__name__contains']=className
-#             query2['className__className__name__contains']=className
-#         else:
-#             query['studentlist__className__className__name__contains']="A"
-#             query2['className__className__name__contains']=""
-#         if classLevel!="0" and classLevel!=None:
-#             query['studentlist__className__level__level__contains']=classLevel
-#             query2['className__level__level__contains']=classLevel
-#         else:
-#             query['studentlist__className__level__level__contains']="9"
-#             query2['className__level__level__contains']=""
-            
-#         query["studentlist__session__session__contains"]=session
-#         query["studentlist__periods__period__contains"]=period
-#         query2["session__session__contains"]=session
-#         query2["periods__period__contains"]=period
-#         try:
-            
-#             queryset = {"students": Student.objects.filter(**query),"studentlist": StudentList.objects.filter(**query2)}  
-            
-#             #queryset = {"students": Student.objects.filter(**query)}
-#             day = datetime.date(year=2021,month=12,day=23)
-#             studentsList =Student.objects.all()
-#             lesPeriods=LessonPeriods.objects.all()
-            
-#             newlist=[]
-#             for x in lesPeriods:
-#                 mylist=[]
-#                 for student in studentsList:
-                    
-#                     try:
-#                         DailyAttendance.objects.get(lesPeriod=x.pk,student=student.pk,day=day)
-                            
-#                         student.attStatus = True
-                        
-#                     except:
-#                         student.attStatus = False
-                    
-#                     mylist.append(student)
-#                 x.studentsList=mylist 
-#                 newlist.append(x)
-#             print(newlist)
-#             queryset = {"newlist":newlist}
-#         except Exception as err:
-#             print(err)
-            
-
-#         return queryset
 
 @login_required(login_url="/login/")
 def stdAttShowList(request):

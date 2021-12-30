@@ -5,7 +5,7 @@
 {% block content %}   
 
 <div class="container rounded bg-white mt-5 mb-5">
-    <form action="" method="GET">
+    <form action="" method="POST">
         {% csrf_token %}
     <div class="row">
         <div class="col-md-3 border-right">
@@ -84,22 +84,23 @@
                     <h4 class="text-right">Öğrenci Bilgileri</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Ad</label><input type="text" class="form-control"   placeholder="Ad" value="{{student.firstName}}" ></div>
-                    <div class="col-md-6"><label class="labels">Soyad</label><input type="text" class="form-control" value="{{student.lastName}}" placeholder="Soyad" ></div>
+                    <div class="col-md-6"><label class="labels">Ad</label>{{student_form.firstName}}</div>
+                    <div class="col-md-6"><label class="labels">Soyad</label><input id="lastName" type="text" class="form-control" value="{{student.lastName}}" placeholder="Soyad" ></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Öğrenci No:</label><input type="text" class="form-control" placeholder="Okul No" value="{{student.number}}" ></div>
-                    <div class="col-md-12"><label class="labels">Adres:</label><textarea rows="3" cols="30" class="form-control" name="" >{{student.address}}</textarea></div>
-                    <div class="col-md-12"><label class="labels">Sağlık Durumu:</label><textarea rows="3" cols="30" class="form-control" name="" >{{student.health}}</textarea></div>
+                    <div class="col-md-12"><label class="labels">Öğrenci No:</label><input id="number" type="text" class="form-control" placeholder="Okul No" value="{{student.number}}" ></div>
+                    <div class="col-md-12"><label class="labels">Adres:</label><textarea id="address" rows="3" cols="30" class="form-control" name="" >{{student.address}}</textarea></div>
+                    <div class="col-md-12"><label class="labels">Sağlık Durumu:</label><textarea id="health" rows="3" cols="30" class="form-control" name="" >{{student.health}}</textarea></div>
                     <!-- <div class="col-md-12"><label class="labels">Postcode:</label><input type="text" class="form-control" placeholder="enter address line 2" value="" disabled></div>
                     <div class="col-md-12"><label class="labels">State:</label><input type="text" class="form-control" placeholder="enter address line 2" value="" disabled></div> -->
-                    <div class="col-md-12"><label class="labels">TC:</label><input type="text" class="form-control" placeholder="TC" value="{{student.TC}}" ></div>
-                    <div class="col-md-12"><label class="labels">E-mail:</label><input type="text" class="form-control" placeholder="E-mail" value="{{student.email}}" ></div>
-                    <div class="col-md-12"><label class="labels">Orta Okulu:</label><input type="text" class="form-control" placeholder="Orta Okulu" value="{{student.middleSchool}}" ></div>
+                    <div class="col-md-12"><label class="labels">TC:</label><input id="TC" type="text" class="form-control" placeholder="TC" value="{{student.TC}}" ></div>
+                    <div class="col-md-12"><label class="labels">E-mail:</label><input id="email" type="text" class="form-control" placeholder="E-mail" value="{{student.email}}" ></div>
+                    <div class="col-md-12"><label class="labels">Orta Okulu:</label><input id="middleSchool" type="text" class="form-control" placeholder="Orta Okulu" value="{{student.middleSchool}}" ></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value="" ></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state" ></div>
+                    <div class="col-md-6"><label class="labels">HES Kodu</label><input id="hescode" type="text" class="form-control" placeholder="HES Kodu" value="" ></div>
+                    <div class="col-md-6"><label class="labels">Telefon </label><input id="phone" type="text" class="form-control" value="" placeholder="Telefon" ></div>
+                    <div class="col-md-6"><label class="labels">boss </label><input id="boss" type="text" class="form-control" value="" placeholder="state" ></div>
                 </div>
                 
             </div>
@@ -116,8 +117,16 @@
             </div>
         </div>
     </div>
+    
+   
+
 </div>
+
 </div>
+<div class="col-md-12 mx-5">
+    <hr>
+    <button type="submit" class="btn btn-success">Değişiklikleri Kaydet</button>
+</div>         
 </form>
 </div>
 
