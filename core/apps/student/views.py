@@ -56,9 +56,9 @@ def studentUpdate(request,pk=None):
             student_form.save()
             if student_form.is_valid():
                 formf =student_form.save()
-                print("ok",student_form.firstName)
-            
-                return render(request, "student/std-Update.html", context)
+                
+                return redirect('student-list')
+                
             elif student_form.errors :
                 print("Profil form da hatalar var" , student_form.errors.as_text())
             else:
@@ -68,7 +68,7 @@ def studentUpdate(request,pk=None):
         
         'sessions':sessions,"periods":periods
         }
-        return render(request,"student/std-list.html",context)
+        return render(request, "student/std-Update.html", context)
     
     student_form = StudentForm(instance=student)
     context={
@@ -209,6 +209,10 @@ class StudentListView(ListView):
         period=Period.objects.get(active=True)
         className = self.request.GET.get("className")
         classLevel = self.request.GET.get("classLevel")
+        if className==None:
+            className="A"
+        if classLevel==None:
+            classLevel="9"    
         query={}
         query2={}
         

@@ -60,7 +60,7 @@ def stdAttUpdate(request,pk=None):
         
         'sessions':sessions,"periods":periods
         }
-        return render(request,"student/std-list.html",context)
+        return render(request,"student/att-list.html",context)
     
     
     context={

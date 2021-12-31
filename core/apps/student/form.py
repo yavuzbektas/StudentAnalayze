@@ -4,74 +4,82 @@ from .models import Student,StudentList,Parent,MiddleSchool
 
 class StudentForm(forms.ModelForm):
     firstName = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'firstName',
+        'id':'firstName_std',
         'class': 'form-control',
         'placeholder': 'Adınız',
     }),required=False)
     lastName = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'lastName',
+        'id':'lastName_std',
         'class': 'form-control',
         'placeholder': 'Soy Adınız',
         
     }),required=False)
     
     TC = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'TC',
+        'id':'TC_std',
         'class': 'form-control',
         'placeholder': 'TC No'
     }),required=False)
     phone = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'phone',
+        'id':'phone_std',
         'class': 'form-control',
         'placeholder': 'Telefon No'
     }),required=False)
-    address = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'address',
+    address = forms.CharField(widget=forms.Textarea(attrs={
+        'id':'address_std',
+        'rows':'3' ,
+        'cols':'30' ,
         'class': 'form-control',
         'placeholder': 'Adres',
         
     }),required=False)
     status = forms.BooleanField(widget=forms.CheckboxInput(attrs={
-        'id':'status',
-        'class': 'form-control',
-        'placeholder': 'Ayrıldı Mı?'
+        'id':'status_std',
+        'class': 'form-control mx-2',
+        'placeholder': 'Ayrıldı Mı?',
+        'data-toggle':'toggle',
+        'data-on':'AKTIF' ,
+        'data-off':'AYRILDI' ,
+        'data-onstyle':'success' ,
+        'data-offstyle':'danger'
     }),required=False)
     middleSchool = forms.ModelChoiceField(queryset=MiddleSchool.objects.all(),widget=forms.Select({
-        'id':'middleSchool',
+        'id':'middleSchool_std',
         'class': ' form-control',
         'placeholder': 'Orta Okul',
          
         }),required=False)
     number = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'number',
+        'id':'number_std',
         'class': 'form-control',
-        'placeholder': 'Okul No'
     }),required=False)
     session = forms.ModelChoiceField(queryset=Session.objects.all(),widget=forms.Select({
-        'id':'session',
+        'id':'session_std',
         'class': ' form-control',
         'placeholder': 'sezon',
          
         }),required=False)
-    health = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'health',
+    health = forms.CharField(widget=forms.Textarea(attrs={
+        'id':'health_std',
+        'rows':'3' ,
+        'cols':'30' ,
         'class': 'form-control',
         'placeholder': 'Sağlık Bilgisi',
         
     }),required=False)
     HESCode = forms.CharField(widget=forms.TextInput(attrs={
-        'id':'hescode',
+        'id':'hescode_std',
         'class': 'form-control',
         'placeholder': '____-____-_'
     }),required=False)
     birtdate = forms.DateField(widget=forms.SelectDateWidget(attrs={
-        'id':'birtdate',
+        'id':'birtdate_std',
         'class': 'form-control',
         'placeholder': 'Dogum Günü'
     }),required=False)
     
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'id':'email',
+        'id':'email_std',
         'class': 'form-control',
         'placeholder': 'Email'
     }),required=False)
@@ -94,4 +102,4 @@ class StudentForm(forms.ModelForm):
     
     class Meta:
         model = Student
-        fields =  ['firstName','lastName','health','address',"TC",'phone','HESCode','gender',"status",'image',"birtdate","email",'middleSchool']
+        fields =  '__all__'
