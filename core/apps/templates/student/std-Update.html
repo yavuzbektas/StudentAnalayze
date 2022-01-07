@@ -308,29 +308,30 @@
                         <div class="col-md-6"><label class="labels">TC No ? </label>{{student_form.TC}}</div>
                         <div class="col-md-6"><label class="labels"> Devam : </label>
 
-                        <div id="ModalPopovers" class="modal fade" tabindex="-1" role="dialog"
-                            aria-labelledby="ModalPopoversLabel" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalPopoversLabel">Öğrenci Kayıt Pasifleştirme</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body ">
-                                        <h5>Öğrenciyi Pasifleştirmek istiyor musunuz ?</h5>
-                                        {{student_form.status}}
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Kapat</button>
+                            <div id="ModalPopovers" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="ModalPopoversLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalPopoversLabel">Öğrenci Kayıt Pasifleştirme
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <h5>Öğrenciyi Pasifleştirmek istiyor musunuz ?</h5>
+                                            {{student_form.status}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Kapat</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#ModalPopovers">Kaydı Pasifleştir</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#ModalPopovers">Kaydı Pasifleştir</button>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -361,6 +362,7 @@
                         <div class="col-md-6"><label class="labels">Kız/Erkek ? </label>{{student_form.gender}}</div>
                         <div class="col-md-6"><label class="labels">HES Kodu</label>{{student_form.HESCode}}</div>
                         <div class="col-md-12"><label class="labels">Sağlık Durumu:</label>{{student_form.health}}</div>
+                        <div class="col-md-12"><label class="labels">Doğum Tarihi:</label>{{student_form.birtdate}}</div>
                     </div>
 
                 </div>
@@ -604,7 +606,8 @@
                                         <g></g>
                                     </svg><a href="http://www.amcharts.com/javascript-charts/" title="JavaScript charts"
                                         style="position: absolute; text-decoration: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 11px; opacity: 0.7; display: block; left: 5px; top: 5px;">JS
-                                        chart by amCharts</a></div>
+                                        chart by amCharts</a>
+                                </div>
                             </div>
                         </div>
 

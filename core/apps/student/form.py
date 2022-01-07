@@ -2,7 +2,7 @@ from django import forms
 from apps.home.models import Session,Period,Profil
 from apps.classes.models import  Classes,ClassLevels,ClassNames
 from .models import Student,StudentList,Parent,MiddleSchool,Period
-
+from django.contrib.admin.widgets import AdminDateWidget
 class StudentForm(forms.ModelForm):
     firstName = forms.CharField(widget=forms.TextInput(attrs={
         'id':'firstName_std',
@@ -73,9 +73,10 @@ class StudentForm(forms.ModelForm):
         'class': 'form-control',
         'placeholder': '____-____-_'
     }),required=False)
-    birtdate = forms.DateField(widget=forms.SelectDateWidget(attrs={
+    birtdate = forms.DateField(widget=forms.DateInput(attrs={
         'id':'birtdate_std',
-        'class': 'form-control',
+        'type':'date',
+        'class': 'form-control datepicker',
         'placeholder': 'Dogum Günü'
     }),required=False)
     
