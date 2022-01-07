@@ -94,6 +94,7 @@
                     <div class="col-md-12"><label class="labels">TC:</label><input type="text" class="form-control" placeholder="TC" value="{{student.TC}}" disabled></div>
                     <div class="col-md-12"><label class="labels">E-mail:</label><input type="text" class="form-control" placeholder="E-mail" value="{{student.email}}" disabled></div>
                     <div class="col-md-12"><label class="labels">Orta Okulu:</label><input type="text" class="form-control" placeholder="Orta Okulu" value="{{student.middleSchool}}" disabled></div>
+                    <div class="col-md-12"><label class="labels">Doğum günü:</label><input type="text" class="form-control" placeholder="Doğum günü" value="{% if student.birtdate %}{{student.birtdate}}{% endif %}" disabled></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value="" disabled></div>

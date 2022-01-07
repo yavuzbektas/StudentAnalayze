@@ -9,7 +9,7 @@ from django.views.generic.list import ListView
 from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
 from django.views.generic.detail import SingleObjectMixin
-from .form import StudentForm
+from .form import StudentForm,StudentListForm
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
@@ -39,6 +39,40 @@ def sessionUpdate(request):
         newPeriod  = Period.objects.get(period=newPeriod )
         newPeriod.active=True
         newPeriod.save()
+
+@login_required(login_url="/login/")
+def studentAdd(request):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)    
+    getStudentList = StudentList.objects.filter(session=session,periods=period)
+    student_form = StudentForm(request.POST,request.FILES)
+    studentListForm = StudentListForm(request.POST,request.FILES)
+    if request.method == 'POST':
+        if student_form.is_valid() and studentListForm.is_valid():
+            formf1 =student_form.save()
+            studentListForm.students =formf1
+            studentListForm.periods =period
+            studentListForm.session =session
+            studentListForm.save()
+            print(studentListForm)
+            return redirect('student-list')
+            
+        elif student_form.errors :
+            print("form da hatalar var" , student_form.errors.as_text())
+        elif studentListForm.errors :
+            print("form da hatalar var" , studentListForm.errors.as_text())
+        else:
+            print("false")
+    
+    context={
+        'student_form':student_form,
+        'studentListForm':studentListForm,
+        'media_url':settings.MEDIA_URL,
+        'sessions':sessions,"periods":periods
+        }
+    return render(request, "student/std-add.html", context)
+
 
 @login_required(login_url="/login/")
 def studentUpdate(request,pk=None):

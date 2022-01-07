@@ -20,6 +20,7 @@ urlpatterns = [
     path('std-profile.html', views.studentUpdate, name='student-edit'),
     path('view/<int:pk>', views.studentView, name='student-view'),
     path('update/<int:pk>', views.studentUpdate, name='student-update'),
+    path('add/', views.studentAdd, name='student-add'),
     path('delete/<int:pk>',views.studentDelete, name='student-delete'),
     path('list/', views.StudentListView.as_view(),name='student-list'),
     

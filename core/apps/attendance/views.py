@@ -42,7 +42,6 @@ def sessionUpdate(request):
 
 
 
-
 @login_required(login_url="/login/")
 def stdAttUpdate(request,pk=None):
     sessionUpdate(request)
