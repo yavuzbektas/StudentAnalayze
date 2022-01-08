@@ -18,9 +18,11 @@ urlpatterns = [
     
     # Matches any html file
     path('classes.html', views.classesUpdate, name='classes-edit'),
+    path('StudentListUpdateView/<int:pk>', views.StudentListUpdateView, name='StudentListUpdateView'),
     path('view/<int:pk>', views.classesView, name='classes-view'),
     path('list/', views.classesShowList,name='classes-list'),
     path('delete/<int:pk>',views.classesDelete, name='classes-delete'),
-    path('list/<str:filterBy>/<str:filterValue>', views.classesShowListFiltered,name='classes-list') , ]
+    path('page-blank.html',views.StudentListDetailView.as_view(), name='detail'),
+    path('list/<str:filterBy>/<str:filterValue>', views.classesShowListFiltered,name='classes-list-filtered') , ]
     
     

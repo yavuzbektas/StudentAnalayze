@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}  
+
+{% block title %} YOKLAMA SAYFASI {% endblock %}
+
+{% block content %}   
+<div class="col-xl-12 col-md-6">
+    <div class="card">
+        
+            <div class="card-header">
+                <h5>Yoklama raporları</h5>
+            </div>
+            <br>
+            <span class="mb-0 text-muted">
+                {% include 'reports/filter.html' %} 
+          </span>
+            <hr>
+            {% if alert %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger">{{message}}</div>
+            {% endfor %}
+            {% endif %}
+            {% else %}
+            {% if newlist %}
+            <a href=""><button class="btn btn-primary mr-3" onclick="printData()" >Çıktı al</button></a>
+            <script type="text/javascript">
+              function printData()
+                {
+                  var divToPrint=document.getElementById("table");
+                  newWin= window.open("");
+                  newWin.document.write(divToPrint.outerHTML);
+                  newWin.print();
+                  newWin.close();
+                }
+          </script>
+            <table class="table table-bordered" id = "table">
+                <tr>
+                  <th scope="col">Öğrenci ismi</th>
+                  {% for lesPeriod in lesPeriods %}
+                  <th scope="col">{{lesPeriod}}<th>
+                  {% endfor %}
+                  
+                </tr>
+                {% for student,statuslist in newlist %}
+                <tr>
+                  <th scope="row">{{student.firstName}} {{student.lastName}}</th>
+                  {% for status in statuslist %}
+                  <td style="text-align:center">{{status}}</td>
+                  <td></td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+              </table>
+            
+            {% endif %}
+            
+            
+            
+            
+            
+            {% endif %}
+            
+            <hr>
+            
+
+        
+    </div>
+</div>
+
+            
+
+{% endblock content %}

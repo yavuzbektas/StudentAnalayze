@@ -1,0 +1,30 @@
+<form class="col-md-12" method="GET" action=".">
+  
+    <div class="form-inline">
+      
+      <div class="form-group col-xl-12 col-md-6">
+        <label class="mr-3" for="classLevel">Seviye</label>
+        <select id="classLevel" class="form-control mr-3" name="classLevel">
+          
+          {% for classLevel in classLevels %}
+          <option value="{{ classLevel }}" {% if classLevel.selected %} selected {% endif %} >{{ classLevel }}</option>
+          {% endfor %}
+        </select>
+     
+      
+        <label class=""  for="className">Şube</label>
+        
+        <select id="className " class="form-control mx-3" name="className">
+          
+          {% for className in classNames %}
+          <option value="{{ className }}">{{ className }}</option>
+          {% endfor %}
+        </select>
+        <label for="report_date">Raporu oluşturulacak gün</label>
+        <input type="date" id="report_date" name="report_date">
+        <a href=""><button type="submit" class="btn btn-primary mr-3">Rapor oluştur</button></a>
+        
+      
+    </div>
+    
+</form>

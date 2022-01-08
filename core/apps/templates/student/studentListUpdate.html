@@ -1,0 +1,129 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Öğrenciler Listesi {% endblock %}
+
+{% block content %}   
+
+
+<script>
+
+
+
+  $(document).ready(function () {
+    $('.chkcvalues').click(function () {
+      var txt="";
+      $('.chkcvalues:checked').each(function () {
+        txt+=$(this).val()+","
+      });
+      txt=txt.substring(0,txt.length-1)
+      $('#txtvalues').val(txt);
+    });
+  });
+</script>
+
+
+ 
+
+<div class="col-xl-12 col-md-6">
+  <form  action="" method="GET">
+    {% csrf_token %}
+    <div class="card ">
+        <div class="card-header">
+            <h5>Öğrenci Listesi</h5>
+            <div class="form-inline">
+      
+              <div class="form-group col-xl-12 col-md-6">
+                <label class="mr-3" for="classLevel">Seviye</label>
+                <select id="classLevel" class="form-control mr-3" name="classLevel">
+                  
+                  {% for classLevel in classLevels %}
+                  <option value="{{ classLevel }}" {% if classLevel.selected %} selected {% endif %} >{{ classLevel }}</option>
+                  {% endfor %}
+                </select>
+             
+              
+                <label class=""  for="className">Şube</label>
+                <select id="className " class="form-control mx-3" name="className">
+                  
+                  {% for className in classNames %}
+                  <option value="{{ className }}">{{ className }}</option>
+                  {% endfor %}
+                  
+                </select>
+                
+                <div class="form-group">
+                  <div class="form-check mr-3">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="reviewed"
+                      name="reviewed"
+                    />
+                    <label class="form-check-label" for="reviewed"> Ayrılan </label>
+                  </div>
+                </div>
+              
+            </div>
+            
+        </div>
+       
+      
+        <div class="card-block px-0 py-3">
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th scope="col">değiştirilmek istenen öğrenci</th>
+                      
+                          <th scope="col">Ad ve Soyad</th>
+                        
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                        
+                        {% for student in studentList.students.all %}
+                        <tr class="unread" ></tr>
+                        <td>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox"  value="{{student.id}}" class=" chkcvalues " name="student_check"{% if student.student_check %} checked {% endif %} id="flexCheckDefault">{{ student}}
+                           
+                        </div>
+                      </td>
+                            
+                            
+                          
+                            <td title="Ad Soyad">
+                               
+                                <h6 class="mb-1">{{student.firstName}} {{student.lastName}}</h6>
+                            </a>
+                            </td>
+                            
+                        </tr>
+                        
+                       {% endfor %} 
+                       
+                        
+                        
+                        
+                       
+                       
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mx-5">
+        <hr>
+        <input id="txtvalues" type="text" name="studentr" />
+        <button id="but1" type="submit" class="btn btn-success" onclick="return alert('kayıt gerçekleşti')">Değişiklikleri Kaydet</button>
+    </div> 
+    </form>
+ 
+</div>
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

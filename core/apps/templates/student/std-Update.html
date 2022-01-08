@@ -362,7 +362,10 @@
                         <div class="col-md-6"><label class="labels">Kız/Erkek ? </label>{{student_form.gender}}</div>
                         <div class="col-md-6"><label class="labels">HES Kodu</label>{{student_form.HESCode}}</div>
                         <div class="col-md-12"><label class="labels">Sağlık Durumu:</label>{{student_form.health}}</div>
-                        <div class="col-md-12"><label class="labels">Doğum Tarihi:</label>{{student_form.birtdate}}</div>
+                        <div class="col-md-6"><label class="labels">Doğum Günü:</label><input method="POST"
+                                name="birtdate" class="form-control" {% if student.birtdate %} type="text"
+                                value="{{student.birtdate}}" onfocus="(this.type='date')" onblur="(this.type='text')" {%
+                                else %}type="date" {% endif %}></div>
                     </div>
 
                 </div>
