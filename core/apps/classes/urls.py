@@ -22,7 +22,8 @@ urlpatterns = [
     path('view/<int:pk>', views.classesView, name='classes-view'),
     path('list/', views.classesShowList,name='classes-list'),
     path('delete/<int:pk>',views.classesDelete, name='classes-delete'),
-    path('page-blank.html',views.StudentListDetailView.as_view(), name='detail'),
-    path('list/<str:filterBy>/<str:filterValue>', views.classesShowListFiltered,name='classes-list-filtered') , ]
+    path('list/<str:filterBy>/<str:filterValue>', views.classesShowListFiltered,name='classes-list-filtered') ,
+    path('class/assign/',views.StudentListDetailView.as_view(), name='detail'),
+]
     
     

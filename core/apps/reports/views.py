@@ -44,16 +44,35 @@ def sessionUpdate(request):
 def stdattreportindex(request):
     sessionUpdate(request)
     day =datetime.date.today()
+    str_day = str(day)
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
-    lesPeriods=LessonPeriods.objects.all()
+    lesPeriods= list(LessonPeriods.objects.all())
+    lesPeriod_list = []
+    for lesPeriod in lesPeriods:
+        lesPeriod_str_list = str(lesPeriod).split("-")
+        lesPeriod_list.append([lesPeriod_str_list[0],lesPeriod_str_list[1]+"-"+lesPeriod_str_list[2]])
+    
     absentStudentList = DailyAttendance.objects.filter(day=day)
     #sessions = Session.objects.all()
     #periods=Period.objects.all()
     
     #studentList = StudentList.objects.all()
     newlist=[]
-    
+    try:
+        report_date = request.GET.get("report_date")
+        report_date = datetime.datetime.strptime((report_date.replace("-"," ")),"%Y %m %d").date()
+    except:
+        if report_date == None:
+            context = {
+                'sessions':sessions,
+                'periods':periods,
+                'lesPeriods':lesPeriod_list,
+                'classNames':classNames,
+                'classLevels':classLevels,
+                'day':str_day
+            }
+            return render(request, "reports/rpr-yoklama.html", context)
     if request.GET:
         sessionUpdate(request)
         
@@ -69,20 +88,22 @@ def stdattreportindex(request):
                 context = {
                     'sessions':sessions,
                     'periods':periods,
-                    'lesPeriods':lesPeriods,
+                    'lesPeriods':lesPeriod_list,
                     'classNames':classNames,
                     'classLevels':classLevels,
+                    'day':str_day
                 }
                 return render(request, "reports/rpr-yoklama.html", context)
             
-        if report_date == "" or report_date > day:
+        if type(report_date) == str or report_date > day:
             messages.error(request,"Lütfen geçerli bir tarih giriniz")
             context = {
                 'sessions':sessions,
                 'periods':periods,
-                'lesPeriods':lesPeriods,
+                'lesPeriods':lesPeriod_list,
                 'classNames':classNames,
                 'classLevels':classLevels,
+                'day':str_day
             }
             return render(request, "reports/rpr-yoklama.html", context)
           
@@ -101,26 +122,28 @@ def stdattreportindex(request):
             for x in lesPeriods:
                 studentss = DailyAttendance.objects.filter(lesPeriod=x.pk,day=report_date,student=student)
                 if studentss:
-                    statusList.append("YOK")
+                    statusList.append(["YOK","alert alert-danger"])
                 else:
-                    statusList.append("VAR")
+                    statusList.append(["VAR","alert alert-success"])
             newlist.append([student,statusList])
     else:
         
         for listem in StudentList.objects.filter():
             studentList= listem.students.all()
-          
-           
+    
+    report_date = str(report_date)       
     context = {
         #'students' : students,
         #'studentList':studentList,
         'sessions':sessions,
         'periods':periods,
-        'lesPeriods':lesPeriods,
+        'lesPeriods':lesPeriod_list,
         'classNames':classNames,
         'classLevels':classLevels,
         'newlist':newlist,
         'media_url':settings.MEDIA_URL,
+        'day':str_day,
+        'report_date':report_date
     }
     return render(request, "reports/rpr-yoklama.html", context)
     

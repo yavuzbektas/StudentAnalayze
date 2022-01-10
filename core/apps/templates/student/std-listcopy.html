@@ -2,97 +2,101 @@
 
 {% block title %} Öğrenciler Listesi {% endblock %}
 
-{% block content %}   
+{% block content %}
 
 <div class="col-xl-12 col-md-6">
     <div class="card ">
+
         <div class="card-header">
             <h5>Liste Tablosu</h5>
+            {% include 'student/filter.html' %}
         </div>
-        
+
         <div class="row">
             <div class="col">
                 <div class="card card-body">
-        
-                    <form method="get">
-                        {{myFilter.form}}
-        
-                    <button class="btn btn-primary" type="submit">Search</button>
-                  </form>
-        
+
+
+
                 </div>
             </div>
-            
+
         </div>
         <div class="card-block px-0 py-3">
-            
+
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                        
-                        <th scope="col">Liste Adı</th>
-                       
+
+                            <th scope="col">Liste Adı</th>
+
                         </tr>
-                      </thead>
-                      <tbody>
-                        {% for students in studentlist  %}
+                    </thead>
+                    <tbody>
+                        {% for students in object_list.studentlist %}
                         <tr class="unread">
-                            
+
                             <td title="Sınıf">
                                 <h6 class="mb-1">{{students.className}} </h6>
-                            
+
                             </td>
-                            <td>
-                                
-                                <a href="#"class="label btn btn-success  f-12">Profile Git</a>
-                            </td>
+
                             {% if user.is_staff %}
                             <td>
-                                <a href="{% url 'StudentListUpdateView' students.id %}" class="label btn btn-primary  f-12">Güncelle</a>
-                                
+                                <a href="{% url 'StudentListUpdateView' students.id %}"
+                                    class="label btn btn-primary  f-12">Güncelle</a>
+
                             </td>
                             <td>
-                                
-                                <div id="{{student.id}}model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{student.id}}modelLabel" style="display: none;" aria-hidden="true">
+
+                                <div id="{{student.id}}model" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="{{student.id}}modelLabel" style="display: none;"
+                                    aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="{{student.id}}modelLabel">Öğrenci Silinecek</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                <h5 class="modal-title" id="{{student.id}}modelLabel">Öğrenci Silinecek
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>{{student.firstName}} {{student.lastName}} isimli öğrenciyi silmek istediğinize emin misiniz ? </p>
+                                                <p>{{student.firstName}} {{student.lastName}} isimli öğrenciyi silmek
+                                                    istediğinize emin misiniz ? </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                                                <a href="{% url 'student-delete' students.id %}"><button type="button" class="btn btn-danger">Sil</button></a>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Kapat</button>
+                                                <a href="{% url 'student-delete' students.id %}"><button type="button"
+                                                        class="btn btn-danger">Sil</button></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{student.id}}model">Sil</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#{{student.id}}model">Sil</button>
                             </td>
                             {% endif %}
                         </tr>
                         </tr>
-                       {% endfor %} 
-                       
+                        {% endfor %}
+
                     </tbody>
                 </table>
                 <table>
 
                     <tbody>
-                        
+
                         {% for studentL in studentList %}
                         <tr class="unread">
-                            
+
                             <td title="Ad Soyad">
                                 <h6 class="mb-1">{{studentL.firstName}} {{studentL.lastName}}</h6>
-                            
+
                             </td>
                         </tr>
-                        {% endfor %} 
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

@@ -105,12 +105,16 @@ def studentUpdate(request,pk=None):
         return render(request, "student/std-Update.html", context)
     
     student_form = StudentForm(instance=student)
+    birtdate = str(student.birtdate)
+
     context={
         'student':student,
         'className':className,
         'student_form':student_form,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,
+        'birtdate':birtdate,
+        'updatestudent':updatestudent
         }
     return render(request, "student/std-Update.html", context)
 

@@ -21,8 +21,19 @@
           {% endfor %}
         </select>
         <label for="report_date">Raporu oluşturulacak gün</label>
-        <input type="date" id="report_date" name="report_date">
-        <a href=""><button type="submit" class="btn btn-primary mr-3">Rapor oluştur</button></a>
+        <input class="form-control" type="date" id="report_date" name="report_date" style="margin:10px" {% if report_date %}value="{{report_date}}"{% else %}value="{{day}}"{% endif %}>
+        <a href=""><button type="submit" class="btn btn-primary mr-3" style="margin:10px">Rapor Oluştur</button></a>
+        {% if newlist %}<a href=""><button class="btn btn-primary mr-3" onclick="printData()" style="margin:5px">Çıktı al</button></a>
+        <script type="text/javascript">
+          function printData()
+            {
+              var divToPrint=document.getElementById("table");
+              newWin= window.open("");
+              newWin.document.write(divToPrint.outerHTML);
+              newWin.print();
+              newWin.close();
+            }
+      </script>{% endif %}
         
       
     </div>

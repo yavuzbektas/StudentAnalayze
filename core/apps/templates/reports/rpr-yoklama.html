@@ -14,38 +14,24 @@
                 {% include 'reports/filter.html' %} 
           </span>
             <hr>
-            {% if alert %}
             {% if messages %}
             {% for message in messages %}
             <div class="alert alert-danger">{{message}}</div>
             {% endfor %}
             {% endif %}
-            {% else %}
             {% if newlist %}
-            <a href=""><button class="btn btn-primary mr-3" onclick="printData()" >Çıktı al</button></a>
-            <script type="text/javascript">
-              function printData()
-                {
-                  var divToPrint=document.getElementById("table");
-                  newWin= window.open("");
-                  newWin.document.write(divToPrint.outerHTML);
-                  newWin.print();
-                  newWin.close();
-                }
-          </script>
             <table class="table table-bordered" id = "table">
                 <tr>
                   <th scope="col">Öğrenci ismi</th>
-                  {% for lesPeriod in lesPeriods %}
-                  <th scope="col">{{lesPeriod}}<th>
+                  {% for lessonCount,hours in lesPeriods %}
+                  <th scope="col" style="text-align:center">{{lessonCount}}<br>{{hours}}<th>
                   {% endfor %}
-                  
                 </tr>
                 {% for student,statuslist in newlist %}
                 <tr>
                   <th scope="row">{{student.firstName}} {{student.lastName}}</th>
-                  {% for status in statuslist %}
-                  <td style="text-align:center">{{status}}</td>
+                  {% for status,style in statuslist %}
+                  <td style="text-align:center" class="{{style}}" >{{status}}</td>
                   <td></td>
                   {% endfor %}
               </tr>
@@ -58,7 +44,7 @@
             
             
             
-            {% endif %}
+            
             
             <hr>
             
