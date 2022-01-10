@@ -32,9 +32,13 @@ def sessionUpdate(request):
             oldPeriod = Period.objects.get(active=1)
             oldPeriod.active=False
             oldPeriod.save()
+            newPeriod =request.GET.get("periodID")
         except:
             pass
-        newPeriod =request.GET.get("periodID")
+            print("Bu periyot yoktur")
+            newPeriod =request.GET.get(id=0)
+            
+        
         print("Yeni Period  : ",newPeriod )
         newPeriod  = Period.objects.get(period=newPeriod )
         newPeriod.active=True
@@ -114,7 +118,7 @@ def studentUpdate(request,pk=None):
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods,
         'birtdate':birtdate,
-        'updatestudent':updatestudent
+        
         }
     return render(request, "student/std-Update.html", context)
 

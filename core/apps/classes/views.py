@@ -58,8 +58,6 @@ class StudentListDetailView(ListView):
         return context
     def get_queryset(self):
         queryset = {"studentlist": StudentList.objects.all()}
-        """query["studentlist__session__session__contains"]=session
-        query["studentlist__periods__period__contains"]=period"""
         sessionUpdate(self.request)
     
         session=Session.objects.get(active=True)
@@ -67,10 +65,6 @@ class StudentListDetailView(ListView):
         className = self.request.GET.get("className")
         classLevel = self.request.GET.get("classLevel")
         
-        """if className==None:
-            className="A"
-        if classLevel==None:
-            classLevel="9" """
         z=0
         i=0  
         liste =[]
@@ -114,207 +108,47 @@ class StudentListDetailView(ListView):
                 i=i+1
         return queryset
 
-
+@login_required(login_url="/login/")
 def StudentListUpdateView(request,pk):
+    
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
-    studentList=StudentList.objects.all()
-    listo = StudentList.objects.get(id=pk)
-    student=Student.objects.all()
-    ogrenci5=0
-    r=Classes.objects.all()
-    i=0
+    baseList = StudentList.objects.get(id=pk) # get studentlist by current ID
+    classess=Classes.objects.all()
+    studentIndex=0
     
     if request.GET:
-        
-        
-        
+        try:
+            session=Session.objects.get(active=True)
+            period=Period.objects.get(active=True) 
+        except:
+            return
         className = request.GET.get("className")
         classLevel = request.GET.get("classLevel")
         if className==None or classLevel==None:
-            className="A"
-            classLevel="9"
-        
-        
-        
-        secilen = request.GET.getlist("student_check")
-      
-        liste=secilen
-        session=Session.objects.get(active=True)
-        period=Period.objects.get(active=True)
-        dizi=[]
-        for c in r :
-                for a in c.className.name:
-                    for b in classLevels:       
-                        if a != className and b == classLevel:
-                            
-                            if c.className.name == className and c.level.level == classLevel:
-                                        ekleme=StudentList.objects.get(className=c , session=session)
-                                        liste2=listo.students.all()
-                                        liste= ekleme
-                                        ogrenci4=[]
-                                        query={}
-                                        query2={}
-                                        t=0
-                                        z=0
-                                        h=0
-                                        while i<len(secilen):
-                                            deger1=secilen[i]
-                                            deger2=int(deger1)
-                                            ogrenci=Student.objects.get(id=deger2)
-                                            print(ekleme)
-                                
-                                            
-                                            deger1=secilen[i]
-                                            deger2=int(deger1)
-                                            while t<len(listo.students.all()):
+            return 
+        chekcedStudentList = request.GET.getlist("student_check")
+        #print(chekcedStudentList)
+        targetClass =  Classes.objects.get(className=ClassNames.objects.get(name=className),level=ClassLevels.objects.get(level=classLevel))
+        targetStudentList=StudentList.objects.get(className=targetClass , session=session,periods=period)
+       
+        for studentID in chekcedStudentList:
+            
+            targetStudentList.students.add(Student.objects.get(id=int(studentID)))
+            baseList.students.remove(Student.objects.get(id=int(studentID)))
+            
+            baseList.save()
+            targetStudentList.save()
+            
+                
                                                 
-                                                if liste2[t] == ogrenci:
-                                                    copy=ogrenci
-                                                    ekleme.students.add(ogrenci)
-                                                    ekleme.save()
-                                                    liste9=[]
-                                                    liste9=list(ekleme.students.all())
-                                                    print(liste9)
-                                                    while h<len(ekleme.students.all()):
-                                                        if  liste9[h]==ogrenci:
-                                                                
-                                                            listo.students.remove(ogrenci)
-                                                            listo.save()
-                                                            break
-                                                        h=h+1
-                                                    listo.save()
-                                                    break
-                                            
-                                            t=t+1
-                                            
-                                            
-                                            listo.save()
-                                            ekleme.save()
-                                            
-                                            z=z+1
-                                            listo.save()
-                                            ekleme.save()
-                                            i=i+1
-                                        
-                                            break
-
-                        elif a == className and b != classLevel:
-                                        
-                            if c.className.name == className and c.level.level == classLevel:
-                                        ekleme=StudentList.objects.get(className=c , session=session)
-                                        liste2=listo.students.all()
-                                        liste= ekleme
-                                        ogrenci4=[]
-                                        query={}
-                                        query2={}
-                                        t=0
-                                        z=0
-                                        h=0
-                                        while i<len(secilen):
-                                            deger1=secilen[i]
-                                            deger2=int(deger1)
-                                            ogrenci=Student.objects.get(id=deger2)
-                                            print(ekleme)
-                                
-                                            
-                                            deger1=secilen[i]
-                                            deger2=int(deger1)
-                                            while t<len(listo.students.all()):
-                                                
-                                                if liste2[t] == ogrenci:
-                                                    copy=ogrenci
-                                                    ekleme.students.add(ogrenci)
-                                                    ekleme.save()
-                                                    liste9=[]
-                                                    liste9=list(ekleme.students.all())
-                                                    print(liste9)
-                                                    while h<len(ekleme.students.all()):
-                                                        if  liste9[h]==ogrenci:
-                                                                
-                                                            listo.students.remove(ogrenci)
-                                                            listo.save()
-                                                            break
-                                                        h=h+1
-                                                    listo.save()
-                                                    break
-                                            
-                                            t=t+1
-                                            
-                                            
-                                            listo.save()
-                                            ekleme.save()
-                                            
-                                            z=z+1
-                                            listo.save()
-                                            ekleme.save()
-                                            i=i+1
-                                        
-                                            break
-                        elif a != className and b != classLevel:
-                                    
-                            if c.className.name == className and c.level.level == classLevel:
-                                        ekleme=StudentList.objects.get(className=c , session=session)
-                                        liste2=listo.students.all()
-                                        liste= ekleme
-                                        ogrenci4=[]
-                                        query={}
-                                        query2={}
-                                        t=0
-                                        z=0
-                                        h=0
-                                        while i<len(secilen):
-                                            deger1=secilen[i]
-                                            deger2=int(deger1)
-                                            ogrenci=Student.objects.get(id=deger2)
-                                            print(ekleme)
-                                
-                                            
-                                            deger1=secilen[i]
-                                            deger2=int(deger1)
-                                            while t<len(listo.students.all()):
-                                                
-                                                if liste2[t] == ogrenci:
-                                                    copy=ogrenci
-                                                    ekleme.students.add(ogrenci)
-                                                    ekleme.save()
-                                                    liste9=[]
-                                                    liste9=list(ekleme.students.all())
-                                                    print(liste9)
-                                                    while h<len(ekleme.students.all()):
-                                                        if  liste9[h]==ogrenci:
-                                                                
-                                                            listo.students.remove(ogrenci)
-                                                            listo.save()
-                                                            break
-                                                        h=h+1
-                                                    listo.save()
-                                                    break
-                                            
-                                            t=t+1
-                                            
-                                            
-                                            listo.save()
-                                            ekleme.save()
-                                            
-                                            z=z+1
-                                            listo.save()
-                                            ekleme.save()
-                                            i=i+1
-                                        
-                                            break
-                           
-        
-        
     context = {
-        #'students' : students,
-        'studentList':listo,
+        
+        'studentList':baseList,
         'sessions':sessions,
         'periods':periods,
-        #'studentt':listo,
         'classNames':classNames,
         'classLevels':classLevels,
-    
         'media_url':settings.MEDIA_URL
     }
     
