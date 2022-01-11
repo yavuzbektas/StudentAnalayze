@@ -32,6 +32,7 @@
                             <th scope="col">Sınıf Adı</th>
                             <th scope="col">Sezon</th>
                             <th scope="col">Periyot</th>
+                            <th scope="col">Öğrenci Sayısı</th>
                             <th scope="col">Güncelleme</th>
                         </tr>
                     </thead>
@@ -49,6 +50,10 @@
                             </td>
                             <td title="Period">
                                 <h6 class="mb-1">{{studentlist.periods}} </h6>
+
+                            </td>
+                            <td title="Period">
+                                <h6 class="mb-1">{{studentlist.students.count}} </h6>
 
                             </td>
                             {% if user.is_staff %}

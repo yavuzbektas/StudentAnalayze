@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponseRedirect,reverse
+from django.shortcuts import render,redirect,HttpResponseRedirect,reverse,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Student,StudentList
@@ -10,6 +10,8 @@ from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
 from django.views.generic.detail import SingleObjectMixin
 from .form import StudentForm,StudentListForm
+
+
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
@@ -83,25 +85,32 @@ def studentUpdate(request,pk=None):
     sessionUpdate(request)
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)    
-    
+    getStudentList = StudentList.objects.filter(session=session,periods=period)
     try:
         
         student = Student.objects.get(id=pk)
-        className = StudentList.objects.get(students=student,session=session,periods=period)
+        oldclass = StudentList.objects.get(students=student,session=session,periods=period)
         student_form = StudentForm(request.POST,request.FILES, instance=student)
         
         if request.method == 'POST':
-            student_form.save()
+            
             if student_form.is_valid():
                 formf =student_form.save()
+                newclassNameID = request.POST.get("classNameSelect")
                 
+                newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
+                print(newclass)
+                student_form.save()
+                newclass.students.add(student)
+                oldclass.students.remove(student)
                 return redirect('student-list')
                 
             elif student_form.errors :
                 print("Profil form da hatalar var" , student_form.errors.as_text())
             else:
                 print("false")
-    except:
+    except Exception as err:
+        print(err)
         context={
         
         'sessions':sessions,"periods":periods
@@ -109,11 +118,13 @@ def studentUpdate(request,pk=None):
         return render(request, "student/std-Update.html", context)
     
     student_form = StudentForm(instance=student)
+    
     birtdate = str(student.birtdate)
 
     context={
         'student':student,
-        'className':className,
+        'stdClassName':oldclass,
+        'allClassList':getStudentList,
         'student_form':student_form,
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods,
@@ -138,7 +149,7 @@ def studentView(request,pk=None):
         return render(request,"student/std-list.html",context)
     context={
         'student':student,
-        'className':className,
+        'studentclassName':className,
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods
         }

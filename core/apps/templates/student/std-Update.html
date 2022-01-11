@@ -341,7 +341,21 @@
                     <hr>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Kayıt Yılı:</label>{{student_form.session}}</div>
-                        <div class="col-md-12"><label class="labels">Okul No :</label>{{student_form.number}}</div>
+                        <div class="col-md-6"><label class="labels">Sınıfı :</label>
+                            
+                            <select id="classNameSelect " class="form-control mx-3" name="classNameSelect">
+                            
+                            {% for classNamex in allClassList %}
+                            {% if classNamex == stdClassName %}
+                            <option  value="{{ classNamex.id }}" selected >{{ classNamex.className }}</option>
+                            {% else %}
+                            <option value="{{ classNamex.id }}" >{{ classNamex.className }}</option>
+                            {% endif %}
+                            {% endfor %}
+            
+                            </select>
+                            </div>
+                        <div class="col-md-6"><label class="labels">Okul No :</label>{{student_form.number}}</div>
 
                     </div>
                     <hr>
