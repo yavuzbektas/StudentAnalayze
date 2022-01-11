@@ -274,24 +274,33 @@ class StudentListView(ListView):
         query={}
         query2={}
         
-           
+            
         if className!="0" and className!=None:
             query['studentlist__className__className__name__contains']=className
             query2['className__className__name__contains']=className
+        
         else:
             query['studentlist__className__className__name__contains']=""
             query2['className__className__name__contains']=""
         if classLevel!="0" and classLevel!=None:
             query['studentlist__className__level__level__contains']=classLevel
             query2['className__level__level__contains']=classLevel
+        
         else:
             query['studentlist__className__level__level__contains']=""
             query2['className__level__level__contains']=""
             
-        query["studentlist__session__session__contains"]=session
-        query["studentlist__periods__period__contains"]=period
-        query2["session__session__contains"]=session
-        query2["periods__period__contains"]=period
+        if classLevel=="0" and className=="0": 
+            queryset = {"students": Student.objects.all().distinct(),"studentlist": StudentList.objects.all()}  
+            return queryset
+            
+            
+            
+        else:
+            query["studentlist__session__session__contains"]=session
+            query["studentlist__periods__period__contains"]=period
+            query2["session__session__contains"]=session
+            query2["periods__period__contains"]=period
         try:
             queryset = {"students": Student.objects.filter(**query).distinct(),"studentlist": StudentList.objects.filter(**query2)}  
             

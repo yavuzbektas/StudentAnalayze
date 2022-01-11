@@ -113,17 +113,17 @@ def StudentListUpdateView(request,pk):
             return redirect("/classes/assign")
         
         
-       
+        
         if targetClass!=None:
             targetStudentList=StudentList.objects.get(className=targetClass , session=session,periods=period)
-       
-        for studentID in chekcedStudentList:
-            
-            targetStudentList.students.add(Student.objects.get(id=int(studentID)))
-            baseList.students.remove(Student.objects.get(id=int(studentID)))
-            baseList.save()
-            targetStudentList.save()
-            
+        if targetClass.className.name!=className and targetClass.level.level!=classLevel:
+            for studentID in chekcedStudentList:
+                
+                targetStudentList.students.add(Student.objects.get(id=int(studentID)))
+                baseList.students.remove(Student.objects.get(id=int(studentID)))
+                baseList.save()
+                targetStudentList.save()
+                
                 
                                                 
     context = {
