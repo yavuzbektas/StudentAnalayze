@@ -83,6 +83,8 @@ class StudentList(models.Model):
     periods=models.ForeignKey(Period,on_delete=models.CASCADE)
     students=models.ManyToManyField(Student,blank=True)
     teachers=models.ManyToManyField(Profil,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
+    class Meta:
+        ordering = ('className',"session","periods",)
     def __str__(self):
         
-        return str(self.session.session)+' '+str(self.className.level.level)+self.className.className.name
+        return  str(self.session.session)+' '+self.periods.period +' '+str(self.className.level.level)+self.className.className.name

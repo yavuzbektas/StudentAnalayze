@@ -1,0 +1,78 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Öğrenciler Listesi {% endblock %}
+
+{% block content %}
+
+<div class="col-xl-12 col-md-6">
+    <div class="card ">
+
+        <div class="card-header">
+            <h5>Liste Tablosu</h5>
+            {% include 'student/filter.html' %}
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card card-body">
+
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="card-block px-0 py-3 col-md-6">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Sınıf Adı</th>
+                            <th scope="col">Sezon</th>
+                            <th scope="col">Periyot</th>
+                            <th scope="col">Güncelleme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for studentlist in object_list.studentlist %}
+                        <tr class="unread">
+
+                            <td title="Sınıf">
+                                <h6 class="mb-1">{{studentlist.className}} </h6>
+
+                            </td>
+                            <td title="Sezon">
+                                <h6 class="mb-1">{{studentlist.session}} </h6>
+
+                            </td>
+                            <td title="Period">
+                                <h6 class="mb-1">{{studentlist.periods}} </h6>
+
+                            </td>
+                            {% if user.is_staff %}
+                            <td>
+                                <a href="{% url 'StudentListUpdateView' studentlist.id %}"
+                                    class="label btn btn-primary  f-12">Güncelle</a>
+
+                            </td>
+                            
+                            {% endif %}
+                        </tr>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

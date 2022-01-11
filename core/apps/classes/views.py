@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 
 from apps.student.views import sessionUpdate
@@ -44,7 +44,7 @@ def classesShowListFiltered(request,filterBy,filterValue):
 class StudentListDetailView(ListView):
     
     model = StudentList
-    template_name="student/std-listcopy.html"
+    template_name="clasess/cls-list.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,49 +64,31 @@ class StudentListDetailView(ListView):
         period=Period.objects.get(active=True)
         className = self.request.GET.get("className")
         classLevel = self.request.GET.get("classLevel")
+        query={}
         
-        z=0
-        i=0  
-        liste =[]
-        liste=StudentList.objects.all()
-        liste2=[]
-        liste3=[]
-        
-        while i<len(StudentList.objects.all()):
-                deger=liste[i]
+           
+        if className!="0" and className!=None:
+            query['className__className__name__contains']=className
             
-                print(session.session)
-                print(className)
-                if deger.session.session==session.session :
-                   
-                    
-                    queryset = { "studentlist":liste2 }  
-                    if deger.className.className.name==className and deger.className.level.level==classLevel:
-                        print("a")
-               
-                        liste2.append(deger) 
-                        queryset = { "studentlist":liste2 }
-                    elif className==0  and classLevel!=0:
-                        if deger.className.level.level==classLevel:
-                            liste2.append(deger) 
-                            queryset = { "studentlist":liste2 }
-                            break
-                    elif className==0  and classLevel==0:
-                        liste2.append(deger) 
-                        queryset = { "studentlist":liste2 }
-                    elif className!=0  and classLevel==0:
-                        if deger.className.className.name==className:
-                            liste2.append(deger) 
-                            queryset = { "studentlist":liste2 }
-                    elif  className==None  and classLevel==None:
-                        print("z")  
-                        liste2.append(deger) 
-                        queryset = { "studentlist":liste2 }
-                     
-                    
-               
-                i=i+1
+        else:
+            query['className__className__name__contains']=""
+           
+        if classLevel!="0" and classLevel!=None:
+            query['className__level__level__contains']=classLevel
+          
+        else:
+            query['className__level__level__contains']=""
+            
+            
+        query["session__session__contains"]=session
+        query["periods__period__contains"]=period
+        try:
+            queryset = {"studentlist": StudentList.objects.filter(**query)}  
+            
+        except:
+            print("sorgu hatası") 
         return queryset
+        
 
 @login_required(login_url="/login/")
 def StudentListUpdateView(request,pk):
@@ -115,28 +97,30 @@ def StudentListUpdateView(request,pk):
     classLevels = ClassLevels.objects.all()
     baseList = StudentList.objects.get(id=pk) # get studentlist by current ID
     classess=Classes.objects.all()
-    studentIndex=0
+    
     
     if request.GET:
+        className = request.GET.get("className")
+        classLevel = request.GET.get("classLevel")
+        chekcedStudentList = request.GET.getlist("student_check")
+        
         try:
             session=Session.objects.get(active=True)
             period=Period.objects.get(active=True) 
-        except:
-            return
-        className = request.GET.get("className")
-        classLevel = request.GET.get("classLevel")
-        if className==None or classLevel==None:
-            return 
-        chekcedStudentList = request.GET.getlist("student_check")
-        #print(chekcedStudentList)
-        targetClass =  Classes.objects.get(className=ClassNames.objects.get(name=className),level=ClassLevels.objects.get(level=classLevel))
-        targetStudentList=StudentList.objects.get(className=targetClass , session=session,periods=period)
+            targetClass =  Classes.objects.get(className=ClassNames.objects.get(name=className),level=ClassLevels.objects.get(level=classLevel))
+        except Exception as err:
+            print(err)
+            return redirect("/classes/assign")
+        
+        
+       
+        if targetClass!=None:
+            targetStudentList=StudentList.objects.get(className=targetClass , session=session,periods=period)
        
         for studentID in chekcedStudentList:
             
             targetStudentList.students.add(Student.objects.get(id=int(studentID)))
             baseList.students.remove(Student.objects.get(id=int(studentID)))
-            
             baseList.save()
             targetStudentList.save()
             
@@ -152,4 +136,4 @@ def StudentListUpdateView(request,pk):
         'media_url':settings.MEDIA_URL
     }
     
-    return render(request, "student/studentListUpdate.html", context)
+    return render(request, "clasess/cls-listUpdate.html", context)
