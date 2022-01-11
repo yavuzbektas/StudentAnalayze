@@ -346,7 +346,7 @@
                             <select id="classNameSelect " class="form-control mx-3" name="classNameSelect">
                             
                             {% for classNamex in allClassList %}
-                            {% if classNamex == stdClassName %}
+                            {% if classNamex.className == stdClassName.className %}
                             <option  value="{{ classNamex.id }}" selected >{{ classNamex.className }}</option>
                             {% else %}
                             <option value="{{ classNamex.id }}" >{{ classNamex.className }}</option>

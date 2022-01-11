@@ -7,7 +7,12 @@
         <select id="classLevel" class="form-control mr-3" name="classLevel">
           
           {% for classLevel in classLevels %}
-          <option value="{{ classLevel }}" {% if classLevel.selected %} selected {% endif %} >{{ classLevel }}</option>
+          {% if currentClassLevel == classLevel %}
+          
+          <option value="{{ classLevel }}" selected >{{ classLevel }} </option>
+          {% else %}
+          <option value="{{ classLevel }}"  >{{ classLevel }}</option>
+          {% endif %}
           {% endfor %}
         </select>
      
@@ -16,10 +21,14 @@
         <select id="className " class="form-control mx-3" name="className">
           
           {% for className in classNames %}
+          {% if currentClassName == className %}  
+          <option value="{{ className }}" selected>{{ className }}</option>
+          {% else %}
           <option value="{{ className }}">{{ className }}</option>
+          {% endif %}
           {% endfor %}
         </select>
-        <a href=""><button type="submit" class="btn btn-primary mr-3">Arama</button></a>
+        <a href="att-list"><button type="submit" class="btn btn-primary mr-3" value="className">Arama</button></a>
         
       
     </div>

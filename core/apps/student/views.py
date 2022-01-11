@@ -49,19 +49,24 @@ def sessionUpdate(request):
 @login_required(login_url="/login/")
 def studentAdd(request):
     sessionUpdate(request)
-    session=Session.objects.get(active=True)
-    period=Period.objects.get(active=True)    
-    getStudentList = StudentList.objects.filter(session=session,periods=period)
+     
+  
     student_form = StudentForm(request.POST,request.FILES)
     studentListForm = StudentListForm(request.POST,request.FILES)
     if request.method == 'POST':
         if student_form.is_valid() and studentListForm.is_valid():
+            hosts=StudentList.objects.filter(className=Classes.objects.get(id=studentListForm['className'].data),session=Session.objects.get(id=studentListForm['session'].data),periods=Period.objects.get(id=studentListForm['periods'].data))
+
             formf1 =student_form.save()
-            studentListForm.students =formf1
-            studentListForm.periods =period
-            studentListForm.session =session
-            studentListForm.save()
-            print(studentListForm)
+           
+            for index in hosts:
+    
+                index.students.add(formf1)
+
+                index.save()
+                break
+            
+            
             return redirect('student-list')
             
         elif student_form.errors :
@@ -80,12 +85,13 @@ def studentAdd(request):
     return render(request, "student/std-add.html", context)
 
 
+
 @login_required(login_url="/login/")
 def studentUpdate(request,pk=None):
     sessionUpdate(request)
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)    
-    getStudentList = StudentList.objects.filter(session=session,periods=period)
+    getStudentList = StudentList.objects.filter(session=session,periods=period).order_by("className")
     try:
         
         student = Student.objects.get(id=pk)
@@ -99,7 +105,6 @@ def studentUpdate(request,pk=None):
                 newclassNameID = request.POST.get("classNameSelect")
                 
                 newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
-                print(newclass)
                 student_form.save()
                 newclass.students.add(student)
                 oldclass.students.remove(student)

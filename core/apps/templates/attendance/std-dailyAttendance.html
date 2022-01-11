@@ -36,6 +36,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Profil Resmi</th>
+                                                <th scope="col">Sınıf</th>
                                                 <th scope="col">Okul No</th>
                                                 <th scope="col">Ad ve Soyad</th>
                                                 <th scope="col">tc</th>
@@ -52,7 +53,11 @@
                                                         src="{{media_url}}{{student.image}}" alt="activity-user">
                                             </td>
                                             </a>
-
+                                            <td title="Sınıf">
+                                                <a href="{% url 'student-view' student.id %}">
+                                                    <h6 class="mb-1">{{currentClassLevel}}/{{currentClassName}} </h6>
+                                                </a>
+                                            </td>
                                             <td title="Okul No">
                                                 <a href="{% url 'student-view' student.id %}">
                                                     <h6 class="mb-1">{{student.number}} </h6>

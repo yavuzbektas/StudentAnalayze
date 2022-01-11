@@ -117,14 +117,14 @@ def stdAttShowList(request):
     #studentList = StudentList.objects.all()
     newlist=[]
     
-    
+    className = request.GET.get("className")
+    classLevel = request.GET.get("classLevel") 
     if request.GET:
         sessionUpdate(request)
         
         session=Session.objects.get(active=True)
         period=Period.objects.get(active=True)
-        className = request.GET.get("className")
-        classLevel = request.GET.get("classLevel")
+        
         attandanceList = request.GET.getlist("cb-1")
           
         if className==None or classLevel==None:
@@ -180,7 +180,7 @@ def stdAttShowList(request):
         for listem in StudentList.objects.filter():
             studentList= listem.students.all()
           
-           
+         
     context = {
         #'students' : students,
         #'studentList':studentList,
@@ -189,6 +189,8 @@ def stdAttShowList(request):
         'lesPeriods':lesPeriods,
         'classNames':classNames,
         'classLevels':classLevels,
+        'currentClassName':className,
+        'currentClassLevel':classLevel,
         'newlist':newlist,
         'media_url':settings.MEDIA_URL
     }
