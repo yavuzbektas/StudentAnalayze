@@ -47,7 +47,11 @@ def stdattreportindex(request):
     str_day = str(day)
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
-    lesPeriods= list(LessonPeriods.objects.all())
+    session=Session.objects.get(active=True)
+    session_id = session.id
+    period=Period.objects.get(active=True)
+    period_id = period.id
+    lesPeriods = list(LessonPeriods.objects.filter(session_id=session_id,periods_id=period_id))
     lesPeriod_list = []
     for lesPeriod in lesPeriods:
         lesPeriod_str_list = str(lesPeriod).split("-")

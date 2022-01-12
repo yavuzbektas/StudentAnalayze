@@ -18,7 +18,7 @@ urlpatterns = [
     
     # Matches any html file
     path('list/', views.stdAttShowList,name='att-list'),
-    
+    path('lessonPeriods/',views.lessonPeriodList,name='lesperiod-edit')
     
     
 ]

@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Yoklama Listesi {% endblock %}
+
+{% block content %}
+
+
+
+<div class="col-xl-12 col-md-6">
+    <div class="card ">
+        <div class="card-header">
+            <h5>Ders Saatleri</h5>
+        </div>
+        <div class="card-block px-0 py-3">
+          <form method="GET">
+            <button style="margin:5px" value="delete" name="delete" class="btn btn-primary mr-3">Ders Sil</button>
+            <button type="submit" value="add" name="add" style="margin:5px" class="btn btn-primary mr-3">Ders Ekle</button>
+            <button type="submit" value="change" name="change" style="margin:5px" class="btn btn-primary mr-3">Saat Değişikliklerini Kaydet</button>
+            <table class="table table-bordered" id = "table">
+                <tr>
+                  <th style="text-align:center" scope="col">Ders Saati</th>
+                  <th style="text-align:center" scope="col">Ders Başlangıcı</th>
+                  <th style="text-align:center" scope="col">Ders Bitişi</th>
+                </tr>
+                {% for name,start,end,count in lesPeriods %}
+                <tr>
+                  <td style="text-align:center" scope="row">{{name}}</td>
+                  <td style="text-align:center" scope="row"><input class="form-control" type="time" name="{{count}}-start" value={{start}}></input></td>
+                  <td style="text-align:center" scope="row"><input class="form-control" type="time" name="{{count}}-end" value={{end}}></input></td>
+                </tr>
+                {% endfor %}
+              </table>
+            </form>
+        </div>
+
+    </div>
+
+    {% endblock content %}
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}

@@ -109,7 +109,9 @@ def stdAttShowList(request):
     day =datetime.date.today()
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
-    lesPeriods=LessonPeriods.objects.all()
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    lesPeriods=LessonPeriods.objects.filter(session=session,periods=period)
     absentStudentList = DailyAttendance.objects.filter(day=day)
     #sessions = Session.objects.all()
     #periods=Period.objects.all()
@@ -117,14 +119,12 @@ def stdAttShowList(request):
     #studentList = StudentList.objects.all()
     newlist=[]
     
-    className = request.GET.get("className")
-    classLevel = request.GET.get("classLevel") 
+    
     if request.GET:
         sessionUpdate(request)
         
-        session=Session.objects.get(active=True)
-        period=Period.objects.get(active=True)
-        
+        className = request.GET.get("className")
+        classLevel = request.GET.get("classLevel")
         attandanceList = request.GET.getlist("cb-1")
           
         if className==None or classLevel==None:
@@ -157,6 +157,7 @@ def stdAttShowList(request):
                     newAttandance.save()
             
         studentsx=[]
+
         for x in lesPeriods:
             
             statusList=[]
@@ -180,7 +181,7 @@ def stdAttShowList(request):
         for listem in StudentList.objects.filter():
             studentList= listem.students.all()
           
-         
+           
     context = {
         #'students' : students,
         #'studentList':studentList,
@@ -189,11 +190,79 @@ def stdAttShowList(request):
         'lesPeriods':lesPeriods,
         'classNames':classNames,
         'classLevels':classLevels,
-        'currentClassName':className,
-        'currentClassLevel':classLevel,
         'newlist':newlist,
         'media_url':settings.MEDIA_URL
     }
     
     return render(request, "attendance/std-dailyAttendance.html", context)
+
+@login_required(login_url="/login/")
+def lessonPeriodList(request):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    session_id = session.id
+    period=Period.objects.get(active=True)
+    period_id = period.id
+    lesPeriods = LessonPeriods.objects.filter(session_id=session_id,periods_id=period_id)
+    if request.GET:
+        if request.GET.get("add"):
+            if len(lesPeriods) > 0:
+                Period_time_list = str(lesPeriods[len(lesPeriods) - 1]).split("-")
+                hour_value = int(Period_time_list[2].split(":")[0])
+                minute_value = int(Period_time_list[2].split(":")[1])+10
+                if minute_value > 59:
+                    hour_value += 1
+                    minute_value = minute_value - 60
+                hour_value_end = hour_value
+                minute_value_end = minute_value + 40
+                if hour_value == 0:
+                    hour_value = "00"
+                if minute_value == 0:
+                    minute_value = "00"
+                if minute_value_end > 59:
+                    hour_value_end += 1
+                    minute_value_end = minute_value_end - 60
+                if hour_value_end == 0:
+                    hour_value_end = "00"
+                if minute_value_end == 0:
+                    minute_value_end = "00"
+                id = str(len(lesPeriods)+1)
+                #str(hour_value)+":"+str(minute_value)+"-"+str(hour_value_end)+":"+str(minute_value_end)
+                new_lesPeriod = LessonPeriods(lessCount=id,periods=period,session=session,lessName = id+".Ders",lesPeriod=str(hour_value)+":"+str(minute_value)+"-"+str(hour_value_end)+":"+str(minute_value_end))
+                new_lesPeriod.save()
+            else:
+                new_lesPeriod = LessonPeriods(lessName = "1.Ders",periods=period,session=session,lessCount="1")
+                new_lesPeriod.save()
+            return redirect("lesperiod-edit")
+        if request.GET.get("delete"):
+            id = str(len(lesPeriods))
+            old_lesPeriod = LessonPeriods.objects.filter(lessCount=id,periods=period,session=session)
+            old_lesPeriod.delete()
+            return redirect("lesperiod-edit")
+        if request.GET.get("change"):
+            for i in range(1,len(lesPeriods)+1):
+                i = str(i)
+                start = request.GET.get(i+"-start")
+                end = request.GET.get(i+"-end")
+                start_end = start + "-" + end
+                old_lesPeriod_object = LessonPeriods.objects.get(lessCount=i,session_id=session_id,periods_id=period_id)
+                old_lesPeriod_object.lesPeriod = start_end
+                old_lesPeriod_object.save()
+            return redirect("lesperiod-edit")
+    lesPeriods=LessonPeriods.objects.filter(session_id=session_id,periods_id=period_id)
+    all_lesPeriods = []
+    lessonCount = 1
+
+    for i in lesPeriods:
+        Period_list = str(i).split("-")
+        all_lesPeriods.append([Period_list[0],Period_list[1],Period_list[2],str(lessonCount)])
+        lessonCount += 1
+        
+    context={
+        'lesPeriods':all_lesPeriods,
+        'sessions':sessions,
+        'periods':periods,
+        'media_url':settings.MEDIA_URL
+    }
+    return render(request, "attendance/lessonPeriods.html",context)
 # Create your views here.

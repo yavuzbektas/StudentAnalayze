@@ -106,8 +106,11 @@ def studentUpdate(request,pk=None):
                 
                 newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
                 student_form.save()
-                newclass.students.add(student)
-                oldclass.students.remove(student)
+                
+                if oldclass.className != newclass.className:
+                    
+                    newclass.students.add(student)
+                    oldclass.students.remove(student)
                 return redirect('student-list')
                 
             elif student_form.errors :
