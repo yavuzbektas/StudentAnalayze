@@ -23,6 +23,8 @@ urlpatterns = [
     path('add/', views.studentAdd, name='student-add'),
     path('delete/<int:pk>',views.studentDelete, name='student-delete'),
     path('list/', views.StudentListView.as_view(),name='student-list'),
+    path('parent/update/<int:pk>', views.parentUpdate, name='parent-Update'),
+    path('parent/add',views.parentAdd,name='parentAdd'),
     
     
 ]

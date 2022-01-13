@@ -9,7 +9,7 @@ from django.views.generic.list import ListView
 from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
 from django.views.generic.detail import SingleObjectMixin
-from .form import StudentForm,StudentListForm
+from .form import ParentForm, StudentForm,StudentListForm
 
 
 sessions = Session.objects.all()
@@ -46,23 +46,24 @@ def sessionUpdate(request):
         newPeriod.active=True
         newPeriod.save()
 
+@login_required(login_url="/login/")
 def parentUpdate(request,pk):
     sessionUpdate(request)
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)  
     parent=Parent.objects.get(id=pk)
     student=Student.objects.all()
-    ZarentForm = ParentForm(request.POST,request.FILES,instance=parent)
+    parent_Form = ParentForm(request.POST,request.FILES,instance=parent)
     student_form = StudentForm(request.POST,request.FILES)
     
     
     getStudentList = StudentList.objects.filter(session=session,periods=period)
     if request.method == 'POST':
        
-        if ZarentForm.is_valid() :
+        if parent_Form.is_valid() :
             try:
                  
-               instance= ZarentForm.save()
+               instance= parent_Form.save()
                print(instance)
                return redirect('/student/add')  
             except Exception as err:
@@ -76,57 +77,13 @@ def parentUpdate(request,pk):
             
         elif student_form.errors :
             print("form da hatalar var" , student_form.errors.as_text())
-        elif ZarentForm.errors :
-            print("form da hatalar var" , ZarentForm.errors.as_text())
+        elif parent_Form.errors :
+            print("form da hatalar var" , parent_Form.errors.as_text())
         else:
             print("false")
     
     context={
-        'ParentForm':ZarentForm,
-        'student_form':student_form,
-        'studentListForm':student,
-        'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods,
-        'allClassList':getStudentList,
-       
-        }
-    return render(request, "student/std-parentUpdate.html", context)
-def parentAdd(request):
-    sessionUpdate(request)
-    session=Session.objects.get(active=True)
-    period=Period.objects.get(active=True)  
-    
-    student=Student.objects.all()
-    ZarentForm = ParentForm(request.POST,request.FILES)
-    student_form = StudentForm(request.POST,request.FILES)
-    
-    getStudentList = StudentList.objects.filter(session=session,periods=period)
-    if request.method == 'POST':
-        
-        if ZarentForm.is_valid() :
-            try:
-                 
-               instance= ZarentForm.save()
-               print(instance)
-               return redirect('/student/add')  
-            except Exception as err:
-                print(err)
-                return redirect('/student/add') 
-                
-               
-            
-            
-            
-            
-        elif student_form.errors :
-            print("form da hatalar var" , student_form.errors.as_text())
-        elif ZarentForm.errors :
-            print("form da hatalar var" , ZarentForm.errors.as_text())
-        else:
-            print("false")
-    
-    context={
-        'ParentForm':ZarentForm,
+        'ParentForm':parent_Form,
         'student_form':student_form,
         'studentListForm':student,
         'media_url':settings.MEDIA_URL,
@@ -137,11 +94,57 @@ def parentAdd(request):
     return render(request, "student/std-parentUpdate.html", context)
 
 @login_required(login_url="/login/")
+def parentAdd(request):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)  
+    
+    student=Student.objects.all()
+    parent_Form = ParentForm(request.POST,request.FILES)
+    student_form = StudentForm(request.POST,request.FILES)
+    
+    getStudentList = StudentList.objects.filter(session=session,periods=period)
+    if request.method == 'POST':
+        
+        if parent_Form.is_valid() :
+            try:
+                 
+               instance= parent_Form.save()
+               print(instance)
+               return redirect('/student/add')  
+            except Exception as err:
+                print(err)
+                return redirect('/student/add') 
+                
+               
+            
+            
+            
+            
+        elif student_form.errors :
+            print("form da hatalar var" , student_form.errors.as_text())
+        elif parent_Form.errors :
+            print("form da hatalar var" , parent_Form.errors.as_text())
+        else:
+            print("false")
+    
+    context={
+        'parent_Form':parent_Form,
+        'student_form':student_form,
+        'studentListForm':student,
+        'media_url':settings.MEDIA_URL,
+        'sessions':sessions,"periods":periods,
+        'allClassList':getStudentList,
+       
+        }
+    return render(request, "student/std-ParentAdd.html", context)
+
+@login_required(login_url="/login/")
 def studentAdd(request):
     sessionUpdate(request)
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)  
-    parentForm=Parent.objects.all()
+    parents=Parent.objects.all()
 
     student_form = StudentForm(request.POST,request.FILES)
     studentListForm = StudentListForm(request.POST,request.FILES)
@@ -182,7 +185,7 @@ def studentAdd(request):
         
     context={
        
-        'ParentForm':parentForm,
+        'parents':parents,
         'student_form':student_form,
         'studentListForm':studentListForm,
         'media_url':settings.MEDIA_URL,
@@ -200,22 +203,22 @@ def studentUpdate(request,pk=None):
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)    
     getStudentList = StudentList.objects.filter(session=session,periods=period).order_by("className")
+    parents=Parent.objects.all()
     try:
         
         student = Student.objects.get(id=pk)
         oldclass = StudentList.objects.get(students=student,session=session,periods=period)
-        student_form = StudentForm(request.POST,request.FILES, instance=student)
+        
         
         if request.method == 'POST':
-            
+            student_form = StudentForm(request.POST,request.FILES, instance=student)
             if student_form.is_valid():
-                formf =student_form.save()
                 newclassNameID = request.POST.get("classNameSelect")
-                
                 newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
+                parentazi=request.POST.getlist("parentFormSelect")
                 student_form.save()
                 
-                if oldclass.className != newclass.className or oldclass.session.sessin!=newclass.session.session :
+                if oldclass.className != newclass.className or oldclass.session.session!=newclass.session.session :
                      
                     newclass.students.add(student)
                     oldclass.students.remove(student)
@@ -245,7 +248,7 @@ def studentUpdate(request,pk=None):
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods,
         'birtdate':birtdate,
-        
+        'parents':parents,
         }
     return render(request, "student/std-Update.html", context)
 

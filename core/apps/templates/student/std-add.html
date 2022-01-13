@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="container rounded bg-white mt-5 mb-5">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col-md-3 border-right">
@@ -78,9 +78,9 @@
                         <div class="col-md-8">
                            <select id="parentFormSelect " class="form-control" name="parentFormSelect">
                               
-                               {% for parentForm in ParentForm %}
+                               {% for parent in parents %}
                                
-                               <option  value="{{ parentForm.id }}" selected >{{ parentForm.firstName}} </option>
+                               <option  value="{{ parent.id }}" selected >{{ parent.firstName}}  {{ parent.lastName}}</option>
                                
                                {% endfor %}
                

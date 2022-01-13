@@ -87,7 +87,7 @@ class StudentForm(forms.ModelForm):
     }),required=False)
     
     image = forms.ImageField(widget=forms.FileInput(attrs={
-        'id':'TC',
+        'id':'image-std',
         'class': 'form-control',
         'placeholder': 'Resim',
         
@@ -138,4 +138,53 @@ class StudentListForm(forms.ModelForm):
         }),required=False)
     class Meta:
         model = StudentList
+        fields =  '__all__'
+
+class ParentForm(forms.ModelForm):
+    firstName = forms.CharField(widget=forms.TextInput(attrs={
+        'id':'firstName_stdp',
+        'class': 'form-control',
+        'placeholder': 'Adınız',
+    }),required=False)
+    
+    lastName = forms.CharField(widget=forms.TextInput(attrs={
+        'id':'lastName_stdp',
+        'class': 'form-control',
+        'placeholder': 'Adınız',
+    }),required=False)
+    
+    student = forms.ModelChoiceField(queryset=Student.objects.all(),widget=forms.Select({
+        'id':'student_stdp',
+        'class': ' form-control',
+        'placeholder': 'ogrenci',
+         
+        }),required=False)
+    
+    
+    relation = forms.CharField(widget=forms.TextInput(attrs={
+        'id':'relation_stdp',
+        'class': 'form-control',
+        'placeholder': 'Yakınlık Durumu',
+        }),required=False)
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'id':'phone_stdp',
+        'class': 'form-control',
+        'placeholder': 'Telefon No'
+    }),required=False)
+
+    adsreds = forms.CharField(widget=forms.Textarea(attrs={
+        'id':'address_stdp',
+        'rows':'3' ,
+        'cols':'30' ,
+        'class': 'form-control',
+        'placeholder': 'Adres',
+        
+    }),required=False)
+    job = forms.CharField(widget=forms.TextInput(attrs={
+        'id':'job_stdp',
+        'class': 'form-control',
+        'placeholder': 'İş Durumu'
+    }),required=False)
+    class Meta:
+        model = Parent
         fields =  '__all__'
