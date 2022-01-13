@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect,reverse,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Student,StudentList
+from .models import Student,StudentList,Parent
 from django.conf import settings
 from .filter import StudentFilter
 from django.conf import settings
@@ -46,41 +46,149 @@ def sessionUpdate(request):
         newPeriod.active=True
         newPeriod.save()
 
-@login_required(login_url="/login/")
-def studentAdd(request):
+def parentUpdate(request,pk):
     sessionUpdate(request)
-     
-  
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)  
+    parent=Parent.objects.get(id=pk)
+    student=Student.objects.all()
+    ZarentForm = ParentForm(request.POST,request.FILES,instance=parent)
     student_form = StudentForm(request.POST,request.FILES)
-    studentListForm = StudentListForm(request.POST,request.FILES)
-    if request.method == 'POST':
-        if student_form.is_valid() and studentListForm.is_valid():
-            hosts=StudentList.objects.filter(className=Classes.objects.get(id=studentListForm['className'].data),session=Session.objects.get(id=studentListForm['session'].data),periods=Period.objects.get(id=studentListForm['periods'].data))
-
-            formf1 =student_form.save()
-           
-            for index in hosts:
     
-                index.students.add(formf1)
-
-                index.save()
-                break
+    
+    getStudentList = StudentList.objects.filter(session=session,periods=period)
+    if request.method == 'POST':
+       
+        if ZarentForm.is_valid() :
+            try:
+                 
+               instance= ZarentForm.save()
+               print(instance)
+               return redirect('/student/add')  
+            except Exception as err:
+                print(err)
+                return redirect('/student/add') 
+                
+               
             
             
-            return redirect('student-list')
+            
             
         elif student_form.errors :
             print("form da hatalar var" , student_form.errors.as_text())
-        elif studentListForm.errors :
-            print("form da hatalar var" , studentListForm.errors.as_text())
+        elif ZarentForm.errors :
+            print("form da hatalar var" , ZarentForm.errors.as_text())
         else:
             print("false")
     
     context={
+        'ParentForm':ZarentForm,
+        'student_form':student_form,
+        'studentListForm':student,
+        'media_url':settings.MEDIA_URL,
+        'sessions':sessions,"periods":periods,
+        'allClassList':getStudentList,
+       
+        }
+    return render(request, "student/std-parentUpdate.html", context)
+def parentAdd(request):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)  
+    
+    student=Student.objects.all()
+    ZarentForm = ParentForm(request.POST,request.FILES)
+    student_form = StudentForm(request.POST,request.FILES)
+    
+    getStudentList = StudentList.objects.filter(session=session,periods=period)
+    if request.method == 'POST':
+        
+        if ZarentForm.is_valid() :
+            try:
+                 
+               instance= ZarentForm.save()
+               print(instance)
+               return redirect('/student/add')  
+            except Exception as err:
+                print(err)
+                return redirect('/student/add') 
+                
+               
+            
+            
+            
+            
+        elif student_form.errors :
+            print("form da hatalar var" , student_form.errors.as_text())
+        elif ZarentForm.errors :
+            print("form da hatalar var" , ZarentForm.errors.as_text())
+        else:
+            print("false")
+    
+    context={
+        'ParentForm':ZarentForm,
+        'student_form':student_form,
+        'studentListForm':student,
+        'media_url':settings.MEDIA_URL,
+        'sessions':sessions,"periods":periods,
+        'allClassList':getStudentList,
+       
+        }
+    return render(request, "student/std-parentUpdate.html", context)
+
+@login_required(login_url="/login/")
+def studentAdd(request):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)  
+    parentForm=Parent.objects.all()
+
+    student_form = StudentForm(request.POST,request.FILES)
+    studentListForm = StudentListForm(request.POST,request.FILES)
+    getStudentList = StudentList.objects.filter(session=session,periods=period)
+    
+    
+    if request.method == 'POST':
+        
+        
+                  
+        if student_form.is_valid() and studentListForm.is_valid() :
+            try:
+                formf1 =student_form.save()
+                newclassNameID = request.POST.get("classNameSelect")
+                newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
+                parentazi=request.POST.getlist("parentFormSelect")
+                newclass.students.add(formf1)
+
+                newclass.save() 
+                
+                for parenta in  parentazi:
+                    print(parenta)
+                    parent=Parent.objects.get(id=int(parenta))
+                    parent.student.add(formf1)
+                    
+                
+                
+            except Exception as err:
+                print(err)
+                return redirect('/')
+                
+               
+            
+            
+            return redirect('student-list')
+            
+        
+        
+    context={
+       
+        'ParentForm':parentForm,
         'student_form':student_form,
         'studentListForm':studentListForm,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,
+        'allClassList':getStudentList,
+       
         }
     return render(request, "student/std-add.html", context)
 
@@ -107,8 +215,8 @@ def studentUpdate(request,pk=None):
                 newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
                 student_form.save()
                 
-                if oldclass.className != newclass.className:
-                    
+                if oldclass.className != newclass.className or oldclass.session.sessin!=newclass.session.session :
+                     
                     newclass.students.add(student)
                     oldclass.students.remove(student)
                 return redirect('student-list')

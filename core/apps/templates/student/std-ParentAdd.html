@@ -1,0 +1,91 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Öğrenci Detay Sayfası {% endblock %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div class="container rounded bg-white mt-5 mb-5">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-3 border-right">
+                
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Veli Bilgileri</h4>
+                    </div>
+                    <hr>
+                    <div class="row mt-2">
+                        
+
+                       
+                    </div>
+                    <div class="row mt-2">
+
+                        <div class="col-md-6"><label class="labels">Ad</label>{{ParentForm.firstName}}</div>
+                        <div class="col-md-6"><label class="labels">Soyad</label>{{ParentForm.lastName}}</div>
+                    </div>
+                    
+                    <div class="row mt-2">
+                        
+                        
+                        
+                    <div class="col-md-6">
+                        <!-- <label class="labels">Ögrenci İsmi :</label>
+                    <select id="studentSelect " class="form-control mx-3" name="studentSelect">
+                        
+                        {% for student in studentListForm %}
+                        
+                        <option  value="{{ student.id }}" selected >{{ student.firstName}} </option>
+                        
+                        
+                        
+                        {% endfor %}
+        
+                        </select>, --> 
+                    
+                        
+                        <center><a type="button"  href="/student/add" class="btn btn-dark"> Geri dön </a></center>
+                        
+                        
+
+                       
+                    
+
+                    
+                        
+                    
+                    <div class="row mt-3">
+
+                        <div class="col-md-12"><label class="labels">Adres:</label>{{ParentForm.adsreds}}</div>
+                        <div class="col-md-12"><label class="labels">Adres:</label>{{ParentForm.relation}}</div>
+                        
+                        <div class="col-md-12"><label class="labels">Job:</label>{{ParentForm.job}}</div>
+                        <div class="col-md-6"><label class="labels">Telefon </label>{{ParentForm.phone}}</div>
+                        
+                        </div>
+
+                    </div>
+                    
+
+                </div>
+            </div>
+            
+
+
+</div>
+
+</div>
+<div class="col-md-12 mx-5">
+    <hr>
+    <button type="submit" href="/student/add" class="btn btn-success">Değişiklikleri Kaydet</button>
+</div>
+</form>
+</div>
+
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

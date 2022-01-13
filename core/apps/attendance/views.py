@@ -113,13 +113,15 @@ def stdAttShowList(request):
     period=Period.objects.get(active=True)
     lesPeriods=LessonPeriods.objects.filter(session=session,periods=period)
     absentStudentList = DailyAttendance.objects.filter(day=day)
+    
     #sessions = Session.objects.all()
     #periods=Period.objects.all()
     
     #studentList = StudentList.objects.all()
     newlist=[]
     
-    
+    className = ""
+    classLevel = ""
     if request.GET:
         sessionUpdate(request)
         
@@ -190,6 +192,8 @@ def stdAttShowList(request):
         'lesPeriods':lesPeriods,
         'classNames':classNames,
         'classLevels':classLevels,
+        'currentClassLevel':classLevel,
+        'currentClassName':className,
         'newlist':newlist,
         'media_url':settings.MEDIA_URL
     }
