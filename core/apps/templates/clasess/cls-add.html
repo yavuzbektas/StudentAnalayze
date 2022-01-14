@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Öğrenciler Listesi {% endblock %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="col-xl-12 col-md-6">
+    <div class="card ">
+        <div class="card-header">
+            <h5>Sınıf Oluşturma</h5>
+        </div>
+      
+        <div class="card-block px-3 py-3">
+        
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row field-level">
+                <div class="col-md-12">
+                    <label class="required" for="id_level">Sınıf Seviyesi :</label>
+                </div>
+
+                <div class="form-inline">
+                    <select class="form-control" name="level" required="" id="id_level">
+                        {% for classlevel in newclassform.className %}
+                        <option value={{classlevel.id}}>{{classlevel}}</option>
+                        {% endfor %}
+
+                    </select>
+                    <a class="col-md-3 change-related" id="change_id_level"
+                        data-href-template="/admin/classes/classlevels/__fk__/change/?_to_field=id&amp;_popup=1"
+                        title="Seçilen Seviyeyi Değiştiri "><img src="/static/admin/img/icon-changelink.svg"
+                            alt="Değiştir"></a>
+                    <a class="col-md-3 add-related" id="add_id_level"
+                        href="/admin/classes/classlevels/add/?_to_field=id&amp;_popup=1"
+                        title="Başka bir Sınıf Seviyesi Ekler"><img src="/static/admin/img/icon-addlink.svg"
+                            alt="Ekle"></a>
+                </div>
+
+            </div>
+            
+            <div class="form-row ">
+                <div class="col-md-12">
+                    <label for="id_className col-md-12">Şube Adı : </label>
+                </div>
+                <div class="form-inline">
+                    <select class="form-control className col-md-6" id="id_className">
+                        {% for classname in newclassform.className.className %}
+                        <option value={{classname.id}}>{{classname}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <a class="col-md-3" id="change_id_className"
+                        data-href-template="/admin/classes/classnames/__fk__/change/?_to_field=id&amp;_popup=1"
+                        title="Seçilen Sınıfın Adını değiştir"
+                        href="/admin/classes/classnames/2/change/?_to_field=id&amp;_popup=1">
+                        <img src="/static/admin/img/icon-changelink.svg" alt="Değiştir">
+                    </a>
+                    <a class="col-md-3 add-related" id="add_id_className"
+                        href="/admin/classes/classnames/add/?_to_field=id&amp;_popup=1" title="Başka sınıf adı ekle">
+                        <img src="/static/admin/img/icon-addlink.svg" alt="Ekle">
+                    </a>
+                </div>
+
+            </div>
+            <br> <br>
+
+            
+            <br><br>
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="submit-row">
+                        <a href="{%  url 'classesList-add' 1 1 %}"><input type="button" value="Kaydet" class="default btn btn-primary" name="_save"></a>
+                        <input type="submit" value="Kaydet ve Yeni Sınıf ekle" class="btn btn-primary"
+                            name="_addanother">
+                        <input type="submit" value="Kaydet ve düzenlemeye devam et" class="btn btn-primary"
+                            name="_continue">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br class="clear">
+    
+        <div class="card-block px-0 py-3 col-md-6">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Sınıf Adı</th>
+                            <th scope="col">Sezon</th>
+                            <th scope="col">Periyot</th>
+                            <th scope="col">Öğrenci Sayısı</th>
+                            <th scope="col">Güncelleme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for studentlist in classList %}
+                        <tr class="unread">
+
+                            <td title="Sınıf">
+                                <h6 class="mb-1">{{studentlist.className}} </h6>
+
+                            </td>
+                            <td title="Sezon">
+                                <h6 class="mb-1">{{studentlist.session}} </h6>
+
+                            </td>
+                            <td title="Period">
+                                <h6 class="mb-1">{{studentlist.periods}} </h6>
+
+                            </td>
+                            <td title="Period">
+                                <h6 class="mb-1">{{studentlist.students.count}} </h6>
+
+                            </td>
+                            {% if user.is_staff %}
+                            <td>
+                                <a href="{% url 'StudentListUpdateView' studentlist.id %}"
+                                    class="label btn btn-primary  f-12">Güncelle</a>
+
+                            </td>
+                            
+                            {% endif %}
+                        </tr>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                
+            </div>
+    
+    
+    
+    </div>
+
+</div></div></div>
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

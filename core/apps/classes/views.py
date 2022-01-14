@@ -2,15 +2,24 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 
 from apps.student.views import sessionUpdate
-from ..student.models import Student
+from apps.student.models import Student
 from django.conf import settings
-from ..home.models import Session,Period
+from apps.home.models import Session,Period
 from django.views.generic import ListView
-from ..student.models import StudentList
+from apps.student.models import StudentList
+from apps.classes.form import ClassListForm
 from apps.classes.models import ClassLevels, ClassNames, Classes
 sessions = Session.objects.all()
 periods = Period.objects.all()
+
+ 
 # Create your views here.
+
+@login_required(login_url="/login/")
+def classesAdd(request):
+    context={'sessions':sessions,"periods":periods}
+    return render(request, "classes/cls-9sinif.html", context)
+
 @login_required(login_url="/login/")
 def classesUpdate(request):
     context={'sessions':sessions,"periods":periods}
@@ -137,3 +146,56 @@ def StudentListUpdateView(request,pk):
     }
     
     return render(request, "clasess/cls-listUpdate.html", context)
+
+@login_required(login_url="/login/")
+def classesListIndex(request):
+    classNames = ClassNames.objects.all()
+    classLevels = ClassLevels.objects.all()
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    newclassform = ClassListForm()
+    classList = StudentList.objects.filter(session=session,periods=period)
+    context={
+        'sessions':sessions,
+        'periods':periods,
+        'classNames':classNames,
+        'classLevels':classLevels,
+        'classList':classList,
+        'newclassform':newclassform
+        }
+    return render(request, "clasess/cls-add.html", context)
+
+@login_required(login_url="/login/")
+def classesListUpdate(request):
+    context={'sessions':sessions,"periods":periods}
+    return render(request, "clasess/cls-add.html", context)
+
+@login_required(login_url="/login/")
+def classesListDelete(request):
+    context={'sessions':sessions,"periods":periods}
+    return render(request, "clasess/cls-add.html", context)
+
+@login_required(login_url="/login/")
+def classesListView(request):
+    context={'sessions':sessions,"periods":periods}
+    return render(request, "clasess/cls-add.html", context)
+
+def classesListAdd(request,classlevelID,classnameID):
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    
+    newclassform =ClassListForm()
+    if newclassform.is_valid():
+        
+        newclassform.className.id=classnameID
+        newclassform.classLevel.id=classlevelID
+        newclassform.session.id=session.id
+        newclassform.periods.id=period.id
+        newclassform.save()
+    
+    context={
+        'sessions':sessions,
+        "periods":periods
+        
+        }
+    return render(request, "clasess/cls-add.html", context)
