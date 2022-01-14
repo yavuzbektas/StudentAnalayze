@@ -195,8 +195,6 @@ def studentAdd(request):
         }
     return render(request, "student/std-add.html", context)
 
-
-
 @login_required(login_url="/login/")
 def studentUpdate(request,pk=None):
     sessionUpdate(request)

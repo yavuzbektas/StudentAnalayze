@@ -87,7 +87,7 @@ class StudentList(models.Model):
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
     periods=models.ForeignKey(Period,on_delete=models.CASCADE)
     students=models.ManyToManyField(Student,blank=True)
-    teachers=models.ManyToManyField(Profil,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
+    mainteacher=models.ForeignKey(Profil,on_delete=models.CASCADE,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
     class Meta:
         ordering = ('className',"session","periods",)
     def __str__(self):
