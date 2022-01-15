@@ -18,45 +18,20 @@
                     <div class="row mt-2">
 
                         <div class="col-md-6"><label class="labels">Ders :</label>
-                            
-                            <select id="lesson " class="form-control " name="lessonSelect">
-                            
-                                {% for classNamex in lesson %}
-                            
-                                <option  value="{{ classNamex.id }}" selected >{{ classNamex.name }}</option>
-                                     
-                                {% endfor %}
-            
-                            </select>
+                            {{lesson_form.lesson}}
+                           
                             </div>
                         
                         <div class="col-md-6"><label class="labels">Sınıf :</label>
-                            
-                            <select id="StudentListSelect " class="form-control " name="StudentListSelect">
-                            
-                                {% for classNamex in studentlist %}
-                            
-                                <option  value="{{ classNamex.id }}" selected >{{ classNamex.className }}</option>
-                                     
-                                {% endfor %}
-            
-                            </select>
+                            {{lesson_form.className}}
                         </div>
                         <div class="col-md-6"><label class="labels">Öğretmen :</label>
                             
-                            <select id="teacherSelect " class="form-control " name="teacherSelect">
-                            
-                                {% for teacher in teachers %}
-                            
-                                <option  value="{{ teacher.id }}" selected >{{ teacher.user.first_name }}{{ teacher.user.last_name }}</option>
-                                     
-                                {% endfor %}
-            
-                            </select>
+                            {{lesson_form.teacher}}
                         </div>
                     </div>
                     
-                  
+                    {{
                        
             </div>
             

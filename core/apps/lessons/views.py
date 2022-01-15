@@ -93,25 +93,13 @@ def LessonClassListAdd(request):
 
     sessionUpdate(request)
     
-    LessonClassList_form= LessonClassListForm(request.POST,request.FILES)    
-    studentlist=StudentList.objects.all()
-    lesson=Lesson.objects.all()
-    teachers=Profil.objects.all()
+    fromdata = LessonClassListForm(request.POST,request.FILES)        
+    
     if request.method == 'POST':
-        LessonClassList_form = LessonClassListForm(request.POST,request.FILES)        
-        if LessonClassList_form.is_valid():
+        if fromdata.is_valid():
+            
             try:
-                isAddListID=request.POST.get('StudentListSelect')
-                isAddlessonID=request.POST.get('lessonSelect')
-                isAddteacherID=request.POST.get('teacherSelect')
-                isAddlesson=Lesson.objects.get(id=isAddlessonID)
-                isAddList=StudentList.objects.get(id=isAddListID)
-                isAddteacher=Profil.objects.get(id=isAddteacherID)
-                data=LessonClassList_form.save()
-                data.className.add(isAddList)
-                data.lessons.add(isAddlesson)
-                data.teacher.add(isAddteacher)
-                data.save()
+                fromdata.save()
                 return redirect('/lessons/lessons/list/')
                 
                
@@ -125,10 +113,8 @@ def LessonClassListAdd(request):
         
     context={
        
-        'lesson_form':LessonClassList_form,
-        'studentlist':studentlist,
-        'lesson':lesson,
-        'teachers':teachers
+        'lesson_form':fromdata,
+        
        
         }
     return render(request, "lesson/DerslikAdd.html", context)

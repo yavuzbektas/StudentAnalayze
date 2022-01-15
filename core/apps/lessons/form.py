@@ -28,19 +28,19 @@ class lessonForm(forms.ModelForm):
 
 class LessonClassListForm(forms.ModelForm):
     teacher = forms.ModelChoiceField(queryset=Profil.objects.all(),widget=forms.Select({
-        'id':'lesson_teacher',
+        'id':'lesson_teacherID',
         'class': ' form-control',
         'placeholder': 'Ders Öğretmeni',
          
         }),required=False)
     lesson = forms.ModelChoiceField(queryset=Lesson.objects.all(),widget=forms.Select({
-        'id':'lessons',
+        'id':'lesson_lessonID',
         'class': ' form-control',
         'placeholder': 'Ders',
          
         }),required=False)
     className  = forms.ModelChoiceField(queryset=StudentList.objects.all(),widget=forms.Select({
-        'id':'className',
+        'id':'lesson_classnameID',
         'class': ' form-control',
         'placeholder': 'Sınıf',
          
