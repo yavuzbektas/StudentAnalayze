@@ -10,9 +10,9 @@ urlpatterns = [
     
     
     
-    
-   
-
+    path('add/', views.LessonAdd  ,name='LessonAdd'),
+    path('lessons/add/', views.LessonClassListAdd  ,name='LessonClassListAdd'),
+    path('lessons/list/', views.LessonClassListList.as_view()  ,name='LessonClassListList'),
     
     
 ]
