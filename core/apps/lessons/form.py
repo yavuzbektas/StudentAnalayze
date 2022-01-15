@@ -6,7 +6,7 @@ from django import forms
 from apps.home.models import Period, Session
 from apps.lessons.models import Lesson, LessonClassList
 from apps.student.models import Student, StudentList
-
+from apps.home.models import Profil
 
 
 
@@ -27,25 +27,25 @@ class lessonForm(forms.ModelForm):
 
 
 class LessonClassListForm(forms.ModelForm):
-    
-    lessons = forms.ModelMultipleChoiceField(queryset=Lesson.objects.all(),widget=forms.Select({
+    teacher = forms.ModelMultipleChoiceField(queryset=Profil.objects.all(),widget=forms.Select({
+        'id':'lesson_teacher',
+        'class': ' form-control',
+        'placeholder': 'Ders Öğretmeni',
+         
+        }),required=False)
+    lesson = forms.ModelMultipleChoiceField(queryset=Lesson.objects.all(),widget=forms.Select({
         'id':'lessons',
         'class': ' form-control',
-        'placeholder': 'lessons',
+        'placeholder': 'Ders',
          
         }),required=False)
     className  = forms.ModelMultipleChoiceField(queryset=StudentList.objects.all(),widget=forms.Select({
         'id':'className',
         'class': ' form-control',
-        'placeholder': 'className',
+        'placeholder': 'Sınıf',
          
         }),required=False)
-    """periods =forms.ModelChoiceField(queryset=Period.objects.all(),widget=forms.Select({
-        'id':'periods_stdlist',
-        'class': ' form-control',
-        'placeholder': 'student-list',
-         
-        }),required=False)"""
+    
     class Meta:
         model = LessonClassList
         fields =  "__all__"

@@ -20,6 +20,7 @@
                         <tr>
                             <th scope="col">Dersin Kodu</th>
                             <th scope="col">Ders Adı</th>
+                            <th scope="col">Ders Öğretmeni</th>
                             <th scope="col">Sınıf Adı</th>
                             <th scope="col">Sezon</th>
                             <th scope="col">Periyot</th>
@@ -38,6 +39,10 @@
                             <td title="Ders Adı">
                                 
                                 <h6 class="mb-1">{{studentlist.lesson.name}} </h6>
+
+                            </td>
+                            <td title="Öğretmen">
+                                <h6 class="mb-1">{{studentlist.teacher.user.first_name}}  {{studentlist.teacher.user.last_name}}</h6>
 
                             </td>
                             <td title="Sınıf">
