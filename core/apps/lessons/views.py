@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from apps.attendance.views import sessionUpdate
 from django.views.generic.list import ListView
 from apps.classes.models import ClassLevels, ClassNames
-from apps.home.models import Period, Session
+from apps.home.models import Period, Session,Profil
 from apps.lessons.form import LessonClassListForm, lessonForm
 from apps.lessons.models import Lesson, LessonClassList
 from apps.student.models import StudentList
@@ -96,27 +96,28 @@ def LessonClassListAdd(request):
     LessonClassList_form= LessonClassListForm(request.POST,request.FILES)    
     studentlist=StudentList.objects.all()
     lesson=Lesson.objects.all()
+    teachers=Profil.objects.all()
     if request.method == 'POST':
         LessonClassList_form = LessonClassListForm(request.POST,request.FILES)        
         if LessonClassList_form.is_valid():
             try:
                 isAddListID=request.POST.get('StudentListSelect')
                 isAddlessonID=request.POST.get('lessonSelect')
+                isAddteacherID=request.POST.get('teacherSelect')
                 isAddlesson=Lesson.objects.get(id=isAddlessonID)
                 isAddList=StudentList.objects.get(id=isAddListID)
-                print(isAddlesson)
-                
-                
+                isAddteacher=Profil.objects.get(id=isAddteacherID)
                 data=LessonClassList_form.save()
                 data.className.add(isAddList)
                 data.lessons.add(isAddlesson)
+                data.teacher.add(isAddteacher)
                 data.save()
                 return redirect('/lessons/lessons/list/')
                 
                
             except Exception as err:
                 print(err)
-                return redirect('/')
+                return redirect('/lessons/lessons/list/')
             
             
             
@@ -126,7 +127,8 @@ def LessonClassListAdd(request):
        
         'lesson_form':LessonClassList_form,
         'studentlist':studentlist,
-        'lesson':lesson
+        'lesson':lesson,
+        'teachers':teachers
        
         }
     return render(request, "lesson/DerslikAdd.html", context)
