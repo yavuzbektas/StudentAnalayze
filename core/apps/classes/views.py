@@ -122,19 +122,22 @@ def StudentListUpdateView(request,pk):
             return redirect("/classes/assign")
         
         
-        
+        # if baseList.className != targetClass.className 
+        print(chekcedStudentList)
         if targetClass!=None:
             targetStudentList=StudentList.objects.get(className=targetClass , session=session,periods=period)
-        if targetClass.className.name!=className and targetClass.level.level!=classLevel:
+
+        print(targetStudentList)
+        if baseList.className != targetStudentList.className:
             for studentID in chekcedStudentList:
-                
-                targetStudentList.students.add(Student.objects.get(id=int(studentID)))
-                baseList.students.remove(Student.objects.get(id=int(studentID)))
+                print(chekcedStudentList)
+                targetStudentList.students.add(Student.objects.get(id=studentID))
+                baseList.students.remove(Student.objects.get(id=studentID))
                 baseList.save()
                 targetStudentList.save()
+
                 
-                
-                                                
+        return redirect('/classes/assign/')                                        
     context = {
         
         'studentList':baseList,

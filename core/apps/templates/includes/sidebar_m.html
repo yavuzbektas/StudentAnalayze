@@ -1,0 +1,210 @@
+{% block stylesheets %}
+<style>
+.navbar-custom {
+    background-color: #3F4D67;
+}
+@media (min-width: 767px) {
+    .navbar-custom {
+      display: none;
+    }
+  }
+</style>
+{% endblock stylesheets %}
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="navbar-brand header-logo">
+        <a target="_blank" 
+        href="#"
+           class="b-brand">
+            <div class="b-bg">
+                <i class="feather icon-trending-up"></i>
+            </div>
+            <span class="b-title">Okul Yönetimi</span>
+            
+        </a>
+        
+    </div>
+            
+        </a></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-link {% if 'index' in segment %} active {% endif %}">
+            <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+        </li>
+        {% if user.is_staff %} 
+       
+        <li class="nav-item">
+          <a class="nav-item">Yönetici</a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link" href="/register/" >&nbsp;&nbsp;&nbsp;&nbsp; Öğretmen Ekle/Düzenle </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="/student/add" >&nbsp;&nbsp;&nbsp;&nbsp; Öğrenci Ekle </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="/classes/assign/" >&nbsp;&nbsp;&nbsp;&nbsp; Öğrenci Sınıf Atama </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="/attendance/lessonPeriods" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Saatleri </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="/classes/" >&nbsp;&nbsp;&nbsp;&nbsp; Sınıf Ekle/Düzenle </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="/lessons/add" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Ekle/Düzenle </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="/lessons/lessons/add" >&nbsp;&nbsp;&nbsp;&nbsp; Derslik Ekle/Düzenle </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Atama </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Programı Hazırlama </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Derslik Programı Hazırlama </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Nöbet Programı Hazırlama </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Okul Servisi Düzenleme </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Staj Programı Düzenleme </a>
+          </li> 
+     
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-item">Raporlar</a>
+          </li> 
+          <li class="nav-item">
+              <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; DIS Raporları </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Raporları </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; SÖK Raporları </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="/report/attendanceReport" >&nbsp;&nbsp;&nbsp;&nbsp; Yoklama Raporları </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Diğer Raporlar </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-item">Sınıflar</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;9. Sınıflar</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;10. Sınıflar</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;11. Sınıflar</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;12. Sınıflar</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="/usr-ogretmenler.html" > Öğretmenler </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="/student/list" > Öğrenciler </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" > Dersler </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" > Derslikler </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="/attendance/list" > Yoklama </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-item">Kullanıcı Ayarları</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;Profil Ayarları</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="/profil.html" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Profil Düzenle </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="/accounts/password_reset/" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Şifre Resetleme </a>
+              </li> 
+              <li data-username="Disabled Menu" class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link">
+                    <span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Çıkış</span>
+                </a>
+            </li>
+      </ul>
+    </div>
+  </nav>

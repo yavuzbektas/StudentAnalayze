@@ -5,7 +5,7 @@
 {% block content %}   
 
  <!--[ Recent Users ] start-->
- <div class="col-xl-8 col-md-6">
+ <div class="col-xl-12 col-md-6">
     <div class="card Recent-Users">
         <div class="card-header">
             <h5>Kullanıcılar Tablosu</h5>
@@ -23,9 +23,11 @@
                           <th scope="col">Adres</th>
                           <th scope="col">Email</th>
                           <th scope="col">Aktif</th>
+                          {% if user.is_staff %}
                           <th scope="col">Profile Detay</th>
-                          <th scope="col">Yetki</th>
+                                <th scope="col">Yetki</th>
                           <th scope="col">Profil Sİl</th>
+                          {% endif %}
                         </tr>
                       </thead>
                     <tbody>
@@ -73,18 +75,69 @@
                             {% if user.is_staff %}
                             <td>
                                 
-                                <a href="{% url 'users-view' kullanici.id %}"class="label theme-bg text-white f-12">Profile Git</a>
+                                <a href="{% url 'users-view' kullanici.id %}" class="btn btn-info">Profile Git</a>
                             </td>
                             <td>
                                 {% if kullanici.user.is_staff %}
-                                <a href="{% url 'yetki' kullanici.user.id %}" class="label theme-bg text-white f-12">Yetki Kaldır</a>
+                                <div id="{{kullanici.user.id}}model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{kullanici.user.id}}modelLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="{{kullanici.user.id}}modelLabel">Öğretmen Yetkisi Kaldırılacak</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p> {{kullanici.user.first_name}} {{kullanici.last_name}}  isimli öğretmenin yetkisini kaldırmak istediğinize emin misiniz ? </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                <a href="{% url 'yetki' kullanici.user.id %}"><button type="button" class="btn btn-primary">Yetki kaldır</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#{{kullanici.user.id}}model">Yetki Kaldır</button>
                                 {% else %}
-                                <a href="{% url 'yetki' kullanici.user.id %}" class="label theme-bg text-white f-12">Yetki Ver</a>
+                                <div id="{{kullanici.user.id}}model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{kullanici.user.id}}modelLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="{{kullanici.user.id}}modelLabel">Yetki Verilecek</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p> {{kullanici.user.first_name}} {{kullanici.last_name}}  isimli öğretmene yetki vermek istediğinize emin misiniz ? </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                <a href="{% url 'yetki' kullanici.user.id %}"><button type="button" class="btn btn-primary">Yetki Ver</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#{{kullanici.user.id}}model">Yetki Ver</button>
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'delete' kullanici.id %}" class="label theme-bg text-white f-12">Kullanıcı Sİl</a>
                                 
+                                <div id="{{kullanici.id}}model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{kullanici.id}}modelLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="{{kullanici.id}}modelLabel">Öğrenci Silinecek</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p> {{studentlist.lesson.name}} {{studentlist.className.className}}  isimli öğrenciyi silmek istediğinize emin misiniz ? </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                <a href="{% url 'delete' kullanici.id %}"><button type="button" class="btn btn-danger">Sil</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{kullanici.id}}model">Sil</button>
                             </td>
                             {% endif %}
                         </tr>
@@ -100,3 +153,21 @@
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
+<div id="{{kullanici.user.id}}model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{kullanici.user.id}}modelLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{kullanici.user.id}}modelLabel">Öğrenci Silinecek</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p> {{studentlist.lesson.name}} {{studentlist.className.className}}  isimli öğrenciyi silmek istediğinize emin misiniz ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <a href="{% url 'yetki' kullanici.user.id %}"><button type="button" class="btn btn-primary">Sil</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#{{kullanici.user.id}}model">Sil</button>

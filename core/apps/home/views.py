@@ -159,23 +159,23 @@ def profilDelete(request, pk):
         # Eğer kullanıcı giriş yapmamış ise hata sayfası gönder
         return Http404()
 
-    if request.method == 'POST':
+    if request.method == 'GET':
         post.delete()
         user.delete()
-        return redirect('/')
+        return redirect('/usr-ogretmenler.html')
     
     context={
         'form': profil
     }
     
-    return render(request,"home/ProfileDeleteConfirm.html",context)
+    
 
 @login_required(login_url="/login/")
 def issuperUser(request,pk):
     
     User = get_user_model()
     user = User.objects.get(id=pk)
-    if request.method == 'POST':
+    if request.method == 'GET':
         if user.is_superuser :
             user.is_staff = False
             user.is_admin = False
@@ -186,9 +186,9 @@ def issuperUser(request,pk):
             user.is_admin = False
             user.is_superuser = True
         user.save()
-        return redirect('/')
+        return redirect('/usr-ogretmenler.html')
     context={
         'form': user
     }
     
-    return render(request,"home/superuser.html",context)
+    

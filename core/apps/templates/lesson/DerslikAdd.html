@@ -31,8 +31,62 @@
                         </div>
                     </div>
                     
-                    {{
-                       
+                    <div class="card-block px-0 py-3 col-md-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Dersin Kodu</th>
+                                        <th scope="col">Ders Adı</th>
+                                        <th scope="col">Ders Öğretmeni</th>
+                                        <th scope="col">Sınıf Adı</th>
+                                        <th scope="col">Sezon</th>
+                                        <th scope="col">Periyot</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for studentlist in lesson %}
+                                    
+                                    <tr class="unread">
+                                        <td title="Ders Kodu">
+                                            
+                                            <h6 class="mb-1">{{studentlist.lesson.code}} </h6>
+            
+                                        </td>
+                                        <td title="Ders Adı">
+                                            
+                                            <h6 class="mb-1">{{studentlist.lesson.name}} </h6>
+            
+                                        </td>
+                                        <td title="Öğretmen">
+                                            <h6 class="mb-1">{{studentlist.teacher.user.first_name}}  {{studentlist.teacher.user.last_name}}</h6>
+            
+                                        </td>
+                                        <td title="Sınıf">
+                                            <h6 class="mb-1">{{studentlist.className.className}} </h6>
+            
+                                        </td>
+                                        <td title="Sezon">
+                                            <h6 class="mb-1">{{studentlist.className.session}} </h6>
+            
+                                        </td>
+                                        <td title="Period">
+                                            <h6 class="mb-1">{{studentlist.className.periods}} </h6>
+            
+                                        </td>
+                                        
+                                    
+                                    
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                    
+                </div>     
             </div>
             
 </div>

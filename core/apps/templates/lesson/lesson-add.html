@@ -3,7 +3,7 @@
 {% block title %} Öğrenci Detay Sayfası {% endblock %}
 
 {% block content %}
-<div class="container rounded bg-white mt-5 mb-5">
+<div class="container  bg-white">
     <form action="" method="POST">
         {% csrf_token %}
         <div class="row">
@@ -26,7 +26,53 @@
                   
                        
             </div>
+            <div class="card-block px-0 py-3">
             
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                           
+                              <th scope="col">Ders Adı</th>
+                              <th scope="col">Ders Code</th>
+                              
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            
+                            
+                            {% for studentl in lesson %}
+                            
+                          
+                            <tr class="unread"></tr>
+                             
+                                    
+                                
+                                <td title="Ders Adı">
+                          
+                                    <h6 class="mb-3"> {{studentl.name}}  </h6>
+                                   
+                                </td>
+                                <td title="Ders Code">
+                             
+                                    <h6 class="mb-3"> {{studentl.code}} </h6>
+                             
+                                </td>
+                                
+                               
+                                
+                            </tr>
+                            
+                                                    
+                            {% endfor %} 
+    
+    
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
 </div>
 
 <div class="col-md-12">

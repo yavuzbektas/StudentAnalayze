@@ -1,4 +1,3 @@
-
 from cgi import print_environ
 from http.client import HTTPResponse
 from multiprocessing import context
@@ -59,7 +58,7 @@ def LessonAdd(request):
     
 
     sessionUpdate(request)
-    
+    lesson=Lesson.objects.all()
     lesson_form = lessonForm(request.POST,request.FILES)
     if request.method == 'POST':
         
@@ -83,7 +82,7 @@ def LessonAdd(request):
     context={
        
         'lesson_form':lesson_form,
-        
+        'lesson':lesson
        
         }
     return render(request, "lesson/lesson-add.html", context)
@@ -94,7 +93,7 @@ def LessonClassListAdd(request):
     sessionUpdate(request)
     
     fromdata = LessonClassListForm(request.POST,request.FILES)        
-    
+    lesson=LessonClassList.objects.all()
     if request.method == 'POST':
         if fromdata.is_valid():
             
@@ -114,7 +113,7 @@ def LessonClassListAdd(request):
     context={
        
         'lesson_form':fromdata,
-        
+        'lesson':lesson
        
         }
     return render(request, "lesson/DerslikAdd.html", context)
@@ -164,50 +163,60 @@ class LessonClassListList(ListView):
         
         return queryset 
 
-# class StudentListDetailView(ListView):
+
+
+
+
+
+@login_required(login_url="/login/")
+def LessonClassListDelete(request,pk):
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True) 
+    lessonClassList = LessonClassList.objects.get(id=pk)
+    if not request.user.is_authenticated:
+        # Eğer kullanıcı giriş yapmamış ise hata sayfası gönder
+        return Http404()
+
+    if request.method == 'GET':
+        lessonClassList.delete()
+        return redirect('/')
+    context={'sessions':session,"periods":period}
     
-#     model = StudentList
-#     template_name="clasess/cls-list.html"
+
+def LessonClassListUpdate(request,pk):
+    lessonClassList=LessonClassList.objects.get(id=pk)
     
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-        
-#         context['classLevels']=ClassLevels.objects.all()
-#         context['sessions']=Session.objects.all()
-#         context['periods']=Period.objects.all()
-#         context['classNames']=ClassNames.objects.all()
-#         context['studentlist']=StudentList.objects.all()
-        
-#         return context
-#     def get_queryset(self):
-#         queryset = {"studentlist": StudentList.objects.all()}
-#         sessionUpdate(self.request)
     
-#         session=Session.objects.get(active=True)
-#         period=Period.objects.get(active=True)
-#         className = self.request.GET.get("className")
-#         classLevel = self.request.GET.get("classLevel")
-#         query={}
-        
-           
-#         if className!="0" and className!=None:
-#             query['className__className__name__contains']=className
+   
+    allProfil=Profil.objects.all()
+    allClassName=StudentList.objects.all()
+    allLesson=Lesson.objects.all()
+    if request.method == 'POST':
+        lessonClassListForm = LessonClassListForm(request.POST,request.FILES,instance=lessonClassList)
+        if lessonClassListForm.is_valid():
             
-#         else:
-#             query['className__className__name__contains']=""
-           
-#         if classLevel!="0" and classLevel!=None:
-#             query['className__level__level__contains']=classLevel
-          
-#         else:
-#             query['className__level__level__contains']=""
-            
-            
-#         query["session__session__contains"]=session
-#         query["periods__period__contains"]=period
-#         try:
-#             queryset = {"studentlist": StudentList.objects.filter(**query)}  
-            
-#         except:
-#             print("sorgu hatası") 
-#         return queryset '''
+            try:
+                instance=lessonClassListForm.save()
+                
+                return redirect('/lessons/lessons/list/')
+                
+               
+            except Exception as err:
+                print(err)
+                context={
+                    'lessonClassListForm':lessonClassListForm,
+                    'allProfil':allProfil,
+                    'allClassName':allClassName,
+                    'allLesson':allLesson,
+                    'err':err
+                }
+                return render(request, "lesson/DerslikUpdate.html", context)
+
+    lessonClassListFormz=LessonClassListForm(instance=lessonClassList)
+    context={
+        'lessonClassListForm':lessonClassListFormz,
+        'allProfil':allProfil,
+        'allClassName':allClassName,
+        'allLesson':allLesson
+        }
+    return render(request, "lesson/DerslikUpdate.html", context)

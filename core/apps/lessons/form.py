@@ -8,8 +8,16 @@ from apps.lessons.models import Lesson, LessonClassList
 from apps.student.models import Student, StudentList
 from apps.home.models import Profil
 
-
-
+class MyModelChoiceField_lesson(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.className
+class MyModelChoiceField_teacher(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.className
+class MyModelChoiceField_class(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.className
+    
 class lessonForm(forms.ModelForm):
     name  = forms.CharField(widget=forms.TextInput(attrs={
         'id':'name',
@@ -39,11 +47,10 @@ class LessonClassListForm(forms.ModelForm):
         'placeholder': 'Ders',
          
         }),required=False)
-    className  = forms.ModelChoiceField(queryset=StudentList.objects.all(),widget=forms.Select({
+    className  = MyModelChoiceField_class(queryset=StudentList.objects.all(),widget=forms.Select({
         'id':'lesson_classnameID',
         'class': ' form-control',
-        'placeholder': 'Sınıf',
-         
+        'placeholder': 'Sınıf', 
         }),required=False)
     
     class Meta:
