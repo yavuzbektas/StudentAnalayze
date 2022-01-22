@@ -3,7 +3,7 @@
 .navbar-custom {
     background-color: #3F4D67;
 }
-@media (min-width: 767px) {
+@media (min-width: 990px) {
     .navbar-custom {
       display: none;
     }
@@ -37,34 +37,44 @@
         {% if user.is_staff %} 
        
         <li class="nav-item">
-          <a class="nav-item">Yönetici</a>
-        </li> 
+          <a class="nav-link" type="button" onclick="yoneticidrop()" >Yönetici&#x25BE</a>
+        </li>
+        <script>
+          function yoneticidrop() {
+            if( document.getElementById('yonetici').style.display == "none" ) {
+                document.getElementById('yonetici').style.display = "block";
+            } else {
+                document.getElementById('yonetici').style.display = "none";
+            }
+        }
+      </script> 
+        <div  name="yonetici" id="yonetici" style="display: none;">
         <li class="nav-item">
-            <a class="nav-link" href="/register/" >&nbsp;&nbsp;&nbsp;&nbsp; Öğretmen Ekle/Düzenle </a>
+            <a class="nav-link" href="/register/">&nbsp;&nbsp;&nbsp;&nbsp; Öğretmen Ekle/Düzenle </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="/student/add" >&nbsp;&nbsp;&nbsp;&nbsp; Öğrenci Ekle </a>
+            <a class="nav-link" href="/student/add">&nbsp;&nbsp;&nbsp;&nbsp; Öğrenci Ekle </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="/classes/assign/" >&nbsp;&nbsp;&nbsp;&nbsp; Öğrenci Sınıf Atama </a>
+            <a class="nav-link" href="/classes/assign/">&nbsp;&nbsp;&nbsp;&nbsp; Öğrenci Sınıf Atama </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="/attendance/lessonPeriods" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Saatleri </a>
+            <a class="nav-link" href="/attendance/lessonPeriods">&nbsp;&nbsp;&nbsp;&nbsp; Ders Saatleri </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="/classes/" >&nbsp;&nbsp;&nbsp;&nbsp; Sınıf Ekle/Düzenle </a>
+            <a class="nav-link" href="/classes/">&nbsp;&nbsp;&nbsp;&nbsp; Sınıf Ekle/Düzenle </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="/lessons/add" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Ekle/Düzenle </a>
+            <a class="nav-link" href="/lessons/add">&nbsp;&nbsp;&nbsp;&nbsp; Ders Ekle/Düzenle </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="/lessons/lessons/add" >&nbsp;&nbsp;&nbsp;&nbsp; Derslik Ekle/Düzenle </a>
+            <a class="nav-link" href="/lessons/lessons/add">&nbsp;&nbsp;&nbsp;&nbsp; Derslik Ekle/Düzenle </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Atama </a>
+            <a class="nav-link" href="">&nbsp;&nbsp;&nbsp;&nbsp; Ders Atama </a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Ders Programı Hazırlama </a>
+            <a class="nav-link" href="">&nbsp;&nbsp;&nbsp;&nbsp; Ders Programı Hazırlama </a>
           </li> 
           <li class="nav-item">
             <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Derslik Programı Hazırlama </a>
@@ -78,11 +88,21 @@
           <li class="nav-item">
             <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Staj Programı Düzenleme </a>
           </li> 
-     
+        </div>
           {% endif %}
-          <li class="nav-item">
-            <a class="nav-item">Raporlar</a>
+          <li class="nav-item" type="button" onclick="rapordrop()">
+            <a class="nav-link">Raporlar&#x25BE</a>
           </li> 
+          <script>
+            function rapordrop() {
+              if( document.getElementById('rapor').style.display == "none" ) {
+                  document.getElementById('rapor').style.display = "block";
+              } else {
+                  document.getElementById('rapor').style.display = "none";
+              }
+          }
+        </script> 
+          <div id="rapor" style="display: none;">
           <li class="nav-item">
               <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; DIS Raporları </a>
             </li> 
@@ -98,11 +118,43 @@
             <li class="nav-item">
               <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp; Diğer Raporlar </a>
             </li> 
-            <li class="nav-item">
-                <a class="nav-item">Sınıflar</a>
+          </div>
+            <li class="nav-item" type="button" onclick="sınıfdrop()">
+                <a class="nav-link">Sınıflar&#x25BE</a>
             </li> 
+            <script>
+              function sınıfdrop() {
+                if( document.getElementById('sınıflar').style.display == "none" ) {
+                    document.getElementById('sınıflar').style.display = "block";
+                } else {
+                    document.getElementById('sınıflar').style.display = "none";
+                }
+            }
+          </script> 
+            <div id="sınıflar" style="display: none;">
             <li class="nav-item">
-                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;9. Sınıflar</a>
+                <a class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;9. Sınıflar</a>
+            </li> 
+            
+            
+            <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D - ŞUBESİ </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
+              </li> 
+          
+              <li class="nav-item">
+                <a class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;10. Sınıflar</a>
             </li> 
             <li class="nav-item">
                 <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
@@ -120,7 +172,7 @@
                 <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;10. Sınıflar</a>
+                <a class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;11. Sınıflar</a>
             </li> 
             <li class="nav-item">
                 <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
@@ -138,7 +190,7 @@
                 <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;11. Sınıflar</a>
+                <a class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;12. Sınıflar</a>
             </li> 
             <li class="nav-item">
                 <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
@@ -155,24 +207,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
               </li> 
-              <li class="nav-item">
-                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;12. Sınıflar</a>
-            </li> 
-            <li class="nav-item">
-                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A - ŞUBESİ </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - ŞUBESİ </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C - ŞUBESİ </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D - ŞUBESİ </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E - ŞUBESİ </a>
-              </li> 
+            </div>
               <li class="nav-item">
                 <a class="nav-link" href="/usr-ogretmenler.html" > Öğretmenler </a>
               </li> 
@@ -189,17 +224,26 @@
                 <a class="nav-link" href="/attendance/list" > Yoklama </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-item">Kullanıcı Ayarları</a>
+                <a class="nav-link" type="button" onclick="ayardrop()">Kullanıcı Ayarları&#x25BE</a>
+              </li> 
+              <script>
+                function ayardrop() {
+                  if( document.getElementById('profil').style.display == "none" ) {
+                      document.getElementById('profil').style.display = "block";
+                  } else {
+                      document.getElementById('profil').style.display = "none";
+                  }
+              }
+              </script>
+              <div id="profil" style="display: none;">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/profil.html" >&nbsp;&nbsp;&nbsp;&nbsp; Profil Düzenle </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;Profil Ayarları</a>
+                <a class="nav-link" href="/accounts/password_reset/" >&nbsp;&nbsp;&nbsp;&nbsp; Şifre Resetleme </a>
               </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="/profil.html" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Profil Düzenle </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="/accounts/password_reset/" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Şifre Resetleme </a>
-              </li> 
+            </div>
               <li data-username="Disabled Menu" class="nav-item">
                 <a href="{% url 'logout' %}" class="nav-link">
                     <span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Çıkış</span>

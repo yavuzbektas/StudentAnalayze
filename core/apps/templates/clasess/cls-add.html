@@ -2,9 +2,18 @@
 
 {% block title %} Öğrenciler Listesi {% endblock %}
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
-
-{% block content %}
+{% block stylesheets %}
+<style>
+button {
+    all: unset;
+    cursor: pointer;
+    }
+    
+    button:focus {
+    outline: none;
+    }
+</style>
+{% endblock stylesheets %}{% block content %}
 <div class="col-xl-12 col-md-6">
     <div class="card ">
         <div class="card-header">
@@ -15,50 +24,128 @@
         
         <form method="POST">
             {% csrf_token %}
-            <div class="form-row field-classes">
-                <div class="col-md-12">
+            <div class="form-inline">
                     <label class="required" for="id_classes">Sınıf Seviyesi :</label>
-                </div>
-
-                <div class="form-inline">
-                    <select class="form-control" name="classes" required="" id="id_classes">
+                    <select style="margin:10px" class="form-control" name="classesidadd" required="" id="id_classes" onChange="updatelevel()">
+                        {% for classlevel in newclassform.classLevel %}
+                        <option value={{classlevel.id}}>{{classlevel}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" style="margin:10px" value="change-related" class="change-related" name="change_id_classes" id="change_id_classes"
+                        title="Seçilen Seviyeyi Değiştirir"><img src="/static/admin/img/icon-changelink.svg" alt="Değiştir" data-toggle="modal" data-target="#levelchangemodal"></button>
+                    <button type="button" href="" style="margin:10px" class="add-related" name="add_id_classes" id="add_id_classes" title="Başka bir Sınıf Seviyesi Ekler"><img src="/static/admin/img/icon-addlink.svg" data-toggle="modal" data-target="#leveladdmodal" alt="Ekle"></button>
+                    <label class="required" for="name_classes">Sınıf Şubesi :</label>
+                    <select style="margin:10px" class="form-control" name="classnameadd" required="" id="classnameadd" onChange="updatename()">
                         {% for classlevel in newclassform.className %}
                         <option value={{classlevel.id}}>{{classlevel}}</option>
                         {% endfor %}
-
                     </select>
-                    <a class="col-md-3 change-related" id="change_id_classes"
-                        data-href-template="/admin/classes/classes/__fk__/change/?_to_field=id&_popup=1"
-                        title="Seçilen Seviyeyi Değiştirir "
-                        href="/admin/classes/classnames/?/change/?_to_field=id&amp;_popup=1">
-                        
-                        <img src="/static/admin/img/icon-changelink.svg" alt="Değiştir">
-                        </a>
-                    <a class="col-md-3 add-related" id="add_id_classes"
-                        href="/admin/classes/classes/add/?_to_field=id&amp;_popup=1"
-                        title="Başka bir Sınıf Seviyesi Ekler">
-                        <img src="/static/admin/img/icon-addlink.svg" alt="Ekle">
-                    </a>
+                    <button type="button" href="" style="margin:10px" class="change-related" name="change_name_classes" id="change_name_classes" title="Seçilen Seviyeyi Değiştirir "><img src="/static/admin/img/icon-changelink.svg" data-toggle="modal" data-target="#namechangemodal" alt="Değiştir"></button>
+                    <button type="button" href="" style="margin:10px" class="add-related" name="add_name_classes" id="add_name_classes"title="Başka bir Sınıf Seviyesi Ekler"><img src="/static/admin/img/icon-addlink.svg" data-toggle="modal" data-target="#nameaddmodal" alt="Ekle"></button>
+                    
+                    <input style="margin:10px" type="submit" value="Yeni Sınıf ekle" class="btn btn-primary" name="_addanother">
                 </div>
-
-            </div>
-            
-             
-            <br> <br>
-
-            
-            <br><br>
-            <div class="form-row">
-                <div class="form-group">
-                    <div class="submit-row">
-                        <a href="{%  url 'classesList-add' 1 1 %}"><input type="button" value="Kaydet" class="default btn btn-primary" name="_save"></a>
-                        <input type="submit" value="Kaydet ve Yeni Sınıf ekle" class="btn btn-primary"
-                            name="_addanother">
-                        <input type="submit" value="Kaydet ve düzenlemeye devam et" class="btn btn-primary"
-                            name="_continue">
+                <script type="text/javascript">
+                    function updatelevel() {
+                        var select = document.getElementById('id_classes');
+                        var option = select.options[select.selectedIndex];
+        
+                        document.getElementById('clvalue').value = option.text;
+                    }
+        
+                    updatelevel();
+                </script>
+                <div class="modal fade" id="levelchangemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Sınıf seviyesini düzenle</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control" type="text" id="clvalue" placeholder="---------" name="clvalue">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                          <button type="submit" class="btn btn-primary" value="clvaluesave" name="clvaluesave">Kaydet</button>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+               <div class="modal fade" id="leveladdmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Yeni sınıf seviyesi ekle</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" id="clvaluenew" placeholder="---------" name="clvaluenew">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                      <button type="submit" class="btn btn-primary" value="clvaluenewsave" name="clvaluenewsave">Kaydet</button>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+              <script type="text/javascript">
+                function updatename() {
+                    var select = document.getElementById('classnameadd');
+                    var option = select.options[select.selectedIndex];
+    
+                    document.getElementById('cnvalue').value = option.text;
+                }
+    
+                updatelevel();
+            </script>
+              <div class="modal fade" id="namechangemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Sınıf şubesini düzenle</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" id="cnvalue" placeholder="---------" name="cnvalue">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                      <button type="submit" class="btn btn-primary" value="cnvaluesave" name="cnvaluesave">Kaydet</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="nameaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Yeni sınıf şubesi ekle</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" id="cnnewvalue" placeholder="---------" name="cnnewvalue">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                      <button type="submit" class="btn btn-primary" value="cnnewvaluesave" name="cnnewvaluesave">Kaydet</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <br> <br>
+            {% if error %}
+            <div class="alert alert-danger">Bu sınıf zaten bulunuyor</div>
+            {% endif %}
+            <br><br>
         </form>
         <br class="clear">
     
@@ -74,6 +161,7 @@
                             <th scope="col">Periyot</th>
                             <th scope="col">Öğrenci Sayısı</th>
                             <th scope="col">Güncelleme</th>
+                            <th scope="col">Sil</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,6 +190,11 @@
                                     class="label btn btn-primary  f-12">Güncelle</a>
 
                             </td>
+                            <td>
+                              <a href="{% url 'classes-delete' studentlist.id %}"
+                                  class="label btn btn-danger  f-12">Sil</a>
+                              
+                          </td>
                             
                             {% endif %}
                         </tr>

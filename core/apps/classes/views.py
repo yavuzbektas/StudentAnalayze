@@ -1,6 +1,7 @@
+from hashlib import new
+from traceback import print_tb
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-
 from apps.student.views import sessionUpdate
 from apps.student.models import Student
 from django.conf import settings
@@ -36,9 +37,10 @@ def classesShowList(request):
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
-def classesDelete(request):
-   context={'sessions':sessions,"periods":periods}
-   return render(request, "classes/cls-9sinif.html", context)
+def classesDelete(request,pk):
+    baseList = StudentList.objects.get(id=pk)
+    baseList.delete()
+    return redirect("classes")
 
 @login_required(login_url="/login/")
 def classesIndex(request):
@@ -137,7 +139,7 @@ def StudentListUpdateView(request,pk):
                 targetStudentList.save()
 
                 
-        return redirect('/classes/assign/')                                        
+        return redirect("classes")                                        
     context = {
         
         'studentList':baseList,
@@ -152,19 +154,148 @@ def StudentListUpdateView(request,pk):
 
 @login_required(login_url="/login/")
 def classesListIndex(request):
+    sessionUpdate(request)
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)
     newclassform = ClassListForm()
     classList = StudentList.objects.filter(session=session,periods=period)
+    
+    if request.POST:
+        if request.POST.get("cnnewvaluesave"):
+            newname = request.POST.get("cnnewvalue")
+            tnn = len(str(newname))
+            if tnn != 1:
+                return redirect("classes")
+            try:
+                tnn = int(newname)
+                return redirect("classes")
+            except:
+                newname = str(newname).upper()
+                oldnameobjects = ClassNames.objects.filter(name = newname)
+                if oldnameobjects:
+                    return redirect("classes")
+                newnameobject = ClassNames(name=newname)
+                newnameobject.save()
+        if request.POST.get("cnvaluesave"):
+            name_id = request.POST.get("classnameadd")
+            if name_id == "":
+                newname = request.POST.get("cnvalue")
+                tnn = len(str(newname))
+                if tnn != 1:
+                    return redirect("classes")
+                try:
+                    tnn = int(newname)
+                    return redirect("classes")
+                except:
+                    newname = str(newname).upper()
+                    oldnameobjects = ClassNames.objects.filter(name = newname)
+                    if oldnameobjects:
+                        return redirect("classes")
+                    newnameobject = ClassNames(name=newname)
+                    newnameobject.save()
+                    
+            else:
+                try:
+                    name = ClassNames.objects.filter(id=name_id)[0]
+                except:
+                    return redirect("classes")
+                newname = request.POST.get("cnvalue")
+                if newname == "":
+                    newnameobject = ClassNames.objects.get(id=name_id)
+                    newnameobject.delete()
+                else:
+                    tnn = len(str(newname))
+                    if tnn != 1:
+                        return redirect("classes")
+                    try:
+                        tnn = int(newname)
+                    except:
+                        newname = str(newname).upper
+                        newnameobject = ClassNames.objects.get(id=name_id)
+                        newnameobject.name = newname
+                        newnameobject.save()
+        if request.POST.get("clvaluenewsave"):
+            newlevel = request.POST.get("clvaluenew")
+            try:
+                tnl = int(newlevel)
+            except:
+                return redirect("classes")
+            oldlevelobjects = ClassLevels.objects.filter(level = newlevel)
+            if oldlevelobjects:
+                return redirect("classes")
+            newlevelobject = ClassLevels(level=newlevel)
+            newlevelobject.save()
+        if request.POST.get("clvaluesave"):
+            level_id = request.POST.get("classesidadd")
+            if level_id == "":
+                newlevel = request.POST.get("clvalue")
+                try:
+                    tnl = int(newlevel)
+                except:
+                    return redirect("classes")
+                oldlevelobjects = ClassLevels.objects.filter(level = newlevel)
+                if oldlevelobjects:
+                    return redirect("classes")
+                newlevelobject = ClassLevels(level=newlevel)
+                newlevelobject.save()
+            else:
+                try:
+                    level = ClassLevels.objects.filter(id=level_id)[0]
+                except:
+                    return redirect("classes")
+                newlevel = request.POST.get("clvalue")
+                if newlevel == "":
+                    newlevelobject = ClassLevels.objects.get(id=level_id)
+                    newlevelobject.delete()
+                else:
+                    try:
+                        tnl = int(newlevel)
+                    except:
+                        return redirect("classes")
+                    newlevelobject = ClassLevels.objects.get(id=level_id)
+                    newlevelobject.level = newlevel
+                    newlevelobject.save()
+            
+        if request.POST.get("_addanother"):
+            level = request.POST.get("classesidadd")
+            name = request.POST.get("classnameadd")
+            if level != "" and name != "":
+                try:
+                    level = ClassLevels.objects.filter(id=level)[0]
+                    name = ClassNames.objects.filter(id=name)[0]
+                except:
+                    return redirect("classes")
+                newclass = Classes(className=name,level=level)
+                if Classes.objects.filter(className=name,level=level):
+                    for i in StudentList.objects.all():
+                        if(str(i.className) == str(newclass)) and str(i.periods) == str(period):
+                            context={
+                                'sessions':sessions,
+                                'periods':periods,
+                                'classNames':classNames,
+                                'classLevels':classLevels,
+                                'classList':classList,
+                                'newclassform':newclassform,
+                                'error':True
+                                }
+                            return render(request, "clasess/cls-add.html", context)
+                newclass.save()
+                newclassList = StudentList(session=session,periods=period,className=newclass)
+                newclassList.save()
+    classList = StudentList.objects.filter(session=session,periods=period)
+    classNames = ClassNames.objects.all()
+    classLevels = ClassLevels.objects.all()
+    
     context={
         'sessions':sessions,
         'periods':periods,
         'classNames':classNames,
         'classLevels':classLevels,
         'classList':classList,
-        'newclassform':newclassform
+        'newclassform':newclassform,
+        'error':False
         }
     return render(request, "clasess/cls-add.html", context)
 
