@@ -10,12 +10,41 @@ from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
 from django.views.generic.detail import SingleObjectMixin
 from .form import ParentForm, StudentForm,StudentListForm
-
+from django.http import Http404, HttpResponse
+from .resources import StudentResource
+from tablib import Dataset
 
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
+def export(request):
+    person_resource = StudentResource()
+    dataset = person_resource.export()
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="students.xls"'
+    return response
+def simple_upload(request):
+    if request.method == 'POST':
+        person_resource = StudentResource()
+        dataset = Dataset()
+        new_persons = request.FILES['myfile']
 
+        imported_data = dataset.load(new_persons.read(),format='xlsx')
+        #print(imported_data)
+        for data in imported_data:
+            print(data[4])
+            value = Student(
+                data[0],
+                data[1],
+                data[2],
+                data[3],
+                data[4]
+                )
+            value.save()       
+        
+    
+
+    return render(request, 'student/input.html')
 def sessionUpdate(request):
     if request.GET.get("sessionID"):
         try:

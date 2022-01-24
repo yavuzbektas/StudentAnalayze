@@ -61,10 +61,10 @@ class Student(models.Model):
         return self.session.session + " - " + str(self.number) +" - " + self.firstName +' '+self.lastName
     def save(self, *args, **kwargs):
         
-        if '-' not in self.HESCode:
+        if '-' not in self.HESCode and self.HESCode!=None and self.HESCode!="" :
             self.HESCode = '{0}-{1}-{2}'.format(
                  self.HESCode[:4], self.HESCode[4:9], self.HESCode[9:])
-        if '-' not in self.phone:
+        if '-' not in self.phone and self.phone!=None and self.phone!="":
             self.phone = '({0})-{1} {2}'.format(
                  self.phone[:4], self.phone[4:7], self.phone[7:])
         
