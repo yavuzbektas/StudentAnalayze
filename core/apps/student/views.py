@@ -1,3 +1,5 @@
+import copy
+import os
 from django.shortcuts import render,redirect,HttpResponseRedirect,reverse,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -13,26 +15,70 @@ from .form import ParentForm, StudentForm,StudentListForm
 from django.http import Http404, HttpResponse
 from .resources import StudentResource
 from tablib import Dataset
-
+from xlrd import open_workbook
 sessions = Session.objects.all()
 periods = Period.objects.all()
 # Create your views here.
+# excel_app/views.py
+import xlwt
+from django.http import HttpResponse
+
+import xlwt
+
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+
+# Super User - admin - password
+
+
+
+# writing to existing workbook using xlwt 
+from xlutils.copy import copy # http://pypi.python.org/pypi/xlutils
+from xlrd import open_workbook # http://pypi.python.org/pypi/xlrd
+
+import os
+
 def export(request):
-    person_resource = StudentResource()
-    dataset = person_resource.export()
-    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="students.xls"'
-    return response
+    
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="users.xls"'
+        
+        path = os.path.dirname(__file__)
+        file = os.path.join(path, 'sample.xls')
+
+        rb = open_workbook(file, formatting_info=True)
+        r_sheet = rb.sheet_by_index(0)
+
+        wb = copy(rb)
+        ws = wb.get_sheet(0)
+
+        row_num = 2 # index start from 0
+        rows = Student.objects.all().values_list('firstName', 'lastName','HESCode', 'TC', 'email','birtdate')
+        for row in rows:
+            row_num += 1
+            for col_num in range(len(row)):
+                ws.write(row_num, col_num, row[col_num])
+        
+        # wb.save(file) # will replace original file
+        # wb.save(file + '.out' + os.path.splitext(file)[-1]) # will save file where the excel file is
+        wb.save(response)
+        return response
+        # return render(request,'student/export',context)
+    
 def simple_upload(request):
+    session=Session.objects.all()
+    period=Period.objects.all()
     if request.method == 'POST':
         person_resource = StudentResource()
         dataset = Dataset()
         new_persons = request.FILES['myfile']
-
+        
         imported_data = dataset.load(new_persons.read(),format='xlsx')
         #print(imported_data)
+        liste=[]
         for data in imported_data:
-            print(data[4])
+            
+            print(data[3])
             value = Student(
                 data[0],
                 data[1],
@@ -40,11 +86,20 @@ def simple_upload(request):
                 data[3],
                 data[4]
                 )
-            value.save()       
+            value.save() 
+            print(value)
+            liste.append(value)
+            
+        context={
+        'student':liste
+        }
+        print(liste)
+        return render(request, 'student/input.html',context)
+                 
         
-    
+    context={"sessions":session,"periods":period}
 
-    return render(request, 'student/input.html')
+    return render(request, 'student/input.html',context)
 def sessionUpdate(request):
     if request.GET.get("sessionID"):
         try:

@@ -26,5 +26,5 @@ urlpatterns = [
     path('parent/update/<int:pk>', views.parentUpdate, name='parent-Update'),
     path('parent/add',views.parentAdd,name='parentAdd'),
     path('input/', views.simple_upload,name='simple_upload-simple_upload'),
-    
+    path('export/', views.export,name='export'),
 ]
