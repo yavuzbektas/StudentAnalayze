@@ -7,7 +7,7 @@ import os
 
 # Create your models here.
 from ..home.models import Profil,Session,Period
-from apps.classes.models import Classes
+from ..classes.models import Classes
 
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
@@ -86,6 +86,7 @@ class StudentList(models.Model):
     className=models.ForeignKey(Classes,on_delete=models.CASCADE)
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
     periods=models.ForeignKey(Period,on_delete=models.CASCADE)
+    seating_arrangement=models.CharField(max_length=10000,default=" / / / / / / / / / / / / / / / / / / / / / / / ")
     students=models.ManyToManyField(Student,blank=True)
     mainteacher=models.ForeignKey(Profil,on_delete=models.CASCADE,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
     class Meta:
