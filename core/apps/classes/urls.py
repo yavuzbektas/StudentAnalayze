@@ -30,6 +30,7 @@ urlpatterns = [
     
     path('list/<str:filterBy>/<str:filterValue>', views.classesShowListFiltered,name='classes-list-filtered') ,
     path('StudentListUpdateView/<int:pk>', views.StudentListUpdateView, name='StudentListUpdateView'),
+    path('Seat_arrangement/<int:pk>', views.UpdateSeating, name='upd-seating'),
     path('assign/',views.StudentListDetailView.as_view(), name='classes-detail'),
 ]
     

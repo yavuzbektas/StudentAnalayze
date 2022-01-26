@@ -7,7 +7,7 @@ import os
 
 # Create your models here.
 from ..home.models import Profil,Session,Period
-from ..classes.models import Classes
+from apps.classes.models import Classes
 
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")
@@ -41,9 +41,9 @@ class Student(models.Model):
     phone = models.CharField(validators=[validatePhone], max_length=17,default="0",unique=False,null=True,blank=True,)
     address=models.TextField(unique=False,null=True,blank=True,)
     status=models.BooleanField(unique=False,null=True,blank=True,)
-    middleSchool=models.ForeignKey(MiddleSchool,on_delete=models.CASCADE)
-    number=models.IntegerField(unique=False,null=True,blank=True,)
-    session=models.ForeignKey(Session,on_delete=models.CASCADE)
+    middleSchool=models.ForeignKey(MiddleSchool,on_delete=models.CASCADE,null=True)
+    number=models.IntegerField(unique=False,null=True,blank=True)
+    session=models.ForeignKey(Session,on_delete=models.CASCADE,null=True)
     image=models.ImageField(upload_to=upload_location,unique=False,null=True,blank=True,default='images/person.png')
     health=models.TextField(unique=False,null=True,blank=True,)
     HESCode=models.CharField(max_length=12,unique=False,null=True,blank=True,validators=[validateHesCode])
@@ -58,18 +58,18 @@ class Student(models.Model):
         ordering = ('firstName',)
     
     def __str__(self):
-        return self.session.session + " - " + str(self.number) +" - " + self.firstName +' '+self.lastName
-    def save(self, *args, **kwargs):
+        return  str(self.number) +" - " + self.firstName +' '+self.lastName
+    """def save(self, *args, **kwargs):
         
-        if '-' not in self.HESCode and self.HESCode!=None and self.HESCode!="" :
+        if '-' not in self.HESCode:
             self.HESCode = '{0}-{1}-{2}'.format(
                  self.HESCode[:4], self.HESCode[4:9], self.HESCode[9:])
-        if '-' not in self.phone and self.phone!=None and self.phone!="":
+        if '-' not in self.phone:
             self.phone = '({0})-{1} {2}'.format(
                  self.phone[:4], self.phone[4:7], self.phone[7:])
         
         # Continue the model saving
-        super(Student, self).save(*args, **kwargs)
+        super(Student, self).save(*args, **kwargs)"""
 class Parent(models.Model):
     firstName= models.CharField(max_length=20,default="",unique=False,null=True,blank=True,)
     lastName=models.CharField(max_length=20,default="",unique=False,null=True,blank=True,)
@@ -87,7 +87,7 @@ class StudentList(models.Model):
     session=models.ForeignKey(Session,on_delete=models.CASCADE)
     periods=models.ForeignKey(Period,on_delete=models.CASCADE)
     students=models.ManyToManyField(Student,blank=True)
-    mainteacher=models.ForeignKey(Profil,on_delete=models.CASCADE,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher',null=True)
+    mainteacher=models.ForeignKey(Profil,on_delete=models.CASCADE,blank=True,verbose_name="Sınıf Öğretmeni",related_name='teacher')
     class Meta:
         ordering = ('className',"session","periods",)
     def __str__(self):
