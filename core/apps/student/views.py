@@ -83,7 +83,7 @@ def simple_upload(request):
         dataset = Dataset() 
         new_students={} 
         newStudentlist=[]
-                
+        student={}         
         if 'import' in request.POST:
             try:
                 new_students = dataset.load(request.FILES['myfile'].read(),format='xlsx')
@@ -92,32 +92,85 @@ def simple_upload(request):
             
             if new_students:
                 for index in range(len(new_students)):
+                    student={}
                     try: 
                         Student.objects.get(TC=new_students['TC'][index])
                         print("This student has already been recorded")
-                        
+                        student['recordStatus']="Zaten Kayıtlı"
                     except Exception as err:
-                        student = Student(
+                        newStudent = Student(
                             firstName=new_students['firstName'][index],lastName=new_students['lastName'][index],TC=new_students['TC'][index],
                             phone=new_students['phone'][index],address=new_students['address'][index],HESCode=new_students['HESCode'][index],
                             birtdate=new_students['birtdate'][index],health=new_students['health'][index],email=new_students['email'][index],
                             gender=new_students['gender'][index],middleSchool_id=new_students['middleSchool_id'][index],number=new_students['number'][index],
                             )
-                        student.save() 
+                        newStudent.save() 
                         
                         query2['className__className__name__contains']=new_students['className'][index]
                         query2['className__level__level__contains']=new_students['classLevel'][index]
-                        studentlist= StudentList.objects.get(**query2) .students.add(student)
+                        studentlist= StudentList.objects.get(**query2) .students.add(newStudent)
                         #StudentList.objects.get(className=ClassName(name=new_students['className'][index]),session=session,periods=period)
+                        student['recordStatus']="Kaydedildi"
+                        student['firstName']=new_students['firstName'][index]
+                        student['TC']=new_students['TC'][index]
+                        student['lastName']=new_students['lastName'][index]
+                        student['phone']=new_students['phone'][index]
+                        student['address']=new_students['address'][index]
+                        student['HESCode']=new_students['HESCode'][index]
+                        student['health']=new_students['health'][index]
+                        student['birtdate']=new_students['birtdate'][index]
+                        student['email']=new_students['email'][index]
+                        student['gender']=new_students['gender'][index]
+                        student['number']=new_students['number'][index]
+                        student['className']=new_students['className'][index]
+                        student['classLevel']=new_students['classLevel'][index]
                         newStudentlist.append(student)    
+                          
         
         
-         
+        if 'load' in request.POST: 
+            try:
+                new_students = dataset.load(request.FILES['myfile'].read(),format='xlsx')
+            except:
+                pass
+            if new_students:
+                  
+                for index in range(len(new_students)):
+                    student={}
+                    try: 
+                        Student.objects.get(TC=new_students['TC'][index])
+                        student['recordStatus']="Zaten Kayıtlı"
+                        print("This student has already been recorded")
+                        
+                    except Exception as err:
+                        student['recordStatus']="Kaydedilecek"
+                        
+                    try:
+                        
+                        student['firstName']=new_students['firstName'][index]
+                        student['TC']=new_students['TC'][index]
+                        student['lastName']=new_students['lastName'][index]
+                        student['phone']=new_students['phone'][index]
+                        student['address']=new_students['address'][index]
+                        student['HESCode']=new_students['HESCode'][index]
+                        student['health']=new_students['health'][index]
+                        student['birtdate']=new_students['birtdate'][index]
+                        student['email']=new_students['email'][index]
+                        student['gender']=new_students['gender'][index]
+                        student['number']=new_students['number'][index]
+                        student['className']=new_students['className'][index]
+                        student['classLevel']=new_students['classLevel'][index]
+                        newStudentlist.append(student) 
+                        recordstatus=2   
+                    except:
+                        recordstatus=3
+        
         context={
         'studentlist':newStudentlist,
         'sessions':sessions,
         'periods':periods,
-        'students':students
+        'students':students,
+        'recordStatus':recordstatus
         
         }
          

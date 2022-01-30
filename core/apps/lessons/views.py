@@ -140,6 +140,7 @@ class LessonClassListList(ListView):
         context['sessions']=Session.objects.all()
         context['periods']=Period.objects.all()
         context['classNames']=ClassNames.objects.all()
+        context['all_class_levels']=all_class_levels
         return context
     def get_queryset(self):
         queryset = {"lessonClassList": LessonClassList.objects.all()}
