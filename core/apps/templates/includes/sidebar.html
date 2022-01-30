@@ -66,64 +66,20 @@
                             
                         </ul></li>
                         <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Yapılacak -  Sınıflar</span></a>
+                        <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Sınıflar</span></a>
                         <ul class="pcoded-submenu">
+                            {% for level in all_class_levels %}
                             <li class="">
                                 <li data-username=""class="nav-item pcoded-hasmenu">
-                                    <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext"> Yapılacak - 9. Sınıflar</span></a>
+                                    <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">{{level.0}}. Sınıflar</span></a>
                                     <ul class="pcoded-submenu">
-                                        <li class=""><a href="/cls-9sinif.html" class="">A - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-10sinif.html" class="">B - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-11sinif.html" class="">C - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">D - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">E - ŞUBESİ</a></li>
-
-                                        
+                                        {% for name in level.1 %}
+                                        <li class=""><a href="/classes/classredirect/{{level.0}}{{name}}" class="">{{name}} - ŞUBESİ</a></li>
+                                        {% endfor %}
                                     </ul>
 
                             </li>
-                            <li class="">
-                                <li data-username="" class="nav-item pcoded-hasmenu">
-                                    <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Yapılacak -  10. Sınıflar</span></a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=""><a href="/cls-9sinif.html" class="">A - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-10sinif.html" class="">B - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-11sinif.html" class="">C - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">D - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">E - ŞUBESİ</a></li>
-
-                                        
-                                    </ul>
-
-                            </li>
-                            <li class="">
-                                <li data-username="" class="nav-item pcoded-hasmenu">
-                                    <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext"> Yapılacak - 11. Sınıflar</span></a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=""><a href="/cls-9sinif.html" class="">A - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-10sinif.html" class="">B - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-11sinif.html" class="">C - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">D - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">E - ŞUBESİ</a></li>
-
-                                        
-                                    </ul>
-
-                            </li>
-                            <li class="">
-                                <li data-username="" class="nav-item pcoded-hasmenu">
-                                    <a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Yapılacak - 12. Sınıflar</span></a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=""><a href="/cls-9sinif.html" class="">A - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-10sinif.html" class="">B - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-11sinif.html" class="">C - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">D - ŞUBESİ</a></li>
-                                        <li class=""><a href="/cls-12sinif.html" class="">E - ŞUBESİ</a></li>
-
-                                        
-                                    </ul>
-
-                            </li>
+                            {% endfor %}
                         </ul>
                     </li>
                     
@@ -136,15 +92,12 @@
                         class="nav-item {% if 'usr-ogrenciler' in segment %} active {% endif %}">
                         <a href="/student/list" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Öğrenciler</span></a>
                     </li>
-                    <li data-username="form elements advance componant validation masking wizard picker select" 
-                        class="nav-item {% if 'page-dersler' in segment %} active {% endif %}">
-                        <a href="/page-dersler.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Dersler</span></a>
-                    </li>
+                    
                     <li data-username="form elements advance componant validation masking wizard picker select"
 
                         class="nav-item {% if 'page-dersler' in segment %} active {% endif %}">
 
-                        <a href="/lessons/lessons/list/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Derslikler</span></a>
+                        <a href="/lessons/lessons/list/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Dersler</span></a>
 
                     </li>
                     
@@ -174,7 +127,7 @@
                     <li class="nav-item pcoded-menu-caption">
                         <label>Diğer</label>
                     </li>
-                    
+                   
                     <li class="nav-item pcoded-menu-caption">
                         <label>Dış Bağlantılar</label>
                     </li>                    

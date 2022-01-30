@@ -8,8 +8,10 @@ from ..classes.models import ClassLevels,Classes,ClassNames
 from ..home.models import Session,Period
 from .models import LessonPeriods,DailyAttendance
 import datetime
+from apps.classes.classes_for_sidebar import all_class_levels
 sessions = Session.objects.all()
 periods = Period.objects.all()
+all_class_levels = all_class_levels()
 # Create your views here.
 
 def sessionUpdate(request):
@@ -57,7 +59,7 @@ def stdAttUpdate(request,pk=None):
     except:
         context={
         
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
         return render(request,"student/att-list.html",context)
     
@@ -66,7 +68,7 @@ def stdAttUpdate(request,pk=None):
         'student':student,
         'className':className,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
     return render(request, "student/std-Update.html", context)
 
@@ -88,18 +90,18 @@ def stdAttView(request,pk=None):
         'student':student,
         'className':className,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
     return render(request, "student/std-profile.html", context)
 
 @login_required(login_url="/login/")
 def stdAttDelete(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "student/std-profile.html", context)
 
 @login_required(login_url="/login/")
 def stdAttIndex(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "attendance/std-dailyAttendance.html", context)
 
 
@@ -195,7 +197,8 @@ def stdAttShowList(request):
         'currentClassLevel':classLevel,
         'currentClassName':className,
         'newlist':newlist,
-        'media_url':settings.MEDIA_URL
+        'media_url':settings.MEDIA_URL,
+        'all_class_levels':all_class_levels
     }
     
     return render(request, "attendance/std-dailyAttendance.html", context)
@@ -266,7 +269,8 @@ def lessonPeriodList(request):
         'lesPeriods':all_lesPeriods,
         'sessions':sessions,
         'periods':periods,
-        'media_url':settings.MEDIA_URL
+        'media_url':settings.MEDIA_URL,
+        'all_class_levels':all_class_levels
     }
     return render(request, "attendance/lessonPeriods.html",context)
 # Create your views here.

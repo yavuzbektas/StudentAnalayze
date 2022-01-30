@@ -20,12 +20,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .form import ProfilForm,UserForm,SessionForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
+from apps.classes.classes_for_sidebar import all_class_levels
 sessions = Session.objects.all()
 periods = Period.objects.all()
+all_class_levels = all_class_levels()
 
 @login_required(login_url="/login/")
 def index(request):
-    context = {'segment': 'index','sessions':sessions,"periods":periods}
+    context = {'segment': 'index','sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
 
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
@@ -33,7 +35,7 @@ def index(request):
 
 @login_required(login_url="/login/")
 def pages(request):
-    context = {'sessions':sessions,"periods":periods}
+    context = {'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     # All resource paths end in .html.
     # Pick out the html file name from the url. And load that template.
     try:
@@ -70,7 +72,7 @@ def profilShowList(request):
         'Kullanicilar' : profilList,
         'media_url':settings.MEDIA_URL,
         'jobs':jobs,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
     }
     
     return render(request,'home/usr-ogretmenler.html',context)
@@ -84,7 +86,7 @@ def profilView(request,pk=None):
         'detail':detail,
         
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
     
 
@@ -126,7 +128,7 @@ def profilUpdate(request,pk=None):
         'profile_form':profile_form,
         'user_form':user_form,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
     
 
@@ -145,7 +147,7 @@ def userUpdate(request):
         'jobs':jobs,
         'form':form,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
     }
     return render(request,'home/profil.html',context)
 

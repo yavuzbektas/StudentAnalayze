@@ -13,6 +13,8 @@ from apps.home.models import Period, Session,Profil
 from apps.lessons.form import LessonClassListForm, lessonForm
 from apps.lessons.models import Lesson, LessonClassList
 from apps.student.models import StudentList
+from apps.classes.classes_for_sidebar import all_class_levels
+all_class_levels = all_class_levels()
 
 # Create your views here.
 
@@ -49,6 +51,7 @@ def LessonAdd(request):
     context={
        
         'lesson_form':lesson_form,
+        'all_class_levels':all_class_levels
         
        
         }
@@ -82,7 +85,8 @@ def LessonAdd(request):
     context={
        
         'lesson_form':lesson_form,
-        'lesson':lesson
+        'lesson':lesson,
+        'all_class_levels':all_class_levels
        
         }
     return render(request, "lesson/lesson-add.html", context)
@@ -113,7 +117,8 @@ def LessonClassListAdd(request):
     context={
        
         'lesson_form':fromdata,
-        'lesson':lesson
+        'lesson':lesson,
+        'all_class_levels':all_class_levels
        
         }
     return render(request, "lesson/DerslikAdd.html", context)
@@ -180,7 +185,7 @@ def LessonClassListDelete(request,pk):
     if request.method == 'GET':
         lessonClassList.delete()
         return redirect('/')
-    context={'sessions':session,"periods":period}
+    context={'sessions':session,"periods":period,'all_class_levels':all_class_levels}
     
 
 def LessonClassListUpdate(request,pk):
@@ -208,7 +213,8 @@ def LessonClassListUpdate(request,pk):
                     'allProfil':allProfil,
                     'allClassName':allClassName,
                     'allLesson':allLesson,
-                    'err':err
+                    'err':err,
+                    'all_class_levels':all_class_levels
                 }
                 return render(request, "lesson/DerslikUpdate.html", context)
 
@@ -217,6 +223,7 @@ def LessonClassListUpdate(request,pk):
         'lessonClassListForm':lessonClassListFormz,
         'allProfil':allProfil,
         'allClassName':allClassName,
-        'allLesson':allLesson
+        'allLesson':allLesson,
+        'all_class_levels':all_class_levels
         }
     return render(request, "lesson/DerslikUpdate.html", context)

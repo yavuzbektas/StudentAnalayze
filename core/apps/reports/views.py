@@ -10,8 +10,10 @@ from ..home.models import Session,Period
 from ..attendance.models import LessonPeriods,DailyAttendance
 import datetime
 from django.contrib import messages
+from apps.classes.classes_for_sidebar import all_class_levels
 sessions = Session.objects.all()
 periods = Period.objects.all()
+all_class_levels = all_class_levels()
 # Create your views here.
 
 def sessionUpdate(request):
@@ -74,7 +76,8 @@ def stdattreportindex(request):
                 'lesPeriods':lesPeriod_list,
                 'classNames':classNames,
                 'classLevels':classLevels,
-                'day':str_day
+                'day':str_day,
+                'all_class_levels':all_class_levels
             }
             return render(request, "reports/rpr-yoklama.html", context)
     if request.GET:
@@ -95,7 +98,8 @@ def stdattreportindex(request):
                     'lesPeriods':lesPeriod_list,
                     'classNames':classNames,
                     'classLevels':classLevels,
-                    'day':str_day
+                    'day':str_day,
+                    'all_class_levels':all_class_levels
                 }
                 return render(request, "reports/rpr-yoklama.html", context)
             
@@ -107,7 +111,8 @@ def stdattreportindex(request):
                 'lesPeriods':lesPeriod_list,
                 'classNames':classNames,
                 'classLevels':classLevels,
-                'day':str_day
+                'day':str_day,
+                'all_class_levels':all_class_levels
             }
             return render(request, "reports/rpr-yoklama.html", context)
           
@@ -147,7 +152,8 @@ def stdattreportindex(request):
         'newlist':newlist,
         'media_url':settings.MEDIA_URL,
         'day':str_day,
-        'report_date':report_date
+        'report_date':report_date,
+        'all_class_levels':all_class_levels
     }
     return render(request, "reports/rpr-yoklama.html", context)
     

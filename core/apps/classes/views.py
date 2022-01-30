@@ -1,8 +1,10 @@
+import numbers
+from operator import le
+from os import name
 from django.forms import BaseInlineFormSet
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-
 from apps.student.views import sessionUpdate
 from apps.student.models import Student
 from django.conf import settings
@@ -11,45 +13,93 @@ from django.views.generic import ListView
 from apps.student.models import StudentList
 from apps.classes.form import ClassListForm
 from apps.classes.models import ClassLevels, ClassNames, Classes
+from apps.classes.classes_for_sidebar import all_class_levels
 sessions = Session.objects.all()
 periods = Period.objects.all()
+classes = Classes.objects.all()
 
- 
+all_class_levels = all_class_levels()
+
 # Create your views here.
 
 @login_required(login_url="/login/")
 def classesAdd(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesUpdate(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesView(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesShowList(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
-def classesDelete(request):
-   context={'sessions':sessions,"periods":periods}
-   return render(request, "classes/cls-9sinif.html", context)
+def classesDelete(request,pk):
+    baseList = StudentList.objects.get(id=pk)
+    baseList.delete()
+    classes = Classes.objects.all()
+    all_class_levels = []
+    all_class_levels_levels = []
+    for i in classes:
+        if i.level not in all_class_levels:
+            all_class_levels.append(i.level)
+
+    for i in all_class_levels:
+        names = []
+        for x in classes:
+            if x.level == i:
+                names.append(x.className)
+        for z in names:
+            names[names.index(z)] = str(names[names.index(z)])
+        names.sort()
+        all_class_levels[all_class_levels.index(i)] = (str(all_class_levels[all_class_levels.index(i)]),names)
+
+    for i in all_class_levels:
+        all_class_levels_levels.append(int(i[0]))
+    all_class_levels_levels.sort()
+    for i in all_class_levels_levels:
+        all_class_levels_levels[all_class_levels_levels.index(i)] = str(all_class_levels_levels[all_class_levels_levels.index(i)])
+
+    for i in all_class_levels_levels:
+        for x in all_class_levels:
+            if i == x[0]:
+                all_class_levels_levels[all_class_levels_levels.index(i)] = (all_class_levels_levels[all_class_levels_levels.index(i)],x[1])
+    for i in all_class_levels_levels:
+        for name in i[1]:
+            name_count=i[1].count(name)
+            if name_count > 1:
+                for count in range(name_count-1):
+                    i[1].remove(name)
+    classes_all = []
+    for i in StudentList.objects.all():
+        if str(i.className) not in classes_all:
+            classes_all.append(str(i.className))
+    for i in all_class_levels_levels:
+        for name in i[1]:
+            if i[0]+name not in classes_all:
+                all_class_levels_levels[all_class_levels_levels.index(i)][1].remove(name)
+        if i[1] == []:
+            all_class_levels_levels.remove(i)
+    all_class_levels = all_class_levels_levels
+    return redirect("classes")
 
 @login_required(login_url="/login/")
 def classesIndex(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "classes/cls-9sinif.html", context)
 
 @login_required(login_url="/login/")
 def classesShowListFiltered(request,filterBy,filterValue):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "classes/cls-9sinif.html", context)
 
 class StudentListDetailView(ListView):
@@ -147,42 +197,265 @@ def StudentListUpdateView(request,pk):
         'periods':periods,
         'classNames':classNames,
         'classLevels':classLevels,
-        'media_url':settings.MEDIA_URL
+        'media_url':settings.MEDIA_URL,
+        'all_class_levels':all_class_levels
     }
     
     return render(request, "clasess/cls-listUpdate.html", context)
 
 @login_required(login_url="/login/")
 def classesListIndex(request):
+    sessionUpdate(request)
     classNames = ClassNames.objects.all()
     classLevels = ClassLevels.objects.all()
     session=Session.objects.get(active=True)
     period=Period.objects.get(active=True)
     newclassform = ClassListForm()
     classList = StudentList.objects.filter(session=session,periods=period)
+    
+    if request.POST:
+        if request.POST.get("cnnewvaluesave"):
+            newname = request.POST.get("cnnewvalue")
+            tnn = len(str(newname))
+            if tnn != 1:
+                return redirect("classes")
+            try:
+                tnn = int(newname)
+                return redirect("classes")
+            except:
+                newname = str(newname).upper()
+                oldnameobjects = ClassNames.objects.filter(name = newname)
+                if oldnameobjects:
+                    return redirect("classes")
+                newnameobject = ClassNames(name=newname)
+                newnameobject.save()
+        if request.POST.get("cnvaluesave"):
+            name_id = request.POST.get("classnameadd")
+            if name_id == "":
+                newname = request.POST.get("cnvalue")
+                tnn = len(str(newname))
+                if tnn != 1:
+                    return redirect("classes")
+                try:
+                    tnn = int(newname)
+                    return redirect("classes")
+                except:
+                    newname = str(newname).upper()
+                    oldnameobjects = ClassNames.objects.filter(name = newname)
+                    if oldnameobjects:
+                        return redirect("classes")
+                    newnameobject = ClassNames(name=newname)
+                    newnameobject.save()
+                    
+            else:
+                try:
+                    name = ClassNames.objects.filter(id=name_id)[0]
+                except:
+                    return redirect("classes")
+                newname = request.POST.get("cnvalue")
+                if newname == "":
+                    newnameobject = ClassNames.objects.get(id=name_id)
+                    newnameobject.delete()
+                else:
+                    tnn = len(str(newname))
+                    if tnn != 1:
+                        return redirect("classes")
+                    try:
+                        tnn = int(newname)
+                    except:
+                        newname = str(newname).upper
+                        newnameobject = ClassNames.objects.get(id=name_id)
+                        newnameobject.name = newname
+                        newnameobject.save()
+        if request.POST.get("clvaluenewsave"):
+            newlevel = request.POST.get("clvaluenew")
+            try:
+                tnl = int(newlevel)
+            except:
+                return redirect("classes")
+            oldlevelobjects = ClassLevels.objects.filter(level = newlevel)
+            if oldlevelobjects:
+                return redirect("classes")
+            newlevelobject = ClassLevels(level=newlevel)
+            newlevelobject.save()
+        if request.POST.get("clvaluesave"):
+            level_id = request.POST.get("classesidadd")
+            if level_id == "":
+                newlevel = request.POST.get("clvalue")
+                try:
+                    tnl = int(newlevel)
+                except:
+                    return redirect("classes")
+                oldlevelobjects = ClassLevels.objects.filter(level = newlevel)
+                if oldlevelobjects:
+                    return redirect("classes")
+                newlevelobject = ClassLevels(level=newlevel)
+                newlevelobject.save()
+            else:
+                try:
+                    level = ClassLevels.objects.filter(id=level_id)[0]
+                except:
+                    return redirect("classes")
+                newlevel = request.POST.get("clvalue")
+                if newlevel == "":
+                    newlevelobject = ClassLevels.objects.get(id=level_id)
+                    newlevelobject.delete()
+                else:
+                    try:
+                        tnl = int(newlevel)
+                    except:
+                        return redirect("classes")
+                    newlevelobject = ClassLevels.objects.get(id=level_id)
+                    newlevelobject.level = newlevel
+                    newlevelobject.save()
+            
+        if request.POST.get("_addanother"):
+            level = request.POST.get("classesidadd")
+            name = request.POST.get("classnameadd")
+            if level != "" and name != "":
+                try:
+                    level = ClassLevels.objects.filter(id=level)[0]
+                    name = ClassNames.objects.filter(id=name)[0]
+                except:
+                    return redirect("classes")
+                newclass = Classes(className=name,level=level)
+                if Classes.objects.filter(className=name,level=level):
+                    for i in StudentList.objects.all():
+                        if(str(i.className) == str(newclass)) and str(i.periods) == str(period):
+                            classes = Classes.objects.all()
+                            all_class_levels = []
+                            all_class_levels_levels = []
+                            for i in classes:
+                                if i.level not in all_class_levels:
+                                    all_class_levels.append(i.level)
+
+                            for i in all_class_levels:
+                                names = []
+                                for x in classes:
+                                    if x.level == i:
+                                        names.append(x.className)
+                                for z in names:
+                                    names[names.index(z)] = str(names[names.index(z)])
+                                names.sort()
+                                all_class_levels[all_class_levels.index(i)] = (str(all_class_levels[all_class_levels.index(i)]),names)
+
+                            for i in all_class_levels:
+                                all_class_levels_levels.append(int(i[0]))
+                            all_class_levels_levels.sort()
+                            for i in all_class_levels_levels:
+                                all_class_levels_levels[all_class_levels_levels.index(i)] = str(all_class_levels_levels[all_class_levels_levels.index(i)])
+
+                            for i in all_class_levels_levels:
+                                for x in all_class_levels:
+                                    if i == x[0]:
+                                        all_class_levels_levels[all_class_levels_levels.index(i)] = (all_class_levels_levels[all_class_levels_levels.index(i)],x[1])
+                            for i in all_class_levels_levels:
+                                for name in i[1]:
+                                    name_count=i[1].count(name)
+                                    if name_count > 1:
+                                        for count in range(name_count-1):
+                                            i[1].remove(name)
+                            classes_all = []
+                            for i in StudentList.objects.all():
+                                if str(i.className) not in classes_all:
+                                    classes_all.append(str(i.className))
+                            for i in all_class_levels_levels:
+                                for name in i[1]:
+                                    if i[0]+name not in classes_all:
+                                        all_class_levels_levels[all_class_levels_levels.index(i)][1].remove(name)
+                                if i[1] == []:
+                                    all_class_levels_levels.remove(i)
+                            all_class_levels = all_class_levels_levels
+                            context={
+                                'sessions':sessions,
+                                'periods':periods,
+                                'classNames':classNames,
+                                'classLevels':classLevels,
+                                'classList':classList,
+                                'newclassform':newclassform,
+                                'error':True,
+                                'all_class_levels':all_class_levels
+                                }
+                            return render(request, "clasess/cls-add.html", context)
+                if Classes.objects.filter(className=name,level=level):
+                    newclass = (Classes.objects.filter(className=name,level=level))[0]
+                else:
+                    newclass.save()
+                newclassList = StudentList(session=session,periods=period,className=newclass)
+                newclassList.save()
+    classList = StudentList.objects.filter(session=session,periods=period)
+    classNames = ClassNames.objects.all()
+    classLevels = ClassLevels.objects.all()
+    classes = Classes.objects.all()
+    all_class_levels = []
+    all_class_levels_levels = []
+    for i in classes:
+        if i.level not in all_class_levels:
+            all_class_levels.append(i.level)
+
+    for i in all_class_levels:
+        names = []
+        for x in classes:
+            if x.level == i:
+                names.append(x.className)
+        for z in names:
+            names[names.index(z)] = str(names[names.index(z)])
+        names.sort()
+        all_class_levels[all_class_levels.index(i)] = (str(all_class_levels[all_class_levels.index(i)]),names)
+
+    for i in all_class_levels:
+        all_class_levels_levels.append(int(i[0]))
+    all_class_levels_levels.sort()
+    for i in all_class_levels_levels:
+        all_class_levels_levels[all_class_levels_levels.index(i)] = str(all_class_levels_levels[all_class_levels_levels.index(i)])
+
+    for i in all_class_levels_levels:
+        for x in all_class_levels:
+            if i == x[0]:
+                all_class_levels_levels[all_class_levels_levels.index(i)] = (all_class_levels_levels[all_class_levels_levels.index(i)],x[1])
+    for i in all_class_levels_levels:
+        for name in i[1]:
+            name_count=i[1].count(name)
+            if name_count > 1:
+                for count in range(name_count-1):
+                    i[1].remove(name)
+    classes_all = []
+    for i in StudentList.objects.all():
+        if str(i.className) not in classes_all:
+            classes_all.append(str(i.className))
+    for i in all_class_levels_levels:
+        for name in i[1]:
+            if i[0]+name not in classes_all:
+                all_class_levels_levels[all_class_levels_levels.index(i)][1].remove(name)
+        if i[1] == []:
+            all_class_levels_levels.remove(i)
+    all_class_levels = all_class_levels_levels
+    
     context={
         'sessions':sessions,
         'periods':periods,
         'classNames':classNames,
         'classLevels':classLevels,
         'classList':classList,
-        'newclassform':newclassform
+        'newclassform':newclassform,
+        'error':False,
+        'all_class_levels':all_class_levels
         }
     return render(request, "clasess/cls-add.html", context)
 
 @login_required(login_url="/login/")
 def classesListUpdate(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "clasess/cls-add.html", context)
 
 @login_required(login_url="/login/")
 def classesListDelete(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "clasess/cls-add.html", context)
 
 @login_required(login_url="/login/")
 def classesListView(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "clasess/cls-add.html", context)
 
 def classesListAdd(request,classlevelID,classnameID):
@@ -200,7 +473,8 @@ def classesListAdd(request,classlevelID,classnameID):
     
     context={
         'sessions':sessions,
-        "periods":periods
+        "periods":periods,
+        'all_class_levels':all_class_levels,
         
         }
     return render(request, "clasess/cls-add.html", context)
@@ -235,15 +509,14 @@ def UpdateSeating(request,pk):
         c3r22 = request.POST.get("c3r22")
         c4r12 = request.POST.get("c4r12")
         c4r22 = request.POST.get("c4r22")
-        
-        if c1r1 == None:
-            pass
-        else:
+        try:
             arrangement = (c1r1+"/"+c1r2+"/"+c2r1+"/"+c2r2+"/"+c3r1+"/"+c3r2+"/"+c4r1+"/"+c4r2+"/"+c1r11+"/"+c1r21+"/"+c2r11+"/"+c2r21+"/"+c3r11+"/"+c3r21+"/"+c4r11+"/"+c4r21+"/"+c1r12+"/"+c1r22+"/"+c2r12+"/"+c2r22+"/"+c3r12+"/"+c3r22+"/"+c4r12+"/"+c4r22)
             baseList.seating_arrangement = arrangement
             baseList.save()
             baseList = StudentList.objects.get(id=pk)
-            return HttpResponseRedirect(str(pk))
+        except:
+            pass
+        return HttpResponseRedirect(str(pk))
     arrangement = baseList.seating_arrangement
     students = arrangement.split("/")
     students_all = list(baseList.students.all())
@@ -476,6 +749,7 @@ def UpdateSeating(request,pk):
         'classNames':classNames,
         'classLevels':classLevels,
         'media_url':settings.MEDIA_URL,
+        'all_class_levels':all_class_levels,
         'c1r1':c1r1,
         'c1r2':c1r2,
         'c2r1':c2r1,
@@ -552,3 +826,79 @@ def UpdateSeating(request,pk):
     }
     
     return render(request, "clasess/cls-listSeat.html", context)
+@login_required(login_url="/login/")
+def classredirect(request,pk):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    level_list = []
+    name_list = []
+    for i in pk:
+        try:
+            i = int(i)
+            i = str(i)
+            level_list.append(i)
+        except:
+            name_list.append(i)
+    level = ''.join(level_list)
+    class_name = ''.join(name_list)
+    class_name_object = ClassNames.objects.get(name=class_name)
+    class_level_object = ClassLevels.objects.get(level=level)
+    try:
+        class_object = Classes.objects.get(className=class_name_object,level=class_level_object)
+    except:
+        class_object = Classes(className=class_name_object,level=class_level_object)
+        class_object.save()
+    try:
+        student_list_object = (StudentList.objects.filter(className=class_object))[0]
+        pk = student_list_object.id
+    except:
+        newstudentlist = StudentList(className = class_object,session = session,periods = period)
+        newstudentlist.save()
+        student_list_object = StudentList.objects.get(className=class_object)
+        pk = student_list_object.id
+    return redirect('classlist', pk=pk)
+@login_required(login_url="/login/")
+def classlist(request,pk):
+    sessionUpdate(request)
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    try:
+        base_list = StudentList.objects.get(id=pk,session=session,periods=period)
+    except:
+        base_list = StudentList.objects.get(id=pk)
+        try:
+            base_list_object = StudentList.objects.get(session = session,periods = period,className=base_list.className)
+        except:
+            base_list_object = StudentList(session = session,periods = period,className=base_list.className)
+            base_list_object.save()
+        base_list = base_list_object
+    students = list(base_list.students.all())
+    for i in students:
+        students[students.index(i)] = (str(int(students.index(i))+1),students[students.index(i)])
+    class_name = str(base_list.className)
+    level_list = []
+    name_list = []
+    for i in class_name:
+        try:
+            i = int(i)
+            i = str(i)
+            level_list.append(i)
+        except:
+            name_list.append(i)
+    level = ''.join(level_list)
+    class_name = ''.join(name_list)
+    class_name_list = []
+    class_name_list.append(level)
+    class_name_list.append(class_name)
+    class_name = "-".join(class_name_list)
+    context = {
+        'class':base_list,
+        'sessions':sessions,
+        "periods":periods,
+        'all_class_levels':all_class_levels,
+        'media_url':settings.MEDIA_URL,
+        'students':students,
+        'class_name':class_name
+    }
+    return render(request, "clasess/cls-class.html", context)

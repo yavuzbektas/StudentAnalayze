@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Sınıf Detay Sayfası {% endblock %}
+{% block stylesheets %}
+<style>
+a {
+text-decoration: none;
+color: #888A8C;
+}
+a:hover,
+a:focus {
+  color: #888A8C;
+  text-decoration: none;
+}
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    {% if class.mainteacher %}
+                    <span class="font-weight-bold"><h4>{{class_name}}</h4></span>
+                    <span class="font-weight-bold">Sınıf öğretmeni</span>
+                    <a href="{% url 'users-view' class.mainteacher.id %}"><img class="rounded-circle mt-5" width="150px" src="{{media_url}}{{class.mainteacher.image}}"></a>
+                    <span class="font-weight-bold"><a href="{% url 'users-view' class.mainteacher.id %}">{{class.mainteacher.user.username}} {{class.mainteacher.user.last_name}}</a></span>
+                    {% else %}
+                    <span class="font-weight-bold"><h4>{{class_name}}</h4></span>
+                    <div class="alert alert-warning" role="alert">
+                        Bu sınıfa seçili dönemde sınıf öğretmeni atanmamış
+                      </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Öğrenci listesi</h4>
+                    </div>
+                    {% if class.students.all %}
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">İsim</th>
+                            <th scope="col">Numara</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for student in students %}
+                          <tr>
+                            <th scope="row"><a href="{% url 'student-view' student.1.id %}">{{student.0}}</a></th>
+                            <td><a href="{% url 'student-view' student.1.id %}">{{student.1.firstName}} {{student.1.lastName}}</a></td>
+                            <td><a href="{% url 'student-view' student.1.id %}">{{student.1.number}}</a></td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                      {% else %}
+                      <div class="alert alert-warning" role="alert">
+                        Bu sınıfın seçili dönemde kayıtlı öğrencisi bulunmuyor
+                      </div>
+                      {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit
+                            Experience</span></div><br>
+                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text"
+                            class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text"
+                            class="form-control" placeholder="additional details" value=""></div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+
+</div>
+<div class="col-md-12 mx-5">
+    <hr>
+    <a href="/classes/Seat_arrangement/{{class.id}}" class="btn btn-primary">Oturma planı</a>
+</div>
+</form>
+</div>
+
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

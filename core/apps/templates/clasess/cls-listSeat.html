@@ -86,7 +86,6 @@
 <div id="students">
   
     <div style="margin:10px;display:inline-block;">Öğrenci Listesi</div> 
-    <button onclick="myFunc('c1r1');myFunc('c1r2');myFunc('c2r1');myFunc('c2r2');myFunc('c3r1');myFunc('c3r2');myFunc('c4r1');myFunc('c4r2');myFunc('c1r11');myFunc('c1r21');myFunc('c2r11');myFunc('c2r21');myFunc('c3r11');myFunc('c3r21');myFunc('c4r11');myFunc('c4r21');myFunc('c1r12');myFunc('c1r22');myFunc('c2r12');myFunc('c2r22');myFunc('c3r12');myFunc('c3r22');myFunc('c4r12');myFunc('c4r22')" type="submit" class="btn btn-primary" style="display:inline-block">Kaydet</button>
    
 <hr>
 {% for student in studentList %}
@@ -98,8 +97,6 @@
 <div class="box-S" draggable="true" style="background-color: #C8C8C6;margin:10px" id="{{student.0}}"><span>{{student.1}}</span></div>
 {% endif %}
 {% endfor %}
-{% else %}
-<button onclick="myFunc('c1r1');myFunc('c1r2');myFunc('c2r1');myFunc('c2r2');myFunc('c3r1');myFunc('c3r2');myFunc('c4r1');myFunc('c4r2');myFunc('c1r11');myFunc('c1r21');myFunc('c2r11');myFunc('c2r21');myFunc('c3r11');myFunc('c3r21');myFunc('c4r11');myFunc('c4r21');myFunc('c1r12');myFunc('c1r22');myFunc('c2r12');myFunc('c2r22');myFunc('c3r12');myFunc('c3r22');myFunc('c4r12');myFunc('c4r22')" type="submit" class="btn btn-primary" style="display:inline-block;margin:10px">Kaydet</button>
 {% endif %}
 <hr>
 </div>
@@ -109,198 +106,199 @@
   
 
         <hr>
-        <div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col1">
+        <div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col1">
           {% if c1r1gender == "Erkek" %}
-            <div class="box c1r1" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c1r1}}"><span>{{c1r1name}}</span><input id="c1r1" name="c1r1" value="{{c1r1}}" style="display:none"></div>
+            <div class="box c1r1" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c1r1}}"><span>{{c1r1name}}</span><input id="c1r1" name="c1r1" value="{{c1r1}}" style="display:none"></div>
             {% elif c1r1gender == "Kız" %}
-            <div class="box c1r1" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c1r1}}"><span>{{c1r1name}}</span><input id="c1r1" name="c1r1" value="{{c1r1}}" style="display:none"></div>
+            <div class="box c1r1" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c1r1}}"><span>{{c1r1name}}</span><input id="c1r1" name="c1r1" value="{{c1r1}}" style="display:none"></div>
             {% else %}
-            <div class="box c1r1" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c1r1}}"><span>{{c1r1name}}</span><input id="c1r1" name="c1r1" value="{{c1r1}}" style="display:none"></div>
+            <div class="box c1r1" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c1r1}}"><span>{{c1r1name}}</span><input id="c1r1" name="c1r1" value="{{c1r1}}" style="display:none"></div>
             {% endif %}
             {% if c1r2gender == "Erkek" %}
-            <div class="box c1r2" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c1r2}}"><span>{{c1r2name}}</span><input id="c1r2" name="c1r2" value="{{c1r2}}" style="display:none"></div>
+            <div class="box c1r2" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c1r2}}"><span>{{c1r2name}}</span><input id="c1r2" name="c1r2" value="{{c1r2}}" style="display:none"></div>
             {% elif c1r2gender == "Kız" %}
-            <div class="box c1r2" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c1r2}}"><span>{{c1r2name}}</span><input id="c1r2" name="c1r2" value="{{c1r2}}" style="display:none"></div>
+            <div class="box c1r2" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c1r2}}"><span>{{c1r2name}}</span><input id="c1r2" name="c1r2" value="{{c1r2}}" style="display:none"></div>
             {% else %}
-            <div class="box c1r2" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c1r2}}"><span>{{c1r2name}}</span><input id="c1r2" name="c1r2" value="{{c1r2}}" style="display:none"></div>
+            <div class="box c1r2" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c1r2}}"><span>{{c1r2name}}</span><input id="c1r2" name="c1r2" value="{{c1r2}}" style="display:none"></div>
             {% endif %}
     </div>
-    <div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col2">
+    <div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col2">
       {% if c2r1gender == "Erkek" %}
-        <div class="box c2r1" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c2r1}}"><span>{{c2r1name}}</span><input id="c2r1" name="c2r1" value="{{c1r1}}" style="display:none"></div>
+        <div class="box c2r1" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c2r1}}"><span>{{c2r1name}}</span><input id="c2r1" name="c2r1" value="{{c1r1}}" style="display:none"></div>
         {% elif c2r1gender == "Kız" %}
-        <div class="box c2r1" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c2r1}}"><span>{{c2r1name}}</span><input id="c2r1" name="c2r1" value="{{c1r1}}" style="display:none"></div>
+        <div class="box c2r1" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c2r1}}"><span>{{c2r1name}}</span><input id="c2r1" name="c2r1" value="{{c1r1}}" style="display:none"></div>
         {% else %}
-        <div class="box c2r1" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c2r1}}"><span>{{c2r1name}}</span><input id="c2r1" name="c2r1" value="{{c1r1}}" style="display:none"></div>
+        <div class="box c2r1" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c2r1}}"><span>{{c2r1name}}</span><input id="c2r1" name="c2r1" value="{{c1r1}}" style="display:none"></div>
         {% endif %}
         {% if c2r2gender == "Erkek" %}
-        <div class="box c2r2" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c2r2}}"><span>{{c2r2name}}</span><input id="c2r2" name="c2r2" value="{{c2r2}}" style="display:none"></div>
+        <div class="box c2r2" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c2r2}}"><span>{{c2r2name}}</span><input id="c2r2" name="c2r2" value="{{c2r2}}" style="display:none"></div>
         {% elif c2r2gender == "Kız" %}
-        <div class="box c2r2" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c2r2}}"><span>{{c2r2name}}</span><input id="c2r2" name="c2r2" value="{{c2r2}}" style="display:none"></div>
+        <div class="box c2r2" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c2r2}}"><span>{{c2r2name}}</span><input id="c2r2" name="c2r2" value="{{c2r2}}" style="display:none"></div>
         {% else %}
-        <div class="box c2r2" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c2r2}}"><span>{{c2r2name}}</span><input id="c2r2" name="c2r2" value="{{c2r2}}" style="display:none"></div>
+        <div class="box c2r2" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c2r2}}"><span>{{c2r2name}}</span><input id="c2r2" name="c2r2" value="{{c2r2}}" style="display:none"></div>
         {% endif %}
       </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col3">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col3">
     {% if c3r1gender == "Erkek" %}
-    <div class="box c3r1" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c3r1}}"><span>{{c3r1name}}</span><input id="c3r1" name="c3r1" value="{{c3r1}}" style="display:none"></div>
+    <div class="box c3r1" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c3r1}}"><span>{{c3r1name}}</span><input id="c3r1" name="c3r1" value="{{c3r1}}" style="display:none"></div>
     {% elif c3r1gender == "Kız" %}
-    <div class="box c3r1" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c3r1}}"><span>{{c3r1name}}</span><input id="c3r1" name="c3r1" value="{{c3r1}}" style="display:none"></div>
+    <div class="box c3r1" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c3r1}}"><span>{{c3r1name}}</span><input id="c3r1" name="c3r1" value="{{c3r1}}" style="display:none"></div>
     {% else %}
-    <div class="box c3r1" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c3r1}}"><span>{{c3r1name}}</span><input id="c3r1" name="c3r1" value="{{c3r1}}" style="display:none"></div>
+    <div class="box c3r1" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c3r1}}"><span>{{c3r1name}}</span><input id="c3r1" name="c3r1" value="{{c3r1}}" style="display:none"></div>
     {% endif %}
     {% if c3r2gender == "Erkek" %}
-    <div class="box c3r2" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c3r2}}"><span>{{c3r2name}}</span><input id="c3r2" name="c3r2" value="{{c3r2}}" style="display:none"></div>
+    <div class="box c3r2" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c3r2}}"><span>{{c3r2name}}</span><input id="c3r2" name="c3r2" value="{{c3r2}}" style="display:none"></div>
     {% elif c3r2gender == "Kız" %}
-    <div class="box c3r2" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c3r2}}"><span>{{c3r2name}}</span><input id="c3r2" name="c3r2" value="{{c3r2}}" style="display:none"></div>
+    <div class="box c3r2" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c3r2}}"><span>{{c3r2name}}</span><input id="c3r2" name="c3r2" value="{{c3r2}}" style="display:none"></div>
     {% else %}
-    <div class="box c3r2" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c3r2}}"><span>{{c3r2name}}</span><input id="c3r2" name="c3r2" value="{{c3r2}}" style="display:none"></div>
+    <div class="box c3r2" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c3r2}}"><span>{{c3r2name}}</span><input id="c3r2" name="c3r2" value="{{c3r2}}" style="display:none"></div>
     {% endif %}
   </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col4">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col4">
     {% if c4r1gender == "Erkek" %}
-    <div class="box c4r1" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c4r1}}"><span>{{c4r1name}}</span><input id="c4r1" name="c4r1" value="{{c4r1}}" style="display:none"></div>
+    <div class="box c4r1" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c4r1}}"><span>{{c4r1name}}</span><input id="c4r1" name="c4r1" value="{{c4r1}}" style="display:none"></div>
     {% elif c4r1gender == "Kız" %}
-    <div class="box c4r1" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c4r1}}"><span>{{c4r1name}}</span><input id="c4r1" name="c4r1" value="{{c4r1}}" style="display:none"></div>
+    <div class="box c4r1" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c4r1}}"><span>{{c4r1name}}</span><input id="c4r1" name="c4r1" value="{{c4r1}}" style="display:none"></div>
     {% else %}
-    <div class="box c4r1" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c4r1}}"><span>{{c4r1name}}</span><input id="c4r1" name="c4r1" value="{{c4r1}}" style="display:none"></div>
+    <div class="box c4r1" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c4r1}}"><span>{{c4r1name}}</span><input id="c4r1" name="c4r1" value="{{c4r1}}" style="display:none"></div>
     {% endif %}
     {% if c4r2gender == "Erkek" %}
-    <div class="box c4r2" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c4r2}}"><span>{{c4r2name}}</span><input id="c4r2" name="c4r2" value="{{c4r2}}" style="display:none"></div>
+    <div class="box c4r2" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c4r2}}"><span>{{c4r2name}}</span><input id="c4r2" name="c4r2" value="{{c4r2}}" style="display:none"></div>
     {% elif c4r2gender == "Kız" %}
-    <div class="box c4r2" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c4r2}}"><span>{{c4r2name}}</span><input id="c4r2" name="c4r2" value="{{c4r2}}" style="display:none"></div>
+    <div class="box c4r2" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c4r2}}"><span>{{c4r2name}}</span><input id="c4r2" name="c4r2" value="{{c4r2}}" style="display:none"></div>
     {% else %}
-    <div class="box c4r2" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c4r2}}"><span>{{c4r2name}}</span><input id="c4r2" name="c4r2" value="{{c4r2}}" style="display:none"></div>
+    <div class="box c4r2" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c4r2}}"><span>{{c4r2name}}</span><input id="c4r2" name="c4r2" value="{{c4r2}}" style="display:none"></div>
     {% endif %}
   </div>
 <br>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
   {% if c1r11gender == "Erkek" %}
-  <div class="box c1r11" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c1r11}}"><span>{{c1r11name}}</span><input id="c1r11" name="c1r11" value="{{c1r11}}" style="display:none"></div>
+  <div class="box c1r11" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c1r11}}"><span>{{c1r11name}}</span><input id="c1r11" name="c1r11" value="{{c1r11}}" style="display:none"></div>
   {% elif c1r11gender == "Kız" %}
-  <div class="box c1r11" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c1r11}}"><span>{{c1r11name}}</span><input id="c1r11" name="c1r11" value="{{c1r11}}" style="display:none"></div>
+  <div class="box c1r11" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c1r11}}"><span>{{c1r11name}}</span><input id="c1r11" name="c1r11" value="{{c1r11}}" style="display:none"></div>
   {% else %}
-  <div class="box c1r11" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c1r11}}"><span>{{c1r11name}}</span><input id="c1r11" name="c1r11" value="{{c1r11}}" style="display:none"></div>
+  <div class="box c1r11" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c1r11}}"><span>{{c1r11name}}</span><input id="c1r11" name="c1r11" value="{{c1r11}}" style="display:none"></div>
   {% endif %}
   {% if c1r21gender == "Erkek" %}
-  <div class="box c1r21" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c1r21}}"><span>{{c1r21name}}</span><input id="c1r21" name="c1r21" value="{{c1r21}}" style="display:none"></div>
+  <div class="box c1r21" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c1r21}}"><span>{{c1r21name}}</span><input id="c1r21" name="c1r21" value="{{c1r21}}" style="display:none"></div>
   {% elif c1r21gender == "Kız" %}
-  <div class="box c1r21" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c1r21}}"><span>{{c1r21name}}</span><input id="c1r21" name="c1r21" value="{{c1r21}}" style="display:none"></div>
+  <div class="box c1r21" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c1r21}}"><span>{{c1r21name}}</span><input id="c1r21" name="c1r21" value="{{c1r21}}" style="display:none"></div>
   {% else %}
-  <div class="box c1r21" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c1r21}}"><span>{{c1r21name}}</span><input id="c1r21" name="c1r21" value="{{c1r21}}" style="display:none"></div>
+  <div class="box c1r21" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c1r21}}"><span>{{c1r21name}}</span><input id="c1r21" name="c1r21" value="{{c1r21}}" style="display:none"></div>
   {% endif %}
 </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col21">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col21">
   {% if c2r11gender == "Erkek" %}
-  <div class="box c2r11" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c2r11}}"><span>{{c2r11name}}</span><input id="c2r11" name="c2r11" value="{{c2r11}}" style="display:none"></div>
+  <div class="box c2r11" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c2r11}}"><span>{{c2r11name}}</span><input id="c2r11" name="c2r11" value="{{c2r11}}" style="display:none"></div>
   {% elif c2r11gender == "Kız" %}
-  <div class="box c2r11" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c2r11}}"><span>{{c2r11name}}</span><input id="c2r11" name="c2r11" value="{{c2r11}}" style="display:none"></div>
+  <div class="box c2r11" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c2r11}}"><span>{{c2r11name}}</span><input id="c2r11" name="c2r11" value="{{c2r11}}" style="display:none"></div>
   {% else %}
-  <div class="box c2r11" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c2r11}}"><span>{{c2r11name}}</span><input id="c2r11" name="c2r11" value="{{c2r11}}" style="display:none"></div>
+  <div class="box c2r11" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c2r11}}"><span>{{c2r11name}}</span><input id="c2r11" name="c2r11" value="{{c2r11}}" style="display:none"></div>
   {% endif %}
   {% if c2r21gender == "Erkek" %}
-  <div class="box c2r21" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c2r21}}"><span>{{c2r21name}}</span><input id="c2r21" name="c2r21" value="{{c2r21}}" style="display:none"></div>
+  <div class="box c2r21" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c2r21}}"><span>{{c2r21name}}</span><input id="c2r21" name="c2r21" value="{{c2r21}}" style="display:none"></div>
   {% elif c2r21gender == "Kız" %}
-  <div class="box c2r21" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c2r21}}"><span>{{c2r21name}}</span><input id="c2r21" name="c2r21" value="{{c2r21}}" style="display:none"></div>
+  <div class="box c2r21" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c2r21}}"><span>{{c2r21name}}</span><input id="c2r21" name="c2r21" value="{{c2r21}}" style="display:none"></div>
   {% else %}
-  <div class="box c2r21" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c2r21}}"><span>{{c2r21name}}</span><input id="c2r21" name="c2r21" value="{{c2r21}}" style="display:none"></div>
+  <div class="box c2r21" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c2r21}}"><span>{{c2r21name}}</span><input id="c2r21" name="c2r21" value="{{c2r21}}" style="display:none"></div>
   {% endif %}
 </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col21">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col21">
   {% if c3r11gender == "Erkek" %}
-  <div class="box c3r11" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c3r11}}"><span>{{c3r11name}}</span><input id="c3r11" name="c3r11" value="{{c3r11}}" style="display:none"></div>
+  <div class="box c3r11" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c3r11}}"><span>{{c3r11name}}</span><input id="c3r11" name="c3r11" value="{{c3r11}}" style="display:none"></div>
   {% elif c3r11gender == "Kız" %}
-  <div class="box c3r11" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c3r11}}"><span>{{c3r11name}}</span><input id="c3r11" name="c3r11" value="{{c3r11}}" style="display:none"></div>
+  <div class="box c3r11" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c3r11}}"><span>{{c3r11name}}</span><input id="c3r11" name="c3r11" value="{{c3r11}}" style="display:none"></div>
   {% else %}
-  <div class="box c3r11" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c3r11}}"><span>{{c3r11name}}</span><input id="c3r11" name="c3r11" value="{{c3r11}}" style="display:none"></div>
+  <div class="box c3r11" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c3r11}}"><span>{{c3r11name}}</span><input id="c3r11" name="c3r11" value="{{c3r11}}" style="display:none"></div>
   {% endif %}
   {% if c3r21gender == "Erkek" %}
-  <div class="box c3r21" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c3r21}}"><span>{{c3r21name}}</span><input id="c3r21" name="c3r21" value="{{c3r21}}" style="display:none"></div>
+  <div class="box c3r21" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c3r21}}"><span>{{c3r21name}}</span><input id="c3r21" name="c3r21" value="{{c3r21}}" style="display:none"></div>
   {% elif c3r21gender == "Kız" %}
-  <div class="box c3r21" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c3r21}}"><span>{{c3r21name}}</span><input id="c3r21" name="c3r21" value="{{c3r21}}" style="display:none"></div>
+  <div class="box c3r21" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c3r21}}"><span>{{c3r21name}}</span><input id="c3r21" name="c3r21" value="{{c3r21}}" style="display:none"></div>
   {% else %}
-  <div class="box c3r21" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c3r21}}"><span>{{c3r21name}}</span><input id="c3r21" name="c3r21" value="{{c3r21}}" style="display:none"></div>
+  <div class="box c3r21" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c3r21}}"><span>{{c3r21name}}</span><input id="c3r21" name="c3r21" value="{{c3r21}}" style="display:none"></div>
   {% endif %}
 </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col21">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col21">
   {% if c4r11gender == "Erkek" %}
-  <div class="box c4r11" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c4r11}}"><span>{{c4r11name}}</span><input id="c4r11" name="c4r11" value="{{c4r11}}" style="display:none"></div>
+  <div class="box c4r11" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c4r11}}"><span>{{c4r11name}}</span><input id="c4r11" name="c4r11" value="{{c4r11}}" style="display:none"></div>
   {% elif c4r11gender == "Kız" %}
-  <div class="box c4r11" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c4r11}}"><span>{{c4r11name}}</span><input id="c4r11" name="c4r11" value="{{c4r11}}" style="display:none"></div>
+  <div class="box c4r11" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c4r11}}"><span>{{c4r11name}}</span><input id="c4r11" name="c4r11" value="{{c4r11}}" style="display:none"></div>
   {% else %}
-  <div class="box c4r11" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c4r11}}"><span>{{c4r11name}}</span><input id="c4r11" name="c4r11" value="{{c4r11}}" style="display:none"></div>
+  <div class="box c4r11" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c4r11}}"><span>{{c4r11name}}</span><input id="c4r11" name="c4r11" value="{{c4r11}}" style="display:none"></div>
   {% endif %}
   {% if c4r21gender == "Erkek" %}
-  <div class="box c4r21" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c4r21}}"><span>{{c4r21name}}</span><input id="c4r21" name="c4r21" value="{{c4r21}}" style="display:none"></div>
+  <div class="box c4r21" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c4r21}}"><span>{{c4r21name}}</span><input id="c4r21" name="c4r21" value="{{c4r21}}" style="display:none"></div>
   {% elif c4r21gender == "Kız" %}
-  <div class="box c4r21" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c4r21}}"><span>{{c4r21name}}</span><input id="c4r21" name="c4r21" value="{{c4r21}}" style="display:none"></div>
+  <div class="box c4r21" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c4r21}}"><span>{{c4r21name}}</span><input id="c4r21" name="c4r21" value="{{c4r21}}" style="display:none"></div>
   {% else %}
-  <div class="box c4r21" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c4r21}}"><span>{{c4r21name}}</span><input id="c4r21" name="c4r21" value="{{c4r21}}" style="display:none"></div>
+  <div class="box c4r21" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c4r21}}"><span>{{c4r21name}}</span><input id="c4r21" name="c4r21" value="{{c4r21}}" style="display:none"></div>
   {% endif %}
 </div>
+
 <br>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
   {% if c1r12gender == "Erkek" %}
-  <div class="box c1r12" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c1r12}}"><span>{{c1r12name}}</span><input id="c1r12" name="c1r12" value="{{c1r12}}" style="display:none"></div>
+  <div class="box c1r12" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c1r12}}"><span>{{c1r12name}}</span><input id="c1r12" name="c1r12" value="{{c1r12}}" style="display:none"></div>
   {% elif c1r12gender == "Kız" %}
-  <div class="box c1r12" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c1r12}}"><span>{{c1r12name}}</span><input id="c1r12" name="c1r12" value="{{c1r12}}" style="display:none"></div>
+  <div class="box c1r12" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c1r12}}"><span>{{c1r12name}}</span><input id="c1r12" name="c1r12" value="{{c1r12}}" style="display:none"></div>
   {% else %}
-  <div class="box c1r12" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c1r12}}"><span>{{c1r12name}}</span><input id="c1r12" name="c1r12" value="{{c1r12}}" style="display:none"></div>
+  <div class="box c1r12" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c1r12}}"><span>{{c1r12name}}</span><input id="c1r12" name="c1r12" value="{{c1r12}}" style="display:none"></div>
   {% endif %}
   {% if c1r22gender == "Erkek" %}
-  <div class="box c1r22" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c1r22}}"><span>{{c1r22name}}</span><input id="c1r22" name="c1r22" value="{{c1r22}}" style="display:none"></div>
+  <div class="box c1r22" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c1r22}}"><span>{{c1r22name}}</span><input id="c1r22" name="c1r22" value="{{c1r22}}" style="display:none"></div>
   {% elif c1r22gender == "Kız" %}
-  <div class="box c1r22" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c1r22}}"><span>{{c1r22name}}</span><input id="c1r22" name="c1r22" value="{{c1r22}}" style="display:none"></div>
+  <div class="box c1r22" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c1r22}}"><span>{{c1r22name}}</span><input id="c1r22" name="c1r22" value="{{c1r22}}" style="display:none"></div>
   {% else %}
-  <div class="box c1r22" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c1r22}}"><span>{{c1r22name}}</span><input id="c1r22" name="c1r22" value="{{c1r22}}" style="display:none"></div>
+  <div class="box c1r22" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c1r22}}"><span>{{c1r22name}}</span><input id="c1r22" name="c1r22" value="{{c1r22}}" style="display:none"></div>
   {% endif %}
 </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
   {% if c2r12gender == "Erkek" %}
-  <div class="box c2r12" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c2r12}}"><span>{{c2r12name}}</span><input id="c2r12" name="c2r12" value="{{c2r12}}" style="display:none"></div>
+  <div class="box c2r12" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c2r12}}"><span>{{c2r12name}}</span><input id="c2r12" name="c2r12" value="{{c2r12}}" style="display:none"></div>
   {% elif c2r12gender == "Kız" %}
-  <div class="box c2r12" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c2r12}}"><span>{{c2r12name}}</span><input id="c2r12" name="c2r12" value="{{c2r12}}" style="display:none"></div>
+  <div class="box c2r12" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c2r12}}"><span>{{c2r12name}}</span><input id="c2r12" name="c2r12" value="{{c2r12}}" style="display:none"></div>
   {% else %}
-  <div class="box c2r12" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c2r12}}"><span>{{c2r12name}}</span><input id="c2r12" name="c2r12" value="{{c2r12}}" style="display:none"></div>
+  <div class="box c2r12" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c2r12}}"><span>{{c2r12name}}</span><input id="c2r12" name="c2r12" value="{{c2r12}}" style="display:none"></div>
   {% endif %}
   {% if c2r22gender == "Erkek" %}
-  <div class="box c2r22" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c2r22}}"><span>{{c2r22name}}</span><input id="c2r22" name="c2r22" value="{{c2r22}}" style="display:none"></div>
+  <div class="box c2r22" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c2r22}}"><span>{{c2r22name}}</span><input id="c2r22" name="c2r22" value="{{c2r22}}" style="display:none"></div>
   {% elif c2r22gender == "Kız" %}
-  <div class="box c2r22" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c2r22}}"><span>{{c2r22name}}</span><input id="c2r22" name="c2r22" value="{{c2r22}}" style="display:none"></div>
+  <div class="box c2r22" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c2r22}}"><span>{{c2r22name}}</span><input id="c2r22" name="c2r22" value="{{c2r22}}" style="display:none"></div>
   {% else %}
-  <div class="box c2r22" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c2r22}}"><span>{{c2r22name}}</span><input id="c2r22" name="c2r22" value="{{c2r22}}" style="display:none"></div>
+  <div class="box c2r22" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c2r22}}"><span>{{c2r22name}}</span><input id="c2r22" name="c2r22" value="{{c2r22}}" style="display:none"></div>
   {% endif %}
 </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
   {% if c3r12gender == "Erkek" %}
-  <div class="box c3r12" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c3r12}}"><span>{{c3r12name}}</span><input id="c3r12" name="c3r12" value="{{c3r12}}" style="display:none"></div>
+  <div class="box c3r12" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c3r12}}"><span>{{c3r12name}}</span><input id="c3r12" name="c3r12" value="{{c3r12}}" style="display:none"></div>
   {% elif c3r12gender == "Kız" %}
-  <div class="box c3r12" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c3r12}}"><span>{{c3r12name}}</span><input id="c3r12" name="c3r12" value="{{c3r12}}" style="display:none"></div>
+  <div class="box c3r12" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c3r12}}"><span>{{c3r12name}}</span><input id="c3r12" name="c3r12" value="{{c3r12}}" style="display:none"></div>
   {% else %}
-  <div class="box c3r12" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c3r12}}"><span>{{c3r12name}}</span><input id="c3r12" name="c3r12" value="{{c3r12}}" style="display:none"></div>
+  <div class="box c3r12" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c3r12}}"><span>{{c3r12name}}</span><input id="c3r12" name="c3r12" value="{{c3r12}}" style="display:none"></div>
   {% endif %}
   {% if c3r22gender == "Erkek" %}
-  <div class="box c3r22" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c3r22}}"><span>{{c3r22name}}</span><input id="c3r22" name="c3r22" value="{{c3r22}}" style="display:none"></div>
+  <div class="box c3r22" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c3r22}}"><span>{{c3r22name}}</span><input id="c3r22" name="c3r22" value="{{c3r22}}" style="display:none"></div>
   {% elif c3r22gender == "Kız" %}
-  <div class="box c3r22" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c3r22}}"><span>{{c3r22name}}</span><input id="c3r22" name="c3r22" value="{{c3r22}}" style="display:none"></div>
+  <div class="box c3r22" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c3r22}}"><span>{{c3r22name}}</span><input id="c3r22" name="c3r22" value="{{c3r22}}" style="display:none"></div>
   {% else %}
-  <div class="box c3r22" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c3r22}}"><span>{{c3r22name}}</span><input id="c3r22" name="c3r22" value="{{c3r22}}" style="display:none"></div>
+  <div class="box c3r22" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c3r22}}"><span>{{c3r22name}}</span><input id="c3r22" name="c3r22" value="{{c3r22}}" style="display:none"></div>
   {% endif %}
 </div>
-<div style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
+<div class="container" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px" id="col11">
   {% if c4r12gender == "Erkek" %}
-  <div class="box c4r12" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c4r12}}"><span>{{c4r12name}}</span><input id="c4r12" name="c4r12" value="{{c4r12}}" style="display:none"></div>
+  <div class="box c4r12" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c4r12}}"><span>{{c4r12name}}</span><input id="c4r12" name="c4r12" value="{{c4r12}}" style="display:none"></div>
   {% elif c4r12gender == "Kız" %}
-  <div class="box c4r12" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c4r12}}"><span>{{c4r12name}}</span><input id="c4r12" name="c4r12" value="{{c4r12}}" style="display:none"></div>
+  <div class="box c4r12" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c4r12}}"><span>{{c4r12name}}</span><input id="c4r12" name="c4r12" value="{{c4r12}}" style="display:none"></div>
   {% else %}
-  <div class="box c4r12" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c4r12}}"><span>{{c4r12name}}</span><input id="c4r12" name="c4r12" value="{{c4r12}}" style="display:none"></div>
+  <div class="box c4r12" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c4r12}}"><span>{{c4r12name}}</span><input id="c4r12" name="c4r12" value="{{c4r12}}" style="display:none"></div>
   {% endif %}
   {% if c4r22gender == "Erkek" %}
-  <div class="box c4r22" draggable="true" style="background-color: #04A9F5;margin:10px;display:inline-block" id="{{c4r22}}"><span>{{c4r22name}}</span><input id="c4r22" name="c4r22" value="{{c4r22}}" style="display:none"></div>
+  <div class="box c4r22" draggable="true" style="background-color: #04A9F5;margin:auto;display:inline-block" id="{{c4r22}}"><span>{{c4r22name}}</span><input id="c4r22" name="c4r22" value="{{c4r22}}" style="display:none"></div>
   {% elif c4r22gender == "Kız" %}
-  <div class="box c4r22" draggable="true" style="background-color: #FDCBD7;margin:10px;display:inline-block" id="{{c4r22}}"><span>{{c4r22name}}</span><input id="c4r22" name="c4r22" value="{{c4r22}}" style="display:none"></div>
+  <div class="box c4r22" draggable="true" style="background-color: #FDCBD7;margin:auto;display:inline-block" id="{{c4r22}}"><span>{{c4r22name}}</span><input id="c4r22" name="c4r22" value="{{c4r22}}" style="display:none"></div>
   {% else %}
-  <div class="box c4r22" draggable="true" style="background-color: #C8C8C6;margin:10px;display:inline-block" id="{{c4r22}}"><span>{{c4r22name}}</span><input id="c4r22" name="c4r22" value="{{c4r22}}" style="display:none"></div>
+  <div class="box c4r22" draggable="true" style="background-color: #C8C8C6;margin:auto;display:inline-block" id="{{c4r22}}"><span>{{c4r22name}}</span><input id="c4r22" name="c4r22" value="{{c4r22}}" style="display:none"></div>
   {% endif %}
 </div>
 </div>
@@ -311,6 +309,8 @@
 <div class="box" style="background-color: #1DDBCA;height:50px;width:210px;border-style: dashed;display:inline-block;margin:10px;justify-content: center;border-radius: 0rem;margin-top:75px" id="col11">
   <span>Öğretmen</span>
 </div>
+<br>
+<button onclick="myFunc('c1r1');myFunc('c1r2');myFunc('c2r1');myFunc('c2r2');myFunc('c3r1');myFunc('c3r2');myFunc('c4r1');myFunc('c4r2');myFunc('c1r11');myFunc('c1r21');myFunc('c2r11');myFunc('c2r21');myFunc('c3r11');myFunc('c3r21');myFunc('c4r11');myFunc('c4r21');myFunc('c1r12');myFunc('c1r22');myFunc('c2r12');myFunc('c2r22');myFunc('c3r12');myFunc('c3r22');myFunc('c4r12');myFunc('c4r22')" type="submit" class="btn btn-success" style="width:924px">Kaydet</button>
 </div>
 </form>
 <script>

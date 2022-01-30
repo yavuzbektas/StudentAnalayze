@@ -16,8 +16,10 @@ from django.http import Http404, HttpResponse
 from .resources import StudentResource
 from tablib import Dataset
 from xlrd import open_workbook
+from apps.classes.classes_for_sidebar import all_class_levels
 sessions = Session.objects.all()
 periods = Period.objects.all()
+all_class_levels = all_class_levels()
 # Create your views here.
 # excel_app/views.py
 import xlwt
@@ -198,6 +200,7 @@ def parentUpdate(request,pk):
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods,
         'allClassList':getStudentList,
+        'all_class_levels':all_class_levels
        
         }
     return render(request, "student/std-parentUpdate.html", context)
@@ -244,6 +247,7 @@ def parentAdd(request):
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods,
         'allClassList':getStudentList,
+        'all_class_levels':all_class_levels
        
         }
     return render(request, "student/std-ParentAdd.html", context)
@@ -300,6 +304,7 @@ def studentAdd(request):
         'media_url':settings.MEDIA_URL,
         'sessions':sessions,"periods":periods,
         'allClassList':getStudentList,
+        'all_class_levels':all_class_levels
        
         }
     return render(request, "student/std-add.html", context)
@@ -339,7 +344,7 @@ def studentUpdate(request,pk=None):
         print(err)
         context={
         
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
         return render(request, "student/std-Update.html", context)
     
@@ -356,6 +361,7 @@ def studentUpdate(request,pk=None):
         'sessions':sessions,"periods":periods,
         'birtdate':birtdate,
         'parents':parents,
+        'all_class_levels':all_class_levels
         }
     return render(request, "student/std-Update.html", context)
 
@@ -370,14 +376,15 @@ def studentView(request,pk=None):
     except:
         context={
         
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
         }
         return render(request,"student/std-list.html",context)
     context={
         'student':student,
         'studentclassName':className,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods
+        'sessions':sessions,"periods":periods,
+        'all_class_levels':all_class_levels
         }
     return render(request, "student/std-profile.html", context)
 
@@ -439,7 +446,8 @@ def studentShowList(request):
         'classNames':classNames,
         'selectedLevel' : selectedLevel,
         'filterNames' :filterNames.keys(),
-        'media_url':settings.MEDIA_URL
+        'media_url':settings.MEDIA_URL,
+        'all_class_levels':all_class_levels
     }
     
     return render(request, "student/std-list.html", context)
@@ -455,13 +463,13 @@ def studentDelete(request,pk):
     if request.method == 'GET':
         student.delete()
         return redirect('/')
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     
     return render(request, "student/std-list.html", context)
 
 @login_required(login_url="/login/")
 def studentIndex(request):
-    context={'sessions':sessions,"periods":periods}
+    context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
     return render(request, "student/std-profile.html", context)
 
 class StudentListView(ListView):
@@ -477,6 +485,7 @@ class StudentListView(ListView):
         context['periods']=Period.objects.all()
         context['classNames']=ClassNames.objects.all()
         context['media_url'] =settings.MEDIA_URL
+        context['all_class_levels']=all_class_levels
         
         return context
     def get_queryset(self):
