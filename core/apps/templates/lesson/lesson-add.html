@@ -1,29 +1,26 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Öğrenci Detay Sayfası {% endblock %}
+{% block title %} Ders Ekleme Sayfası {% endblock %}
 
 {% block content %}
 <div class="container  bg-white">
     <form action="" method="POST">
         {% csrf_token %}
         <div class="row">
-            <div class="col-md-3 border-right"> </div>
-
-
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Ders Bilgileri</h4>
+                        <h4 class="text-right">Eklenecek Dersin Bilgileri</h4>
                     </div>
                     <hr>
                     
                     <div class="row mt-2">
-
-                        <div class="col-md-6"><label class="labels">Ders İsmi</label>{{lesson_form.name}}</div>
-                        <div class="col-md-6"><label class="labels">Code</label>{{lesson_form.code}}</div>
+                        <div class="col-md-4"><label class="labels">Dersin Kodu</label>{{lesson_form.code}}</div>
+                        <div class="col-md-5"><label class="labels">Dersin İsmi</label>{{lesson_form.name}}</div>
+                        <div class="col-md-3">
+                            <label class="labels "> Ekle </label>
+                        <button type="submit"  class="btn btn-success">Dersi Ekle</button></div>
                     </div>
-                    
-                  
                        
             </div>
             <div class="card-block px-0 py-3">
@@ -32,10 +29,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                           
-                              <th scope="col">Ders Adı</th>
-                              <th scope="col">Ders Code</th>
-                              
+                                <th scope="col">Ders Kodu</th>
+                                <th scope="col">Dersin Adı</th>
                               
                             </tr>
                           </thead>
@@ -46,25 +41,21 @@
                             
                           
                             <tr class="unread"></tr>
-                             
-                                    
+                                <td title="Dersin Kodu">
                                 
-                                <td title="Ders Adı">
+                                    <h6 class="mb-3"> {{studentl.code}} </h6>
+                            
+                                </td>
+                                    
+                                <td title="Dersin Adı">
                           
                                     <h6 class="mb-3"> {{studentl.name}}  </h6>
                                    
                                 </td>
-                                <td title="Ders Code">
-                             
-                                    <h6 class="mb-3"> {{studentl.code}} </h6>
-                             
-                                </td>
                                 
-                               
-                                
+                                               
                             </tr>
-                            
-                                                    
+                                                                       
                             {% endfor %} 
     
     
@@ -75,11 +66,7 @@
             </div>
 </div>
 
-<div class="col-md-12">
-    <hr>
-    <button type="submit"  class="btn btn-success">Değişiklikleri Kaydet</button>
-   
-</div>
+
 </form>
 </div>
 

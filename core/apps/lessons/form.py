@@ -22,12 +22,12 @@ class lessonForm(forms.ModelForm):
     name  = forms.CharField(widget=forms.TextInput(attrs={
         'id':'name',
         'class': 'form-control',
-        'placeholder': 'name',
+        'placeholder': 'Dersin Adını Giriniz...',
     }),required=False)
     code  = forms.CharField(widget=forms.TextInput(attrs={
         'id':'code',
         'class': 'form-control',
-        'placeholder': 'code',
+        'placeholder': 'Dersin Kodunu Giriniz...',
     }),required=False)
     class Meta:
         model = Lesson

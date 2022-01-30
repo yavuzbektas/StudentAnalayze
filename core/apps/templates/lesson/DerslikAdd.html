@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Öğrenci Detay Sayfası {% endblock %}
+{% block title %} Sınıflara Dersleri Atama {% endblock %}
 
 {% block content %}
 <div class="container rounded bg-white mt-5 mb-5">
@@ -11,7 +11,7 @@
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Ders Bilgileri</h4>
+                        <h4 class="text-right">Ders ve Atanacak Sınıf Seçimi</h4>
                     </div>
                     <hr>
                     
@@ -29,6 +29,12 @@
                             
                             {{lesson_form.teacher}}
                         </div>
+                        <div class="col-md-6 mx-auto">
+                            <hr>
+                            <button type="submit"  class="btn btn-success">Dersi Sınıfa Ata</button>
+                           
+                        </div>
+                        
                     </div>
                     
                     <div class="card-block px-0 py-3 col-md-12">
@@ -91,11 +97,7 @@
             
 </div>
 
-<div class="col-md-12">
-    <hr>
-    <button type="submit"  class="btn btn-success">Değişiklikleri Kaydet</button>
-   
-</div>
+
 </form>
 </div>
 

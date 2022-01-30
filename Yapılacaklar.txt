@@ -1,0 +1,14 @@
+yapılacaklar Listesi
+Girilen ad soyadların hepsi ya tamamı büyük ya da bas harflari büyük olacak. bunu gösterirken veya kaydederken düzelterek yaptıracağız
+Ana dashboard sayfasında kaç sınıf var, kaç öğrenci var kaç öğretmen var bunların değeri dashboarddaki uygun şekilde gösterilecek hatta tab yani üst sekmelerle sınıf listeleri gösterilebilinir.
+gelmeyen öğrenciler dashboardda gösterilecek. liste halinde
+öğrencileri içe aktarda içe aktar çalışıyor ancak yükle kısmını aktif hale getirilecek. tablonun en solunda durum bilgisi olacak
+filitre de sınıf ,bölüm sezon seçimleri  eski değer kalmıyor onu yapmıstık ama biryeri bozdugundan o javascripti kaldırmıstık buna bir çözüm bulunması
+sınıf eklede üst butonlar çalışmıyor tekrar düzenlenecek
+ders eklemede üst taraftaki sezon ve periyot çalışmıyor eklenmesi lazım. yani sezon değişince ders adları vs o sezon ve periyoda ait olmalı
+aynı ders aynı sınıfa atanmamalı. bu düzeltilmeli
+burada sınıf filitresi olmalı yan, aşağıdaki listede ders atanan sınıf filitrelebilmeli
+sınıfa atanan dersin notları artık girilebilir olmalı bunun için yeni bir model yaratılmalı. marks olabiliir. bunda öğrenc, sezon, periyot,derskodu olabilir
+döküman hazırlanması
+programın videosunun çekilmesi
+export kısmı düzenelenecek. o döneme ait öğrenciler export edilecek ve direk değil bir sayfa oalcak ve tüm sınıflar mı sadece belirli başlı sınıflar mı export edilecek bunlar seçileblinecek

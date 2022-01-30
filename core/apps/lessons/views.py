@@ -15,7 +15,8 @@ from apps.lessons.models import Lesson, LessonClassList
 from apps.student.models import StudentList
 from apps.classes.classes_for_sidebar import all_class_levels
 all_class_levels = all_class_levels()
-
+sessions = Session.objects.all()
+periods = Period.objects.all()
 # Create your views here.
 
 @login_required(login_url="/login/")
@@ -51,6 +52,8 @@ def LessonAdd(request):
     context={
        
         'lesson_form':lesson_form,
+        'sessions':sessions,
+        'periods':periods,
         'all_class_levels':all_class_levels
         
        
@@ -86,6 +89,8 @@ def LessonAdd(request):
        
         'lesson_form':lesson_form,
         'lesson':lesson,
+        'sessions':sessions,
+        'periods':periods,
         'all_class_levels':all_class_levels
        
         }
@@ -118,6 +123,8 @@ def LessonClassListAdd(request):
        
         'lesson_form':fromdata,
         'lesson':lesson,
+        'sessions':sessions,
+        'periods':periods,
         'all_class_levels':all_class_levels
        
         }
@@ -214,6 +221,8 @@ def LessonClassListUpdate(request,pk):
                     'allClassName':allClassName,
                     'allLesson':allLesson,
                     'err':err,
+                    'sessions':sessions,
+                    'periods':periods,
                     'all_class_levels':all_class_levels
                 }
                 return render(request, "lesson/DerslikUpdate.html", context)
@@ -224,6 +233,8 @@ def LessonClassListUpdate(request,pk):
         'allProfil':allProfil,
         'allClassName':allClassName,
         'allLesson':allLesson,
+        'sessions':sessions,
+        'periods':periods,
         'all_class_levels':all_class_levels
         }
     return render(request, "lesson/DerslikUpdate.html", context)

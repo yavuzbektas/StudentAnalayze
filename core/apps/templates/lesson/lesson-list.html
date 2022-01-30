@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Öğrenciler Listesi {% endblock %}
+{% block title %} Derslerin Listesi {% endblock %}
 
 {% block content %}
 
@@ -8,7 +8,8 @@
     <div class="card ">
 
         <div class="card-header">
-            <h5>Derslik Tablosu</h5>
+            <h5>Mevcut Derslerin Tablosu</h5>
+            <hr>
             {% include 'lesson/filter.html' %}
         </div>
 
