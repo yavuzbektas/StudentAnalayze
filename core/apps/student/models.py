@@ -35,9 +35,9 @@ def upload_location(instance, filename):
     return os.path.join('images/ogrenciler/', filename)
 
 class Student(models.Model):
-    firstName= models.CharField(max_length=20,default="",unique=False,null=True,blank=True,)
+    firstName= models.CharField(max_length=20,default="",unique=False,null=False,blank=False,)
     lastName=models.CharField(max_length=20,unique=False,null=True,blank=True,)
-    TC = models.CharField(max_length=11,unique=False,null=True,blank=True,validators=[validateEven])
+    TC = models.CharField(max_length=11,unique=True,null=False,blank=False,validators=[validateEven])
     phone = models.CharField(validators=[validatePhone], max_length=17,default="0",unique=False,null=True,blank=True,)
     address=models.TextField(unique=False,null=True,blank=True,)
     status=models.BooleanField(unique=False,null=True,blank=True,)
@@ -46,7 +46,7 @@ class Student(models.Model):
     session=models.ForeignKey(Session,on_delete=models.CASCADE,null=True)
     image=models.ImageField(upload_to=upload_location,unique=False,null=True,blank=True,default='images/person.png')
     health=models.TextField(unique=False,null=True,blank=True,)
-    HESCode=models.CharField(max_length=12,unique=False,null=True,blank=True,validators=[validateHesCode])
+    HESCode=models.CharField(max_length=12,unique=True,null=True,blank=True,validators=[validateHesCode])
     birtdate=DateField(("Doğum Tarihiniz"), auto_now=False, auto_now_add=False,unique=False,null=True,blank=True,)
     email=models.EmailField()
     genders=(('Kız','Kız'),

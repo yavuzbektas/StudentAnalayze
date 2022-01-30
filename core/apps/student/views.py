@@ -66,38 +66,63 @@ def export(request):
         # return render(request,'student/export',context)
     
 def simple_upload(request):
-    session=Session.objects.all()
-    period=Period.objects.all()
+    sessionUpdate(request)
+    
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    
+    query={}
+    query2={}
+    query["studentlist__session__session__contains"]=session
+    query["studentlist__periods__period__contains"]=period
+    students=Student.objects.filter(**query).distinct()
+      
     if request.method == 'POST':
-        person_resource = StudentResource()
-        dataset = Dataset()
-        new_persons = request.FILES['myfile']
+        dataset = Dataset() 
+        new_students={} 
+        newStudentlist=[]
+                
+        if 'import' in request.POST:
+            try:
+                new_students = dataset.load(request.FILES['myfile'].read(),format='xlsx')
+            except:
+                pass
+            
+            if new_students:
+                for index in range(len(new_students)):
+                    try: 
+                        Student.objects.get(TC=new_students['TC'][index])
+                        print("This student has already been recorded")
+                        
+                    except Exception as err:
+                        student = Student(
+                            firstName=new_students['firstName'][index],lastName=new_students['lastName'][index],TC=new_students['TC'][index],
+                            phone=new_students['phone'][index],address=new_students['address'][index],HESCode=new_students['HESCode'][index],
+                            birtdate=new_students['birtdate'][index],health=new_students['health'][index],email=new_students['email'][index],
+                            gender=new_students['gender'][index],middleSchool_id=new_students['middleSchool_id'][index],number=new_students['number'][index],
+                            )
+                        student.save() 
+                        
+                        query2['className__className__name__contains']=new_students['className'][index]
+                        query2['className__level__level__contains']=new_students['classLevel'][index]
+                        studentlist= StudentList.objects.get(**query2) .students.add(student)
+                        #StudentList.objects.get(className=ClassName(name=new_students['className'][index]),session=session,periods=period)
+                        newStudentlist.append(student)    
         
-        imported_data = dataset.load(new_persons.read(),format='xlsx')
-        #print(imported_data)
-        liste=[]
-        for data in imported_data:
-            
-            print(data[3])
-            value = Student(
-                data[0],
-                data[1],
-                data[2],
-                data[3],
-                data[4]
-                )
-            value.save() 
-            print(value)
-            liste.append(value)
-            
+        
+         
         context={
-        'student':liste
+        'studentlist':newStudentlist,
+        'sessions':sessions,
+        'periods':periods,
+        'students':students
+        
         }
-        print(liste)
+         
         return render(request, 'student/input.html',context)
                  
         
-    context={"sessions":session,"periods":period}
+    context={"sessions":sessions,"periods":periods}
 
     return render(request, 'student/input.html',context)
 def sessionUpdate(request):

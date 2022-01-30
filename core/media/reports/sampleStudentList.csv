@@ -1,0 +1,16 @@
+id,firstName,lastName,TC,phone,address,status,image,health,HESCode,birtdate,email,gender,middleSchool_id,number,session_id
+1,serkan,Sarýcý,23333333333,(0505)-334 334,karsýyaka,1,images/11-Figure2-1.png,saðlýklý,3333-33333-1,13/06/2007,ertan@gmail.com,Erkek,3,777,2
+2,mehmet,Bektaþ,12345678901,(0)-,asfasdfadf,1,images/ogrenciler/arrow-clipart-windows-green-up-arrow-ico-11563053386iuhx755inu.png,dsfsdfs,1111-23423-2,03/12/2021,mehmet@iaosb.org.tr,Erkek,1,444,2
+3,ertan,Sagdýç,33399988854,(5052)-222 666,6421 SK. YALI MH KARSIYAKA,1,images/kisspng-angle-text-symbol-brand-other-python-5ab0c09b9ea1a7.3286927515215330836498.png,saðlýklý,6666-23423-4,,ddfss@iaosb.org.tr,Erkek,3,3345,2
+5,Ahmet,yaðýz,12345678901,(0)-,,1,images/ogrenciler/12345678901.png,,3333-33234-2,13/01/2022,mehmet@iaosb.org.tr,Erkek,3,123,3
+7,Ahmet,tertip,34242342355,(0505)-334 334,izmir,0,images/ogrenciler/Python_Powered.png,saðlýklý,1111-23423-4,15/12/2021,ahmet@iaosb.org.tr,Erkek,3,20,2
+9,doða,elif,12345678933,(0505)-334 334,karþýyaka,1,images/person.png,,3333-33333-1,15/12/2021,dogan@gmail.com,Erkek,3,33,2
+10,serap,sever,12345678933,(2332)-423 42324,sdfsdfsf,1,images/ogrenciler/kisspng-traffic-light-.png,þekerrr,3343-43434-3,15/12/2021,serap@iaosb.org.tr,Erkek,3,443,2
+18,Yavuz55,Bektaþ,12345438901,()- ,,0,images/person.png,,--,,,Erkek,3,432,2
+19,ertan22,Bektaþ,12345678901,()-,,0,images/person.png,,--,,,Erkek,3,4432,2
+20,pelin,bartu,32424234234,(4534)-543 663,karsýyaka,0,images/person.png,,--,,pelin@pelin.com,Kýz,3,3334,2
+21,Murat,Ateþ22,12344328901,(0554)-5327678,sdffdgdfgg,0,images/ogrenciler/12344328901.png,,--,12/01/2014,ahmet@iaosb.org.tr,Erkek,1,33445,2
+22,Türkan,Bektaþ,44441121211,(0505)-334 334,trre,0,images/person.png,,--,12/01/2022,mehmet@iaosb.org.tr,Kýz,2,4432,2
+23,Türkan2,Bektaþ,44331121211,(0505)-334 334,trre,0,images/person.png,,--,12/01/2022,mehmet@iaosb.org.tr,Kýz,2,4432,2
+24,Türkan3,Bektaþ,44331121211,(0505)-334 334,trre,0,images/ogrenciler/44331121211.png,,--,28/12/2021,mehmet@iaosb.org.tr,Kýz,2,4432,2
+25,Sýla,MErkez,14565678933,(0505)-334 334,,0,images/ogrenciler/14565678933.png,,--,15/06/2018,ybektas@iaosb.org.tr,Kýz,2,34534,2
