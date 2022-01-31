@@ -21,13 +21,37 @@ from .form import ProfilForm,UserForm,SessionForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
 from apps.classes.classes_for_sidebar import all_class_levels
+from apps.student.views import sessionUpdate
+from apps.student.models import Student,StudentList
+
 sessions = Session.objects.all()
 periods = Period.objects.all()
 all_class_levels = all_class_levels()
 
+
 @login_required(login_url="/login/")
 def index(request):
-    context = {'segment': 'index','sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}
+    sessionUpdate(request)    
+    session=Session.objects.get(active=True)
+    period=Period.objects.get(active=True)
+    students = StudentList.objects.filter(session=session,periods=period)
+    girlsCount= StudentList.objects.filter(session=session,periods=period,students__gender='Kız')
+    boysCount= StudentList.objects.filter(session=session,periods=period,students__gender='Erkek')
+    teacherWCount= Profil.objects.filter(isWorking=True,gender='Kız')
+    teacherMCount= Profil.objects.filter(isWorking=True,gender='Erkek')
+    teachers=Profil.objects.filter(isWorking=True)
+    print(girlsCount)
+    context = {
+        'segment': 'index',
+        'students':students,
+        'sessions':sessions,
+        "periods":periods,
+        'girlsCount':girlsCount,
+        'teachers':teachers,
+        'teacherWCount':teacherWCount,
+        'teacherMCount':teacherMCount,
+        'boysCount':boysCount,
+        'all_class_levels':all_class_levels}
 
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))

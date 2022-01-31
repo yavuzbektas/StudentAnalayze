@@ -24,10 +24,44 @@
                                 <div class="card-block border-bottom">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-auto">
-                                            <i class="feather icon-zap f-30 text-c-green"></i>
+                                            <i class="feather icon-user f-30 text-c-green"></i>
                                         </div>
                                         <div class="col">
-                                            <h3 class="f-w-300">235</h3>
+                                            <h3 class="f-w-300">{{ teachers.count }}</h3>
+                                            <span class="d-block text-uppercase">Toplam Kayıtlı Öğretmen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-auto">
+                                            <i class="feather icon-user f-30 text-c-purple"></i>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="f-w-300">{{teacherWCount.count}}</h3>
+                                            <span class="d-block text-uppercase">Bayan Öğretmen</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="feather icon-user f-30 text-c-blue"></i>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="f-w-300">{{teacherMCount.count}}</h3>
+                                            <span class="d-block text-uppercase">Erkek Öğretmen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-block border-bottom">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-auto">
+                                            <i class="feather icon-user f-30 text-c-green"></i>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="f-w-300">{{students.count}}</h3>
                                             <span class="d-block text-uppercase">Toplam Kayıtlı Öğrenci</span>
                                         </div>
                                     </div>
@@ -35,11 +69,18 @@
                                 <div class="card-block">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-auto">
-                                            <i class="feather icon-map-pin f-30 text-c-blue"></i>
+                                            <i class="feather icon-user f-30 text-c-purple"></i>
                                         </div>
                                         <div class="col">
-                                            <h3 class="f-w-300">26</h3>
-                                            <span class="d-block text-uppercase">Toplam Öğretmen</span>
+                                            <h3 class="f-w-300">{{girlsCount.count}}</h3>
+                                            <span class="d-block text-uppercase">Kız Öğrenci</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="feather icon-user f-30 text-c-blue"></i>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="f-w-300">{{boysCount.count}}</h3>
+                                            <span class="d-block text-uppercase">Erkek Öğrenci</span>
                                         </div>
                                     </div>
                                 </div>

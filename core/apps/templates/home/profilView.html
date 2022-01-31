@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Forms {% endblock %} 
+{% block title %} UI Forms {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -8,129 +8,155 @@
 {% block content %}
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-8 mx-auto">
-            
-            <div class="my-4">
-                
-                <form method="POST">
-                    {% csrf_token %}
-                    
-                    <div class="row mt-5 align-items-center">
-                        <div class="col-md-5 text-center mb-5">
-                            <div class="avatar avatar-xl">
-                                <img src="{{detail.image.url}}" alt="..." class="avatar-img rounded-circle" width="340" height="340"/>
-                                
-                                {{detail.image}}
-                                
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="row align-items-center">
-                                
-                                <div class="col-md-7">
-                                    <h4 class="mb-1">{{detail.user.first_name}} {{detail.user.last_name}}</h4>
-                                    <p class="medium mb-3"><span class="badge badge-dark">{{detail.job.name}}</span></p>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                
-                                <div class="col">
-                                    <p class="small mb-0 text-muted">{{detail.user.username}}</p>
-                                    <p class="small mb-0 text-muted">{{detail.user.email}}</p>
-                                    <p class="small mb-0 text-muted">{{detail.adress}}</p>
-                                    <p class="small mb-0 text-muted">{{detail.phone}}</p>
-                                </div>
-                            </div>
-                        </div>
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+
+      <div class="my-4">
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="row mt-5 align-items-center">
+            <div class="col-md-5 text-center mb-5">
+              <div class="avatar avatar-xl">
+                <img src="{{detail.image.url}}" alt="..." class="avatar-img rounded-circle" width="340" height="340" />
+
+                {{detail.image}}
+
+              </div>
+            </div>
+            <div class="col">
+              <div class="row align-items-center">
+
+                <div class="col-md-7">
+                  <h4 class="mb-1">{{detail.user.first_name}} {{detail.user.last_name}}</h4>
+                  <p class="medium mb-3"><span class="badge badge-dark">{{detail.job.name}}</span></p>
+                </div>
+              </div>
+              <div class="row mb-4">
+
+                <div class="col">
+                  <p class="small mb-0 text-muted">{{detail.user.username}}</p>
+                  <p class="small mb-0 text-muted">{{detail.user.email}}</p>
+                  <p class="small mb-0 text-muted">{{detail.adress}}</p>
+                  <p class="small mb-0 text-muted">{{detail.phone}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4" />
+          <div class="row">
+
+            <div class="col-md-12 order-md-1">
+              <h4 class="mb-3">Kullanıcı Bilgileri </h4>
+              <form class="needs-validation" novalidate="" action="POST">
+                {% csrf_token %}
+
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="username">Kullanıcı Adınız</label>
+                    <div class="input-group">
+
+                      <input readonly type="text" class="form-control" id="username" placeholder="Username" required=""
+                        value={{detail.user.username}}>
+
                     </div>
-                    <hr class="my-4" />
-                    <div class="row">
-      
-                        <div class="col-md-12 order-md-1">
-                          <h4 class="mb-3">Kullanıcı Bilgileri   </h4>
-                          <form class="needs-validation" novalidate="" action="POST">
-                            {% csrf_token %}
-                            
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="username">Kullanıcı Adınız</label>
-                                    <div class="input-group">
-                                      
-                                      <input readonly type="text" class="form-control" id="username" placeholder="Username" required="" value={{detail.user.username}}>
-                                    
-                                    </div>
-                                  </div>
-                                <div class="col-md-4 mb-3">
-                                <label for="firstName">Adınız</label>
-                                <input readonly type="text" class="form-control" id="firstName" placeholder="" value="{{detail.user.first_name |capfirst}}" required="">
-                               
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                <label for="lastName">Soy Adınız</label>
-                                <input  readonly type="text" class="form-control" id="lastName" placeholder="" value="{{detail.user.last_name|capfirst}}" required="">
-                                
-                              </div>
-                              
-                            </div>
-                            <div class="row">
-                              
-                              <div class="col-md-4 mb-3">
-                                <label for="hescode">HES Kod</label>
-                                <input readonly type="text" class="form-control" id="hescode" placeholder="____-____-_" value="{{detail.HESCode}}" required="">
-                                
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                <label readonly for="birthday">Doğum Tarihiniz</label>
-                                <div class="input-group">
-                                  
-                                  <input readonly type="text" class="form-control" id="Test_DatetimeLocal" placeholder="Doğum Tarihiniz" required="" value="{{detail.birthdate}}">
-                                 
-                                </div>
-                              </div>
-                              
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="TCnumber">TC No</label>
-                                    <input readonly type="password" class="form-control" id="TCnumber" placeholder="___________" value="{{detail.TC}}" required="">
-                                    
-                                  </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="firstName">Adınız</label>
+                    <input readonly type="text" class="form-control" id="firstName" placeholder=""
+                      value="{{detail.user.first_name |capfirst}}" required="">
+
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="lastName">Soy Adınız</label>
+                    <input readonly type="text" class="form-control" id="lastName" placeholder=""
+                      value="{{detail.user.last_name|capfirst}}" required="">
+
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="email">Email </label>
+                    <input readonly type="email" class="form-control" id="email" placeholder="you@example.com"
+                      value={{detail.user.email}}>
+
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="phone">Telefon No </label>
+                    <input readonly type="phone" class="form-control" id="phone" placeholder="(5xx)-xxx-xxxx"
+                      value={{detail.user.phone}}>
+
+                  </div>
+
+
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="address">Address</label>
+                    <input readonly type="text" class="form-control" id="address" placeholder="1234 Main St" required=""
+                      value={{detail.adress}}>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="TCnumber">TC No</label>
+                    <input readonly type="password" class="form-control" id="TCnumber" placeholder="___________"
+                      value="{{detail.TC}}" required="">
+
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="gender">Cinsiyet</label>
+                    <input readonly type="text" class="form-control" id="gender" placeholder=""
+                      value="{{detail.gender}}" required="">
+
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="hescode">HES Kod</label>
+                    <input readonly type="text" class="form-control" id="hescode" placeholder="____-____-_"
+                      value="{{detail.HESCode}}" required="">
+
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label readonly for="birthday">Doğum Tarihiniz</label>
+                    <div class="input-group">
+
+                      <input readonly type="text" class="form-control" id="Test_DatetimeLocal"
+                        placeholder="Doğum Tarihiniz" required="" value="{{detail.birthdate}}">
+
+                    </div>
+                  </div>
                   
-                            <div class="col-md-4 mb-3">
-                              <label for="email">Email </label>
-                              <input readonly type="email" class="form-control" id="email" placeholder="you@example.com" value={{detail.user.email}}>
-                              
-                            </div>
-                            <div class="col-md-4  mb-3">
-                              <label for="job">Görev</label>
-                              
-                                <input readonly type="text" class="form-control" id="job" placeholder="" value={{detail.job.name}}>
-                              
-                            </div>
-                          </div>
-                            <div class="mb-3">
-                              <label for="address">Address</label>
-                              <input readonly type="text" class="form-control" id="address" placeholder="1234 Main St" required="" value={{detail.adress}}>
-                              
-                            </div>
+
+
+                
+                </div>
+                <div class="row">
                   
-                            <hr class="col-md-4 mb-4">
-                            <div class="custom-control custom-checkbox">
-                              
-                              <label class="custom-control-label" for="isWorking">Çalışıyor mu </label>
-                              <input readonly type="checkbox" class="custom-control-input" id="isWorking" checked="{{detail.isWorking}}" value="{{detail.isWorking}}">
-                            </div>
-                            
-                     
-                            <hr class="mb-4">
-                            
-                          </form>
-                        </div>
-                      </div>
-                  
-                    
-                    <!-- <div class="row mb-4">
+                  <div class="col-md-4  mb-3">
+                    <label for="job">Görev</label>
+
+                    <input readonly type="text" class="form-control" id="job" placeholder="" value={{detail.job.name}}>
+
+                  </div>
+
+                  <hr class="col-md-4 mb-4">
+                  <div class="custom-control custom-checkbox">
+
+                    <label class="custom-control-label" for="isWorking">Çalışıyor mu </label>
+                    <input readonly type="checkbox" class="custom-control-input" id="isWorking"
+                      checked="{{detail.isWorking}}" value="{{detail.isWorking}}">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+          <!-- <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="inputPassword4">Old Password</label>
@@ -156,15 +182,15 @@
                             </ul>
                         </div>
                     </div> -->
-                    <!-- <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button> -->
-                </form>
-            </div>
-        </div>
+          <!-- <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button> -->
+        </form>
+      </div>
     </div>
-    
-    </div>
+  </div>
 
-    {% endblock content %}
+</div>
+
+{% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
