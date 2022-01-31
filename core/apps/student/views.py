@@ -67,7 +67,7 @@ def export(request):
         return response
         # return render(request,'student/export',context)
     
-def simple_upload(request):
+def studentImport(request):
     sessionUpdate(request)
     
     session=Session.objects.get(active=True)
@@ -180,12 +180,12 @@ def simple_upload(request):
         
         }
          
-        return render(request, 'student/input.html',context)
+        return render(request, 'student/std-import.html',context)
                  
         
     context={"sessions":sessions,"periods":periods}
 
-    return render(request, 'student/input.html',context)
+    return render(request, 'student/std-import.html',context)
 def sessionUpdate(request):
     if request.GET.get("sessionID"):
         try:
