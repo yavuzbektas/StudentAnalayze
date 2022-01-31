@@ -84,6 +84,7 @@ def simple_upload(request):
         new_students={} 
         newStudentlist=[]
         student={}         
+        recordstatus=0 
         if 'import' in request.POST:
             try:
                 new_students = dataset.load(request.FILES['myfile'].read(),format='xlsx')
@@ -97,6 +98,7 @@ def simple_upload(request):
                         Student.objects.get(TC=new_students['TC'][index])
                         print("This student has already been recorded")
                         student['recordStatus']="Zaten Kayıtlı"
+                        recordstatus=4 
                     except Exception as err:
                         newStudent = Student(
                             firstName=new_students['firstName'][index],lastName=new_students['lastName'][index],TC=new_students['TC'][index],
@@ -124,8 +126,10 @@ def simple_upload(request):
                         student['number']=new_students['number'][index]
                         student['className']=new_students['className'][index]
                         student['classLevel']=new_students['classLevel'][index]
+                        recordstatus=5 
                         newStudentlist.append(student)    
-                          
+            else:
+                recordstatus=1              
         
         
         if 'load' in request.POST: 
@@ -164,6 +168,8 @@ def simple_upload(request):
                         recordstatus=2   
                     except:
                         recordstatus=3
+            else:
+                recordstatus=1      
         
         context={
         'studentlist':newStudentlist,
