@@ -126,12 +126,11 @@ def profilUpdate(request,pk=None):
     
     jobs =  JobsTable.objects.all()
     
-    
     profile_form = ProfilForm(request.POST,request.FILES, instance=post)
     user_form = UserForm(request.POST, instance=user)
     if request.method == 'POST':
         if profile_form.is_valid() and user_form.is_valid():
-            formf =profile_form.save(commit=False)
+            formf =profile_form.save()
             userf= user_form.save()
             formf.user=userf
             formf.save()
@@ -152,28 +151,14 @@ def profilUpdate(request,pk=None):
         'profile_form':profile_form,
         'user_form':user_form,
         'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
+        'sessions':sessions,
+        "periods":periods,
+        'all_class_levels':all_class_levels
         }
     
 
     return render(request, "home/profil.html", context)
 
-@login_required(login_url="/login/")
-def userUpdate(request):
-    id= request.user.id
-    user = User.objects.get(id=id)
-    detail = Profil.objects.get(user=user)
-    jobs =  JobsTable.objects.all()
-    form = ProfilForm()
-    context={
-        'user':user,
-        'detail':detail,
-        'jobs':jobs,
-        'form':form,
-        'media_url':settings.MEDIA_URL,
-        'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels
-    }
-    return render(request,'home/profil.html',context)
 
 @login_required(login_url="/login/")
 def profilDelete(request, pk):

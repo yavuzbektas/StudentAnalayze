@@ -67,8 +67,9 @@ class ProfilForm(forms.ModelForm):
     
    
     image = forms.ImageField(widget=forms.FileInput(attrs={
+        'id':'image-profil',
         'class': 'form-control',
-        'placeholder': 'image',
+        'placeholder': 'Resim',
         
     }),required=False)
    
