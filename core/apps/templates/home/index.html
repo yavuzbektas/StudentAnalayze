@@ -108,76 +108,25 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Activity</th>
-                                                <th>Time</th>
-                                                <th>Status</th>
-                                                <th class="text-right"></th>
+                                                <th>Öğrenci</th>
+                                                <th>Numara</th>
+                                                <th>Sınıf</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for student in first_lesson_absent %}
                                             <tr>
                                                 <td>
-                                                    <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="{{media_url}}{{student.0.image}}" alt="activity-user">{{student.0.firstName}} {{student.0.lastName}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0">The quick brown fox</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0">{{student.0.number}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0">3:28 PM</h6>
+                                                    <a href="{% url 'redirecttoclass' student.2 %}"><h6 class="m-0">{{student.1}}</h6></a>
                                                 </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">Done</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
                                             </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-2.jpg" alt="activity-user">Albert Andersen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">Jumps over the lazy</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">2:37 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-red">Missed</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-3.jpg" alt="activity-user">Silje Larsen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">Dog the quick brown</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">10:23 AM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-purple">Delayed</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">The quick brown fox</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">4:28 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">Done</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                                            </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
 
@@ -186,74 +135,25 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Activity</th>
-                                                <th>Time</th>
-                                                <th>Status</th>
-                                                <th class="text-right"></th>
+                                                <th>Öğrenci</th>
+                                                <th>Numara</th>
+                                                <th>Sınıf</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for student in today_absent %}
                                             <tr>
                                                 <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-2.jpg" alt="activity-user">Albert Andersen</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="{{media_url}}{{student.0.image}}" alt="activity-user">{{student.0.firstName}} {{student.0.lastName}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0">Jumps over the lazy</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0">{{student.0.number}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0">2:37 PM</h6>
+                                                    <a href="{% url 'redirecttoclass' student.2 %}"><h6 class="m-0">{{student.1}}</h6></a>
                                                 </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-red">Missed</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i></td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">The quick brown fox</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">3:28 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">Done</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">The quick brown fox</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">4:28 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">Done</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-3.jpg" alt="activity-user">Silje Larsen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">Dog the quick brown</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">10:23 AM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-purple">Delayed</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i></td>
-                                            </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
 
@@ -262,74 +162,29 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Activity</th>
-                                                <th>Time</th>
-                                                <th>Status</th>
-                                                <th class="text-right"></th>
+                                                <th>Öğrenci</th>
+                                                <th>Numara</th>
+                                                <th>Gelmediği Gün</th>
+                                                <th>Sınıf</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for student in thisWeek_absent %}
                                             <tr>
                                                 <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-3.jpg" alt="activity-user">Silje Larsen</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="{{media_url}}{{student.0.image}}" alt="activity-user">{{student.0.firstName}} {{student.0.lastName}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0">Dog the quick brown</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0">{{student.0.number}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0">10:23 AM</h6>
+                                                    <a href="{% url 'student-view' student.0.id %}"><h6 class="m-0">{{student.1}}</h6></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="m-0 text-c-purple">Delayed</h6>
+                                                    <a href="{% url 'redirecttoclass' student.3 %}"><h6 class="m-0">{{student.2}}</h6></a>
                                                 </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i></td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">The quick brown fox</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">3:28 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">Done</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-2.jpg" alt="activity-user">Albert Andersen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">Jumps over the lazy</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">2:37 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-red">Missed</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">The quick brown fox</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">4:28 PM</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">Done</h6>
-                                                </td>
-                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                                            </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

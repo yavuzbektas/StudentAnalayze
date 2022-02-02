@@ -324,12 +324,13 @@ def studentAdd(request):
     
     
     if request.method == 'POST':
-        
-        
-                  
+        print(student_form.errors)
         if student_form.is_valid() and studentListForm.is_valid() :
             try:
                 formf1 =student_form.save()
+                formf1.firstName = (str(formf1.firstName).lower()).capitalize()
+                formf1.lastName = (str(formf1.lastName).lower()).capitalize()
+                formf1.save()
                 newclassNameID = request.POST.get("classNameSelect")
                 newclass = StudentList.objects.get(id=newclassNameID,session=session,periods=period)
                 parentazi=request.POST.getlist("parentFormSelect")
@@ -352,7 +353,6 @@ def studentAdd(request):
             
             
             return redirect('student-list')
-            
         
         
     context={
@@ -396,7 +396,7 @@ def studentUpdate(request,pk=None):
                 return redirect('student-list')
                 
             elif student_form.errors :
-                print("Profil form da su hatalar var : " , student_form.errors.as_text())
+                print("Profil form da hatalar var" , student_form.errors.as_text())
             else:
                 print("false")
     except Exception as err:
