@@ -20,7 +20,7 @@
                         <div class="col-md-5 text-center mb-5">
                             <div class="avatar avatar-xl">
                                 <img src="{{detail.image.url}}" alt="..." class="avatar-img rounded-circle" width="340" height="340"/>
-                                {{detail.image.url}}
+                                
                                 {{profile_form.image}}
                                 
                             </div>
@@ -50,7 +50,10 @@
                             <label for="lastname">Kullanıcı Adınız</label>
                             {{user_form.username}}
                         </div>
-
+                        <div class="form-group col-md-4">
+                            <label for="lastname">Şifreniz</label>
+                            {{user_form.password}}
+                        </div>
                         <div class="form-group col-md-4">
                             <label for="firstname">Adınız</label>
                             {{user_form.first_name|capfirst }}

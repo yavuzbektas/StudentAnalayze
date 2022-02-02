@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'yavuzbektas@gmail.com'
+EMAIL_HOST_USER = 'xxx@gmail.com'
 EMAIL_HOST_PASSWORD = 'ezaqptburesalydw'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'

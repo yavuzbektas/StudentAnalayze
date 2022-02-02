@@ -13,6 +13,8 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateField, IntegerField, TextField
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
+import os 
+
 
 def validateHesCode(value):
     HesCodeRegex = RegexValidator(regex=r'^[0-9]{4}-?[0-9]{5}$', message="HES Code  must be entered in the format: 'Txxx-xxxx-x'. Up to 9  char allowed.")

@@ -23,6 +23,7 @@ from django.contrib.auth import get_user_model
 from apps.classes.classes_for_sidebar import all_class_levels
 from apps.student.views import sessionUpdate
 from apps.student.models import Student,StudentList
+import os
 
 sessions = Session.objects.all()
 periods = Period.objects.all()
@@ -125,16 +126,15 @@ def profilUpdate(request,pk=None):
     post = Profil.objects.get(user=user)
     
     jobs =  JobsTable.objects.all()
-    
-    profile_form = ProfilForm(request.POST,request.FILES, instance=post)
-    user_form = UserForm(request.POST, instance=user)
     if request.method == 'POST':
+        profile_form = ProfilForm(request.POST,request.FILES, instance=post)
+        user_form = UserForm(request.POST,request.FILES, instance=user)
         if profile_form.is_valid() and user_form.is_valid():
             formf =profile_form.save()
             userf= user_form.save()
             formf.user=userf
             formf.save()
-            
+            return redirect('users-edit')
             return HttpResponseRedirect('/view/'+str(post.id))
         elif profile_form.errors :
             print("Profil form da hatalar var" , profile_form.errors.as_text())

@@ -396,7 +396,7 @@ def studentUpdate(request,pk=None):
                 return redirect('student-list')
                 
             elif student_form.errors :
-                print("Profil form da hatalar var" , student_form.errors.as_text())
+                print("Profil form da su hatalar var : " , student_form.errors.as_text())
             else:
                 print("false")
     except Exception as err:

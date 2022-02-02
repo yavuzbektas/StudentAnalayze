@@ -120,12 +120,13 @@ class UserForm(forms.ModelForm):
         'class': 'form-control',
         'placeholder': 'Your Email'
     }),required=False)
-   
+    
     
 
     class Meta:
         model = User
-        fields =  ['first_name',"last_name","email","username"]
+        fields =  ['username','first_name',"last_name","email"]
+         
         
 class SessionForm(forms.ModelForm):
     session = forms.ModelChoiceField(queryset=Session.objects.all(),widget=forms.TextInput(attrs={
