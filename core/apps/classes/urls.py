@@ -34,7 +34,8 @@ urlpatterns = [
     path('Seat_arrangement/<int:pk>', views.UpdateSeating, name='upd-seating'),
     path('assign/',views.StudentListDetailView.as_view(), name='classes-detail'),
     path('classredirect/<str:pk>',views.classredirect,name ='redirecttoclass'),
-    path('class/<int:pk>',views.classlist,name="classlist")
+    path('class/<int:pk>',views.classlist,name="classlist"),
+    path('success/',views.success,name="success")
 ]
     
     

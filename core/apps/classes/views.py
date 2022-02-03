@@ -21,7 +21,26 @@ classes = Classes.objects.all()
 all_class_levels = all_class_levels()
 
 # Create your views here.
+def success(request):
+    studentList=StudentList.objects.all()
+    student=Student.objects.all()
+    clasess=Classes.objects.all()
+    sinnif9=ClassLevels.objects.filter(level="9")
+    sinnif10=ClassLevels.objects.filter(level="10")
+    sinnif11=ClassLevels.objects.filter(level="11")
+    sinnif12=ClassLevels.objects.filter(level="12")
+    class9=Classes.objects.filter(level=sinnif9[0])
+    class10=Classes.objects.filter(level=sinnif10[0])
+    class11=Classes.objects.filter(level=sinnif11[0])
+    class12=Classes.objects.filter(level=sinnif12[0])
+    classlistx9=StudentList.objects.filter(className__in=class9)
+    classlistx10=StudentList.objects.filter(className__in=class10)
+    classlistx11=StudentList.objects.filter(className__in=class11)
+    classlistx12=StudentList.objects.filter(className__in=class12)
+   
+    context = {'segment': 'index','sessions':sessions,"periods":periods,'all_class_levels':all_class_levels,'studentList':studentList,"student":student,"clasess":clasess,"class9":classlistx9,"class10":classlistx10,"class11":classlistx11,"class12":classlistx12}
 
+    return render(request, "clasess/cls-Success.html", context)
 @login_required(login_url="/login/")
 def classesAdd(request):
     context={'sessions':sessions,"periods":periods,'all_class_levels':all_class_levels}

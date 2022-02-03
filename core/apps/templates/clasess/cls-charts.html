@@ -1,0 +1,365 @@
+ 
+
+<div class="col-xl-12 col-md-12 m-b-30">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" id="9classCharts-tab" data-toggle="tab" href="#9classCharts" role="tab" aria-controls="9class" aria-selected="false">9.Sınıflar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active show" id="10classCharts-tab" data-toggle="tab" href="#10classCharts" role="tab" aria-controls="10class" aria-selected="true">10.Sınıflar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="11classCharts-tab" data-toggle="tab" href="#11classCharts" role="tab" aria-controls="11class" aria-selected="false">11.Sınıflar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="12classCharts-tab" data-toggle="tab" href="#12classCharts" role="tab" aria-controls="12class" aria-selected="false">12.Sınıflar</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" id="9classCharts" role="tabpanel" aria-labelledby="9classCharts-tab">
+            <div class="row ">
+                <div class="col-xl-12 col-md-6">
+                <div class="bg-white">
+                    <div class="card-body">
+                        <canvas id="myChart15" width="400" height="75"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart15').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: [{% for student in class9  %} '{{student}}',{% endfor %}],
+                            datasets: [{
+                                label: ' 11.Sınıflar Arası Genel Başarı ',
+                                data:  [{% for student in class9 %} '{{student.students.count}}',{% endfor %},0],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderWidth: 1
+                            }]
+                                },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div> 
+              
+            </div>
+            
+        </div>
+        <div class="tab-pane fade" id="10classCharts" role="tabpanel" aria-labelledby="10classCharts-tab">
+            <div class="row ">
+                <div class="col-md-6 my-4">
+                    <div class="bg-white">
+                        <div class="card-body">
+                            <canvas id="myChart1" width="400" height="300"></canvas>
+                            <script>
+                                var ctx = document.getElementById('myChart1').getContext('2d');
+                                var myChart1 = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: [{% for student in class10  %} '{{student}}',{% endfor %}],
+                                datasets: [{
+                                    label: ' 10.Sınıflar Arası Genel Başarı ',
+                                    data:  [{% for student in class10  %} '{{student.students.count}}',{% endfor %},0],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                            borderWidth: 1
+                                }]
+                                    },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 my-4">
+                    <div class="bg-white">
+                        <div class="card-body">
+                            <canvas id="myChart6" width="400" height="300"></canvas>
+                            <script>
+                                var ctx = document.getElementById('myChart6').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: [{% for student in class10  %} '{{student}}',{% endfor %}],
+                                datasets: [{
+                                    label: ' 10.Sınıflar Arası Genel Başarı ',
+                                    data:  [{% for student in class10  %} '{{student.students.count}}',{% endfor %},0],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                            borderWidth: 1
+                                }]
+                                    },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 my-4">
+                    <div class="bg-white">
+                        <div class="card-body">
+                            <canvas id="myChart7" width="400" height="300"></canvas>
+                            <script>
+                                var ctx = document.getElementById('myChart7').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: [{% for student in class10  %} '{{student}}',{% endfor %}],
+                                datasets: [{
+                                    label: ' 10.Sınıflar Arası Genel Başarı ',
+                                    data:  [100,80],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                            borderWidth: 1
+                                }]
+                                    },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 my-4">
+                    <div class="bg-white">
+                        <div class="card-body">
+                            <canvas id="myChart8" width="400" height="300"></canvas>
+                            <script>
+                                var ctx = document.getElementById('myChart8').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['matematk','fizik'],
+                                datasets: [{
+                                    label: ' [{% for student in class10  %} '{{student}}',{% endfor %}] ',
+                                    data:  [100,80],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                            borderWidth: 1
+                                }]
+                                    },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="tab-pane fade" id="11class" role="tabpanel" aria-labelledby="11class-tab">
+            <div class="row ">
+                <div class="col-xl-12 col-md-6">
+                <div class="bg-white">
+                    <div class="card-body">
+                        <canvas id="myChart4" width="400" height="75"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart4').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: [{% for student in class11  %} '{{student}}',{% endfor %}],
+                            datasets: [{
+                                label: ' 11.Sınıflar Arası Genel Başarı ',
+                                data:  [{% for student in class11  %} '{{student.students.count}}',{% endfor %},0],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderWidth: 1
+                            }]
+                                },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div> 
+              
+            </div>
+            
+        </div>
+        <div class="tab-pane fade" id="12classCharts" role="tabpanel" aria-labelledby="12classCharts-tab">
+           
+            <div class="row ">
+                <div class="col-xl-12 col-md-6">
+                <div class="bg-white">
+                    <div class="card-body">
+                        <canvas id="myChart3" width="400" height="75"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart3').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: [{% for student in class12  %} '{{student}}',{% endfor %}],
+                            datasets: [{
+                                label: ' 12.Sınıflar Arası Genel Başarı ',
+                                data:  [{% for student in class12  %} '{{student.students.count}}',{% endfor %},0],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderWidth: 1
+                            }]
+                                },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div> 
+              
+            </div>
+
+        </div>
+    </div>
+</div>
