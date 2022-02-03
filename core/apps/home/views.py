@@ -26,7 +26,7 @@ from django.contrib.auth import get_user_model
 from apps.classes.classes_for_sidebar import all_class_levels
 from apps.student.views import sessionUpdate
 from apps.student.models import Student,StudentList
-from apps.classes.models import Classes
+from apps.classes.models import ClassLevels, Classes
 import apps.home.dashboard_att
 
 sessions = Session.objects.all()
@@ -48,6 +48,14 @@ def index(request):
     first_lesson_absent_list_students = apps.home.dashboard_att.first_lesson_absent_list_students()
     today_absent_list_students = apps.home.dashboard_att.today_absent_list_students()
     week_absent_list_students = apps.home.dashboard_att.week_absent_list_students()
+    
+    student=Student.objects.all()
+    clasess=Classes.objects.all()
+    classlistx9=StudentList.objects.filter(className__in=Classes.objects.filter(level=ClassLevels.objects.filter(level="9")[0]))
+    classlistx10=StudentList.objects.filter(className__in=Classes.objects.filter(level=ClassLevels.objects.filter(level="10")[0]))
+    classlistx11=StudentList.objects.filter(className__in=Classes.objects.filter(level=ClassLevels.objects.filter(level="11")[0]))
+    classlistx12=StudentList.objects.filter(className__in=Classes.objects.filter(level=ClassLevels.objects.filter(level="12")[0]))
+    
     context = {
         'segment': 'index',
         'students':students,
@@ -62,7 +70,13 @@ def index(request):
         'first_lesson_absent':first_lesson_absent_list_students,
         'today_absent':today_absent_list_students,
         'thisWeek_absent':week_absent_list_students,
-        'media_url':settings.MEDIA_URL
+        'media_url':settings.MEDIA_URL,
+        "student":student,
+        "clasess":clasess,
+        "class9":classlistx9,
+        "class10":classlistx10,
+        "class11":classlistx11,
+        "class12":classlistx12
         }
 
     html_template = loader.get_template('home/index.html')
