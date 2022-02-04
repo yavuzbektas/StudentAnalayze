@@ -20,6 +20,8 @@ class ClassNames(models.Model):
 class Classes(models.Model):
     className=models.ForeignKey(ClassNames,on_delete=models.CASCADE,default="")
     level=models.ForeignKey(ClassLevels,on_delete=models.CASCADE)
+    class Meta:
+        ordering = ('level','className')
     def __str__(self):
         
         return self.level.level+self.className.name

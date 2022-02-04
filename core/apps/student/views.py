@@ -104,7 +104,7 @@ def studentImport(request):
                             firstName=new_students['firstName'][index],lastName=new_students['lastName'][index],TC=new_students['TC'][index],
                             phone=new_students['phone'][index],address=new_students['address'][index],HESCode=new_students['HESCode'][index],
                             birtdate=new_students['birtdate'][index],health=new_students['health'][index],email=new_students['email'][index],
-                            gender=new_students['gender'][index],middleSchool_id=new_students['middleSchool_id'][index],number=new_students['number'][index],
+                            gender=new_students['gender'][index],number=new_students['number'][index],
                             )
                         newStudent.save() 
                         
